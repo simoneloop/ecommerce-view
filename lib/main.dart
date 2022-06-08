@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=>{Proxy.sharedProxy.logIn("admin","admin").then((value) => Proxy.sharedProxy.modifyProduct(new Product(name: "dafluttter", description: "orecchino inserito da flutter", quantity: 32, price: 25.5, typo: Consts.TYPO_ORECCHINO, hot: true),"daflutter").then((value) => print(value))) },
+        onPressed: ()=>{Proxy.sharedProxy.logIn("admin","admin").then((value) => Proxy.sharedProxy.modifyProduct(new Product(name: "dafluttter", description: "orecchino inserito da flutter", quantity: 32, price: 25.5, typo: Consts.TYPO_ORECCHINO, hot: false),"daflutter").then((value) => print(value))) },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
