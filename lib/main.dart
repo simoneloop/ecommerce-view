@@ -1,5 +1,6 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/Product.dart';
+import 'package:ecommerce_view/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 
 import 'entities/User.dart';
@@ -16,20 +17,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'E-commerce',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
+        primaryColor: Colors.white,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          elevation: 0,
+          foregroundColor: Colors.white,
+        ),
+        textTheme: TextTheme(
+          headline1: TextStyle(fontSize: 22.0, color: Colors.redAccent),
+          headline2: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.w700,
+            color: Colors.redAccent,
+          ),
+          bodyText1: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w400,
+            color: Colors.blueAccent,
+          ),
+        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.redAccent),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      home: loginPage(),
     );
   }
 }
