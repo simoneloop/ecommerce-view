@@ -24,7 +24,7 @@ enum LogInResult {
 
 class Proxy{
   static Proxy sharedProxy=Proxy();
-  StateManager appState = StateManager();
+  static StateManager appState = StateManager();
   RestManager _restManager=RestManager();
   late AuthenticationData _authenticationData;
 

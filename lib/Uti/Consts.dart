@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 class Consts{
 
 
@@ -49,6 +51,15 @@ class Consts{
   static const String TYPO_BRACCIALE="bracciale";
   static const String TYPO_COLLANA="collana";
   static const String TYPO_ORECCHINO="orecchino";
+
+  static const bool TO_VALIDATE=false;
+
+
+  static const MaterialColor kTextColor=Colors.indigo;
+  static const double kToolbarHeight=50;
+  static const Color BRACCIALE_COLOR=Color(0xffd4b483);
+  static const Color ORECCHINO_COLOR=Color(0xffccfbfe);
+  static const Color COLLANA_COLOR=Color(0xffa26769);
 
   //EXAMPLES
   /*Proxy.sharedProxy.logIn("user","user")*/
