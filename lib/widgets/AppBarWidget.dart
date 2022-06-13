@@ -3,10 +3,10 @@ import '../Uti/Consts.dart';
 
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   const AppBarWidget({
-    required this.index,
+    this.index,
     Key? key,
   }) : super(key: key);
-  final int index;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {

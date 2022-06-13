@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 22.0, color: Colors.redAccent),
           headline2: TextStyle(
-            fontSize: 24.0,
+            fontSize: 30,
             fontWeight: FontWeight.w700,
-            color: Colors.redAccent,
+            color: Colors.black45,
           ),
           headline3: TextStyle(
             fontSize: 24.0,
@@ -43,15 +43,20 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.normal,
             color: Colors.black45,
           ),
+          headline5: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.normal,
+            color: Colors.black45,
+          ),
           bodyText1: TextStyle(
             fontSize: 14.0,
             fontWeight: FontWeight.w400,
             color: Colors.blueAccent,
           ),
-        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.redAccent),
+        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.proviamoColor),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'HomePage',
+      initialRoute: 'LoginPage',
       routes: {
         '/':(context)=>HomePage(),
 

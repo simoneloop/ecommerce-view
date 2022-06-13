@@ -55,11 +55,19 @@ class Consts{
   static const bool TO_VALIDATE=false;
 
 
-  static const MaterialColor kTextColor=Colors.indigo;
+  static const Color kBlueColor=Color(0xFF0D47A1);
+  static const LinearGradient kBlueGradient=LinearGradient(
+    colors: <Color>[
+      Color(0xFF0D47A1),
+      Color(0xFF1976D2),
+      Color(0xFF42A5F5),
+    ],
+  );
   static const double kToolbarHeight=50;
   static const Color BRACCIALE_COLOR=Color(0xffd4b483);
   static const Color ORECCHINO_COLOR=Color(0xffccfbfe);
   static const Color COLLANA_COLOR=Color(0xffa26769);
+  static const Color proviamoColor=Color(0xffff965e);
 
   //EXAMPLES
   /*Proxy.sharedProxy.logIn("user","user")*/

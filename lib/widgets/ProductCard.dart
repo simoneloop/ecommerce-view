@@ -7,35 +7,54 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key? key,
     required this.product,
-    required this.press
+    this.press,
+    this.actions
   }) : super(key: key);
   final Product product;
-  final Function press;
+  final Function()? press;
+  final List<Widget>? actions;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Consts.BRACCIALE_COLOR,borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
-              child: Image.network("https://picsum.photos/200")),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: Text(product.name,style: Theme.of(context).textTheme.headline4,),
-                ),
-                Text("€324",style: Theme.of(context).textTheme.headline4?.copyWith(fontWeight: FontWeight.w900),)
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: press,
+      child: Container(
+        decoration: BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
+                child: Image.network("https://picsum.photos/300")),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0,top: 8,bottom: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Text(product.name,style: Theme.of(context).textTheme.headline2?.copyWith(color: Colors.white),),
+                      ),
+                      Text(product.price.toString()+"€",style: Theme.of(context).textTheme.headline3?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
 
-              ],
+                    ],
+                  ),
+                  if (actions!=null) Container(
+                    padding: const EdgeInsets.only(left: 40),
+                    constraints:BoxConstraints(maxWidth: actions!.length*60.0,maxHeight: 30.0),
+                    child: ListView.builder(
+                        scrollDirection:Axis.horizontal,
+                        itemCount:actions?.length,
+                        itemBuilder: (context,i){final action=actions![i];return action;}),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

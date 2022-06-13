@@ -174,7 +174,7 @@ class _loginPageState extends State<loginPage> {
     return col;
   }
   void ValidateAndLogin(){
-    print(parseColor("#A26769"));
+    print(parseColor("#FF7E75"));
     _canLogin=true;
     if(Consts.TO_VALIDATE){
       setState(() {
