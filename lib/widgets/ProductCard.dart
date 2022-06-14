@@ -43,7 +43,8 @@ class ProductCard extends StatelessWidget {
                     ],
                   ),
                   if (actions!=null) Container(
-                    padding: const EdgeInsets.only(left: 40),
+                    margin: EdgeInsets.only(left: 70),
+                    padding: const EdgeInsets.only(left: 10),
                     constraints:BoxConstraints(maxWidth: actions!.length*60.0,maxHeight: 30.0),
                     child: ListView.builder(
                         scrollDirection:Axis.horizontal,

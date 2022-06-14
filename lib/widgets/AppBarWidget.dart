@@ -33,6 +33,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         IconButton(onPressed: (){},
             icon: Icon(Icons.shopping_cart),
             color: index==2?Colors.amber:null,
+
         ),
         SizedBox(width: 10,)
       ],

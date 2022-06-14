@@ -55,6 +55,7 @@ class Consts{
   static const bool TO_VALIDATE=false;
 
 
+  static const Color kTextLightBlack=Colors.black26;
   static const Color kBlueColor=Color(0xFF0D47A1);
   static const LinearGradient kBlueGradient=LinearGradient(
     colors: <Color>[
