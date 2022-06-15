@@ -21,7 +21,7 @@ class ProductCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
@@ -29,20 +29,21 @@ class ProductCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8.0,top: 8,bottom: 8),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
-                        child: Text(product.name,style: Theme.of(context).textTheme.headline2?.copyWith(color: Colors.white),),
+                        child: Text(product.name,style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),),
                       ),
-                      Text(product.price.toString()+"€",style: Theme.of(context).textTheme.headline3?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
+                      Text(product.price.toString()+"€",style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
 
                     ],
                   ),
-                  if (actions!=null) Container(
+                  /*if (actions!=null) Container(
                     margin: EdgeInsets.only(left: 70),
                     padding: const EdgeInsets.only(left: 10),
                     constraints:BoxConstraints(maxWidth: actions!.length*60.0,maxHeight: 30.0),
@@ -50,7 +51,7 @@ class ProductCard extends StatelessWidget {
                         scrollDirection:Axis.horizontal,
                         itemCount:actions?.length,
                         itemBuilder: (context,i){final action=actions![i];return action;}),
-                  )
+                  )*/
                 ],
               ),
             ),

@@ -10,7 +10,7 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = ["Bracciali", "Collane", "Orecchini"];
+  List<String> categories = ["Tutti i prodotti","Bracciali", "Collane", "Orecchini"];
   int selectedIndex = 0;
   final Function callback;
 
@@ -20,7 +20,7 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: SizedBox(
           height: 25,
           child: ListView.builder(

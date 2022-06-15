@@ -12,7 +12,7 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: AppBarWidget(leadingFunction:()=> {Navigator.pop(context),print("ciao")},),
       body:Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

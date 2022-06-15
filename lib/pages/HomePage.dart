@@ -26,7 +26,20 @@ class _HomePageState extends State<HomePage> {
   String typoSelected="bracciali";
   List<Product> _searchedProducts=[];
   TextEditingController _searchController=TextEditingController();
-  String _searchError="";
+  String? _searchError=null;
+  String _radioValue="ascending";
+  List<Product>? productsList=[];
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected).then((value) => {setState(() {
+      productsList=value;
+    })});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             )),
           ),
           Container(
-              constraints: BoxConstraints(maxWidth: 200, maxHeight: 200),
+              constraints: BoxConstraints(maxWidth: 150, maxHeight: 150),
               child: FittedBox(
                   fit: BoxFit.fill,
                   child: ProductCard(
@@ -63,36 +76,115 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ))),
           /*homeHotProducts(),*/
-          Categories(callback:(val)=>{typoSelected=val}),
-          Center(
-
+          Padding(
+            padding: const EdgeInsets.only(top:8.0,left: 15),
             child: Container(
-              width: 200,
-              child: TextFormField(
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (value){Proxy.sharedProxy.getProductPageable(page: 0,pageSize: 10,typo: typoSelected);},
-                controller: _searchController,
-                keyboardType: TextInputType.name,
+              decoration: BoxDecoration(border: Border(top: BorderSide(color: Consts.kBlueColor))),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: FractionallySizedBox(
+                      widthFactor: 1,
+                      child: Container(
+                        width: 1000,
+                          child: Categories(callback:(val)=>{typoSelected=val})),
+                    ),
+                  ),
+                  Flexible(
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: Container(
+                        width: 200,
+                        child: TextFormField(
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (value){Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);},
+                          controller: _searchController,
+                          keyboardType: TextInputType.name,
 
-                decoration: InputDecoration(
-                    hintText: "Cerca",
-                    errorText: _searchError,
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Consts.kBlueColor)),
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Consts.kBlueColor)),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Consts.kBlueColor,
-                    )),
+                          decoration: InputDecoration(
+                              hintText: "Cerca prodotto per nome",
+                              errorText:_searchError!=null?_searchError:null,
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:Consts.kTextLightBlack)),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Consts.kBlueColor)),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Consts.kBlueColor,
+                              )),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Radio(
+                        value: "ascending",
+                        groupValue: _radioValue,
+                        onChanged:(value){
+                          setState(() {
+                            _radioValue=value.toString();
+                            Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected).then((value) => {setState(() {
+                              productsList=value;
+                            })});
+                          });
+                    }),
+                    Text("Dal più economico",style: Theme.of(context).textTheme.headline4,)
+
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                        value: "descending",
+                        groupValue: _radioValue,
+                        onChanged:(value){
+                          setState(() {
+                            _radioValue=value.toString();
+                            Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected).then((value) => {setState(() {
+                              productsList=value;
+                            })});
+                            /*_radioValue=value;*/
+                          });
+                        }),
+                    Text("Dal più caro",style: Theme.of(context).textTheme.headline4,)
+
+                  ],
+                )
+              ],
+
+            ),
+          ),
+          productsList!=null?productsList!.length>0?ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: productsList!.length,
+          itemBuilder: (context,i){
+          return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Container(
+          constraints:BoxConstraints(maxWidth:200,maxHeight: 220),
+          child: FittedBox(
+          fit: BoxFit.fill,
+          child: ProductCard(product: productsList![i], press: (){},actions: [IconButton(onPressed: (){}, icon: Icon(Icons.wifi_tethering)),IconButton(onPressed: (){}, icon: Icon(Icons.add_shopping_cart))]))),
+          );
+          }):CircularProgressIndicator():CircularProgressIndicator()
 
 
-          /*homeHotProducts()*/
+
+
+
         ],
       ),
     );

@@ -4,9 +4,11 @@ import '../Uti/Consts.dart';
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   const AppBarWidget({
     this.index,
+    this.leadingFunction,
     Key? key,
   }) : super(key: key);
   final int? index;
+  final Function()? leadingFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       elevation: 10,
       leading: IconButton(icon: Icon(Icons.home_rounded),
-        onPressed: () { Navigator.pushNamed(
+        onPressed:leadingFunction != null?leadingFunction: () { Navigator.pushNamed(
             context, 'HomePage'); },
         color: index==0?Colors.amber:null,
       ),
