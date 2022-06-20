@@ -9,12 +9,12 @@ import 'package:flutter/services.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
 
-class loginPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _loginPageState createState() => _loginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _LoginPageState extends State<LoginPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
   bool hidePassword = true;
@@ -149,9 +149,18 @@ class _loginPageState extends State<loginPage> {
                               style: TextStyle(color: Colors.white),
                             ),
                             style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
-                            
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Prima volta?"),
+                              TextButton(onPressed: (){Navigator.pushNamed(context, "RegistrationPage");}, child: Text("Registrati"))
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),

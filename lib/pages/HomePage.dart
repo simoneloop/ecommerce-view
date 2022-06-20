@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -23,25 +25,31 @@ class _HomePageState extends State<HomePage> {
       price: 3.14,
       typo: 'bracciale',
       hot: true);
-  String typoSelected="bracciali";
-  List<Product> _searchedProducts=[];
-  TextEditingController _searchController=TextEditingController();
-  String? _searchError=null;
-  String _radioValue="ascending";
-  List<Product>? productsList=[];
-
+  dynamic typoSelected = "bracciale";
+  List<Product> _searchedProducts = [];
+  TextEditingController _searchController = TextEditingController();
+  String? _searchError = null;
+  String _radioValue = "ascending";
+  List<Product>? productsList = [];
+  late Future<List<Product>> hots;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected).then((value) => {setState(() {
-      productsList=value;
-    })});
+    Proxy.sharedProxy
+        .getProductPageable(order: _radioValue, page: 0, pageSize: 10)
+        .then((value) => {
+              setState(() {
+                productsList = value;
+              })
+            });
+    hots = Proxy.sharedProxy.getHotProduct();
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarWidget(
         index: 0,
@@ -56,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               style: Theme.of(context).textTheme.headline3,
             )),
           ),
-          Container(
+          /*Container(
               constraints: BoxConstraints(maxWidth: 150, maxHeight: 150),
               child: FittedBox(
                   fit: BoxFit.fill,
@@ -74,12 +82,13 @@ class _HomePageState extends State<HomePage> {
                       IconButton(
                           onPressed: () {}, icon: Icon(Icons.add_shopping_cart,color: Colors.white,size: 20,))
                     ],
-                  ))),
-          /*homeHotProducts(),*/
+                  ))),*/
+          homeHotProducts(data: hots),
           Padding(
-            padding: const EdgeInsets.only(top:8.0,left: 15),
+            padding: const EdgeInsets.only(top: 8.0, left: 15),
             child: Container(
-              decoration: BoxDecoration(border: Border(top: BorderSide(color: Consts.kBlueColor))),
+              decoration: BoxDecoration(
+                  border: Border(top: BorderSide(color: Consts.kBlueColor))),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,8 +97,28 @@ class _HomePageState extends State<HomePage> {
                     child: FractionallySizedBox(
                       widthFactor: 1,
                       child: Container(
-                        width: 1000,
-                          child: Categories(callback:(val)=>{typoSelected=val})),
+                          width: 1000,
+                          child: Categories(
+                              callback: (val){
+                                if (val!="all") {
+                                  typoSelected = val;}
+                                else{
+                                  typoSelected=null;}
+                                setState(() {
+                                  Proxy.sharedProxy
+                                      .getProductPageable(
+                                      order: _radioValue,
+                                      page: 0,
+                                      pageSize: 10,
+                                      typo: typoSelected)
+                                      .then((value) => {
+                                    setState(() {
+                                      productsList = value;
+                                    })
+                                  });
+                                });
+
+                              })),
                     ),
                   ),
                   Flexible(
@@ -99,19 +128,28 @@ class _HomePageState extends State<HomePage> {
                         width: 200,
                         child: TextFormField(
                           textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (value){Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);},
+                          onFieldSubmitted: (value) {
+                            Proxy.sharedProxy.getProductByName(
+                                value).then((value) {
+                                  if(value!=getProductResult.notExist){
+                                    setState(() {
+                                      productsList=[value];
+                                    });
+                                  }
+                            }); /*Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);*/
+                          },
                           controller: _searchController,
                           keyboardType: TextInputType.name,
-
                           decoration: InputDecoration(
                               hintText: "Cerca prodotto per nome",
-                              errorText:_searchError!=null?_searchError:null,
+                              errorText:
+                                  _searchError != null ? _searchError : null,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      color:Consts.kTextLightBlack)),
+                                      color: Consts.kTextLightBlack)),
                               focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Consts.kBlueColor)),
+                                  borderSide:
+                                      BorderSide(color: Consts.kBlueColor)),
                               prefixIcon: Icon(
                                 Icons.search,
                                 color: Consts.kBlueColor,
@@ -133,16 +171,26 @@ class _HomePageState extends State<HomePage> {
                     Radio(
                         value: "ascending",
                         groupValue: _radioValue,
-                        onChanged:(value){
+                        onChanged: (value) {
                           setState(() {
-                            _radioValue=value.toString();
-                            Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected).then((value) => {setState(() {
-                              productsList=value;
-                            })});
+                            _radioValue = value.toString();
+                            Proxy.sharedProxy
+                                .getProductPageable(
+                                    order: _radioValue,
+                                    page: 0,
+                                    pageSize: 10,
+                                    typo: typoSelected)
+                                .then((value) => {
+                                      setState(() {
+                                        productsList = value;
+                                      })
+                                    });
                           });
-                    }),
-                    Text("Dal più economico",style: Theme.of(context).textTheme.headline4,)
-
+                        }),
+                    Text(
+                      "Dal più economico",
+                      style: Theme.of(context).textTheme.headline4,
+                    )
                   ],
                 ),
                 Row(
@@ -150,46 +198,79 @@ class _HomePageState extends State<HomePage> {
                     Radio(
                         value: "descending",
                         groupValue: _radioValue,
-                        onChanged:(value){
+                        onChanged: (value) {
                           setState(() {
-                            _radioValue=value.toString();
-                            Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected).then((value) => {setState(() {
-                              productsList=value;
-                            })});
+                            _radioValue = value.toString();
+                            Proxy.sharedProxy
+                                .getProductPageable(
+                                    order: _radioValue,
+                                    page: 0,
+                                    pageSize: 10,
+                                    typo: typoSelected)
+                                .then((value) => {
+
+                                      setState(() {print(_radioValue);
+                                        productsList = value;
+                                      })
+                                    });
                             /*_radioValue=value;*/
                           });
                         }),
-                    Text("Dal più caro",style: Theme.of(context).textTheme.headline4,)
-
+                    Text(
+                      "Dal più caro",
+                      style: Theme.of(context).textTheme.headline4,
+                    )
                   ],
                 )
               ],
-
             ),
           ),
-          productsList!=null?productsList!.length>0?ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: productsList!.length,
-          itemBuilder: (context,i){
-          return Padding(
-          padding: const EdgeInsets.all(10),
-          child: Container(
-          constraints:BoxConstraints(maxWidth:200,maxHeight: 220),
-          child: FittedBox(
-          fit: BoxFit.fill,
-          child: ProductCard(product: productsList![i], press: (){},actions: [IconButton(onPressed: (){}, icon: Icon(Icons.wifi_tethering)),IconButton(onPressed: (){}, icon: Icon(Icons.add_shopping_cart))]))),
-          );
-          }):CircularProgressIndicator():CircularProgressIndicator()
-
-
-
-
-
+          productsList != null
+              ? productsList!.length > 0
+                  ? Container(
+                      constraints: BoxConstraints(
+                          minWidth: size.width,
+                          minHeight: size.height / 3,
+                          maxWidth: size.width,
+                          maxHeight: size.height / 3),
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(context).copyWith(
+                            dragDevices: {
+                              PointerDeviceKind.touch,
+                              PointerDeviceKind.mouse
+                            }),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: productsList!.length,
+                            itemBuilder: (context, i) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Container(
+                                    constraints: BoxConstraints(
+                                        maxWidth: 200, maxHeight: 220),
+                                    child: FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: ProductCard(
+                                            product: productsList![i],
+                                            press: () {},
+                                            actions: [
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: Icon(
+                                                      Icons.wifi_tethering)),
+                                              IconButton(
+                                                  onPressed: () {},
+                                                  icon: Icon(
+                                                      Icons.add_shopping_cart))
+                                            ]))),
+                              );
+                            }),
+                      ),
+                    )
+                  : CircularProgressIndicator()
+              : CircularProgressIndicator()
         ],
       ),
     );
   }
 }
-
-
-

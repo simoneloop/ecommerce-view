@@ -11,6 +11,7 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
   List<String> categories = ["Tutti i prodotti","Bracciali", "Collane", "Orecchini"];
+  List<String> categories_tag=['all',"bracciale","collana","orecchino"];
   int selectedIndex = 0;
   final Function callback;
 
@@ -36,7 +37,7 @@ class _CategoriesState extends State<Categories> {
         onTap: () {
           setState(() {
             selectedIndex = index;
-            callback(categories[index]);
+            callback(categories_tag[index]);
           });
         },
         child: Padding(

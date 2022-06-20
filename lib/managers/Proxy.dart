@@ -21,12 +21,28 @@ enum LogInResult {
   error
 }
 
+enum RegistrationResult {
+  registered,
+  emailAlreadyExist,
+  unknown
+}
+
+enum ModifyResult{
+  modified,
+  error
+}
+enum getProductResult{
+  exist,
+  notExist
+}
+
 
 class Proxy{
   static Proxy sharedProxy=Proxy();
   static StateManager appState = StateManager();
   RestManager _restManager=RestManager();
   late AuthenticationData _authenticationData;
+  bool isLastPage=false;
 
   Future<LogInResult> logIn(String email,String password)async{
     try{
@@ -67,16 +83,17 @@ class Proxy{
       return false;
     }
   }
-  Future<User> addUser(User user) async {
+  Future<RegistrationResult> addUser(User user) async {
 
     String rawResult = await _restManager.makePostRequest(
         Consts.ADDRESS_SERVER, Consts.REQUEST_ADD_USER,
         body: user.toJson());
     if(rawResult.contains(Consts.RESPONSE_ERROR_USER_ALREADY_EXIST)){
       print(Consts.RESPONSE_ERROR_USER_ALREADY_EXIST);
-      return User.def();//TODO refactor
+      return RegistrationResult.emailAlreadyExist;
     }
-    return User.fromJson(jsonDecode(rawResult));
+    /*appState.addValue(Consts.USER_LOGGED_DETAILS, User.fromJson(jsonDecode(rawResult)));*/
+    return RegistrationResult.registered;
 
   }
   Future<User> getMyDetails() async {
@@ -113,6 +130,7 @@ class Proxy{
       params['ordered']=order;
       params['pageSize']=pageSize.toString();
       params['page']=page.toString();
+      print(params);
       if(typo!=null){
         params['typo']=typo;
       }
@@ -122,6 +140,7 @@ class Proxy{
       Map<String, dynamic> res = jsonDecode(rawResult) as Map<String,dynamic>;
 
       List<dynamic> content=res['content'];
+      //TODO is lastPage?
       List<Product> products=[];
       content.forEach((element) { products.add(new Product.fromJson(element));});
       return products;
@@ -218,4 +237,31 @@ class Proxy{
       return Product.fromJson(jsonDecode(rawResult));
     }catch(err){print(err);return null;}
   }
+
+  Future<ModifyResult> modifyMyDetails(User u)async{
+    try{
+      String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_MODIFY_MY_DETAILS,body: u);
+      appState.updateValue(Consts.USER_LOGGED_DETAILS, User.fromJson(jsonDecode(rawResult)));
+      return ModifyResult.modified;
+    }catch(err){print(err);return ModifyResult.error;}
+  }
+
+
+
+
+  Future<dynamic> getProductByName(String name)async{
+    try{
+      Map<String,String>params={};
+      params['name']=name;
+      String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_PRODUCT,params: params);
+      print("qua"+rawResult);
+      if(rawResult.contains(Consts.RESPONSE_ERROR_PRODUCT_DOES_NOT_EXIST)){
+        return getProductResult.notExist;
+      }
+      else{return Product.fromJson(jsonDecode(rawResult));}
+
+    }catch(err){print(err);return null;}
+  }
+
+
 }

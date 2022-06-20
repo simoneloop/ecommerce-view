@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Uti/Consts.dart';
+import '../managers/Proxy.dart';
 
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   const AppBarWidget({
@@ -14,7 +15,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
 
-      title: Text("ECOMMERCE",style:Theme.of(context).textTheme.headline3),
+      title: Text("ECOMMERCE",style:Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white)),
       centerTitle: true,
 
       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -26,8 +27,12 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       ),
       actions: <Widget>[
         IconButton(onPressed: (){
-          Navigator.pushNamed(
-              context, 'LoginPage');
+          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){Navigator.pushNamed(context, 'UserDetailsPage');}
+          else{
+            Navigator.pushNamed(
+                context, 'LoginPage');
+          }
+
         },
           icon: Icon(Icons.person),
           color: index==1?Colors.amber:null,

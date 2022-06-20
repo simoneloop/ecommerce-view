@@ -1,7 +1,9 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/Product.dart';
-import 'package:ecommerce_view/pages/loginPage.dart';
+import 'package:ecommerce_view/pages/LoginPage.dart';
 import 'package:ecommerce_view/pages/HomePage.dart';
+import 'package:ecommerce_view/pages/RegistrationPage.dart';
+import 'package:ecommerce_view/pages/UserDetailsPage.dart';
 import 'package:flutter/material.dart';
 
 import 'entities/User.dart';
@@ -57,12 +59,15 @@ class MyApp extends StatelessWidget {
         ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.proviamoColor),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'LoginPage',
+
+      initialRoute: 'RegistrationPage',
       routes: {
         '/':(context)=>HomePage(),
 
         'HomePage':(context)=>HomePage(),
-        'LoginPage':(context)=>loginPage(),
+        'LoginPage':(context)=>LoginPage(),
+        'RegistrationPage':(context)=>RegistrationPage(),
+        "UserDetailsPage":(context)=>UserDetailsPage(),
       },
     );
   }

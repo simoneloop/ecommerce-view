@@ -1,4 +1,5 @@
 import 'package:ecommerce_view/entities/Product.dart';
+import 'package:ecommerce_view/pages/DetailsPage.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -17,7 +18,14 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
-      onTap: press,
+      onTap: (){
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailsPage(
+                  product: product,
+                )));
+      },
       child: Container(
         decoration: BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)),
         child: Column(
@@ -37,7 +45,13 @@ class ProductCard extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
-                        child: Text(product.name,style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),),
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(product.name,style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),)),
+                        ),
                       ),
                       Text(product.price.toString()+"€",style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
 

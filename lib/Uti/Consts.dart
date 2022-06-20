@@ -12,6 +12,7 @@ class Consts{
   static const String REQUEST_REFRESH_TOKEN="/users/refreshToken";
   static const String REQUEST_LOGIN="/login";
   static const String REQUEST_ADD_USER="/users/add";
+  static const String REQUEST_GET_PRODUCT="/products/getProduct";
 
   //ADMIN-REQUEST
   static const String REQUEST_GET_ALL_USERS="users/getAll";
