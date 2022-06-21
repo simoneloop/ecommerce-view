@@ -35,6 +35,11 @@ enum getProductResult{
   exist,
   notExist
 }
+enum addToCartResult{
+  added,
+  quantityUnavailable,
+  unknown
+}
 
 
 class Proxy{
@@ -195,20 +200,20 @@ class Proxy{
       return [];
     }
   }
-  Future<List<ProductInPurchase>>addToCart(String productName,int qty)async{
+  Future<addToCartResult>addToCart(String productName,int qty)async{
     try{
       Map<String,String> params={};
       params['productName']=productName;
       params['quantity']=qty.toString();
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_ADD_PRODUCT_TO_CART,params: params);
       if(rawResult.contains(Consts.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){
-        return getUserCart();
+        return addToCartResult.quantityUnavailable;
       }
       List pip=jsonDecode(rawResult);
-      return pip.map((e) => ProductInPurchase.fromJson(e)).toList();
+      return addToCartResult.added;
     }catch(err){
       print(err);
-      return [];
+      return addToCartResult.unknown;
     }
   }
   Future<List<Product>>getAllProducts()async{
@@ -254,13 +259,14 @@ class Proxy{
       Map<String,String>params={};
       params['name']=name;
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_PRODUCT,params: params);
-      print("qua"+rawResult);
       if(rawResult.contains(Consts.RESPONSE_ERROR_PRODUCT_DOES_NOT_EXIST)){
         return getProductResult.notExist;
       }
       else{return Product.fromJson(jsonDecode(rawResult));}
 
-    }catch(err){print(err);return null;}
+    }catch(err){
+      print(err);
+      return null;}
   }
 
 

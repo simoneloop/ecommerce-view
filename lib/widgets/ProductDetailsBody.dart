@@ -172,7 +172,33 @@ class _CartCounterState extends State<CartCounter> {
                             width: 2, color: Consts.kBlueColor)),
                     child: IconButton(
                       icon: Icon(Icons.add_shopping_cart),
-                      onPressed: () {Proxy.sharedProxy.addToCart(widget.product.name,numOfItems);},
+                      onPressed: () {
+                        if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){
+
+                          Proxy.sharedProxy.addToCart(widget.product.name,numOfItems).then((value) {
+                            if(value==addToCartResult.added){
+                              final snackBar=SnackBar(content: Text("prodotto aggiunto con successo"));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                            else if(value==addToCartResult.quantityUnavailable){
+                              final snackBar=SnackBar(content: Text("Non puoi aggiungere al carrello più della quantità disponibile"));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                            else{
+                              final snackBar=SnackBar(content: Text("errore sconosciuto"));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            }
+                          });
+
+
+                        }
+                        else{
+                          Navigator.pushNamed(context, "LoginPage");
+                          final snackBar=SnackBar(content: Text("Per poter aggiungere al carrello devi prima effettuare il login"));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+
+                        },
                     ),
                   ),
                   ClipRRect(

@@ -136,6 +136,10 @@ class _HomePageState extends State<HomePage> {
                                       productsList=[value];
                                     });
                                   }
+                                  else if(value==getProductResult.notExist){
+                                    final snackBar=SnackBar(content: Text("Il prodotto non esiste"));
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
                             }); /*Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);*/
                           },
                           controller: _searchController,
