@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
 import '../entities/User.dart';
 import '../managers/Proxy.dart';
+import '../widgets/PurchaseCard.dart';
 class UserDetailsPage extends StatefulWidget {
   @override
   _UserDetailsPageState createState() => _UserDetailsPageState();
@@ -66,7 +67,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 30,horizontal:20),
-                  margin: EdgeInsets.symmetric(vertical: 85,horizontal: size.width/3),
+                  margin: EdgeInsets.only(top:10,bottom:10,left: 20,right: 20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Theme.of(context).primaryColor,
@@ -96,29 +97,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                             
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Container(
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                                  child: TextButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        isModifing=true;
-                                      });
-                                    },
-                                    child: Text(
-                                      "Modifica i dettagli",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
-                                  ),
-                                ),
-                              ),
+                              CoolTextButton(gradient: Consts.kOrangeGradient, text: "Modifica i dettagli", press: (){setState(() {
+                                isModifing=true;
+                              }); })
                             ],
                           ),
                         ],
                       ),
-                      TextButton(onPressed: logOut, child: Text("LOGOUT"))
+                      CoolTextButton(gradient: Consts.kBlueGradient, text: "LOGOUT", press: (){logOut(); })
                     ],
                   ):
                   Form(
@@ -284,17 +270,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                          child: TextButton(
-                            onPressed: ValidateAndSave,
-                            child: Text(
-                              "Salva",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
-                          ),
-                        ),
+                        CoolTextButton(gradient: Consts.kOrangeGradient, text: "Salva", press: (){ValidateAndSave(); })
+                        
                       ],
                     ),
                   ),
@@ -306,7 +283,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  margin: EdgeInsets.only(bottom:10,left: 20,right: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).primaryColor,
@@ -320,7 +297,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     children: [
                       Text("Ordini effettuati",style: Theme.of(context).textTheme.headline3,),
                       Container(
-                        constraints:BoxConstraints(minWidth:size.width,minHeight: size.height/4,maxWidth: size.width,maxHeight: size.height/4),
+                        constraints:BoxConstraints(minWidth:size.width,minHeight: size.height/4,maxWidth: size.width,maxHeight: size.height),
                         child: FutureBuilder(
                             future: orders,
                             builder: (BuildContext ctx, AsyncSnapshot<List> snapshot){
@@ -331,7 +308,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                                       scrollDirection: Axis.vertical,
                                       itemCount: snapshot.data!.length,
                                       itemBuilder: (context,i){
-                                        return OrderCart(purchase:snapshot.data![i]);
+                                        return PurchaseCard(purchase:snapshot.data![i]);
                                         return Text(snapshot.data![i].purchaseTime.toString());
                                       }),);
                               }

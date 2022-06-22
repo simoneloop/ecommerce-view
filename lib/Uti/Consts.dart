@@ -68,6 +68,13 @@ class Consts{
       Color(0xFF42A5F5),
     ],
   );
+  static const LinearGradient kOrangeGradient=LinearGradient(
+    colors: <Color>[
+      Color(0xFFA1480D),
+      Color(0xFFD27919),
+      Color(0xFFF59642),
+    ],
+  );
   static const double kToolbarHeight=50;
   static const Color BRACCIALE_COLOR=Color(0xffd4b483);
   static const Color ORECCHINO_COLOR=Color(0xffccfbfe);

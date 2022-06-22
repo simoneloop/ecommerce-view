@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:ui';
 
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:ecommerce_view/widgets/ProgressHUD.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -135,22 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                          child: TextButton(
-                            onPressed: (){ValidateAndLogin();
-                              setState(() {
-                                isApiCallProcess=true;
-                              });
+                        CoolTextButton(gradient: Consts.kOrangeGradient, text: "Login", press:(){ValidateAndLogin();
+                        setState(() {
+                          isApiCallProcess=true;
+                        });
 
-                            },
-                            child: Text(
-                              "Login",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
-                          ),
-                        ),
+                        }),
+
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Row(

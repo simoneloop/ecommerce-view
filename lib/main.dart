@@ -33,22 +33,22 @@ class MyApp extends StatelessWidget {
           headline1: TextStyle(fontSize: 40,  fontWeight: FontWeight.w700,
             color: Colors.black,),
           headline2: TextStyle(
-            fontSize: 30,
+            fontSize: 35,
             fontWeight: FontWeight.w700,
             color: Colors.black,
           ),
           headline3: TextStyle(
-            fontSize: 24.0,
+            fontSize: 30,
             fontWeight: FontWeight.w700,
             color: Colors.black,
           ),
           headline4: TextStyle(
-            fontSize: 17,
+            fontSize: 25,
             fontWeight: FontWeight.normal,
             color: Colors.black,
           ),
           headline5: TextStyle(
-            fontSize: 13,
+            fontSize: 20,
             fontWeight: FontWeight.normal,
             color: Colors.black,
           ),
