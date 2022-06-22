@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:ui';
 
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:ecommerce_view/widgets/ProgressHUD.dart';
 import 'package:flutter/material.dart';
@@ -62,10 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        Text(
-                          "Login",
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
+                        CoolText(text: "Login", size: "m"),
                         SizedBox(height: 25),
                         TextFormField(
                           controller: _emailController,
@@ -74,6 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                               ? "Should be a valid email"
                               : null,
                           decoration: InputDecoration(
+                            hintStyle: Consts.smallTextStyle,
+
                               hintText: "Email",
                               errorText: _emailError,
                               enabledBorder: UnderlineInputBorder(
@@ -100,8 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                               input == null ? "Please enter a password" : null,
                           obscureText: hidePassword,
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
                               hintText: "Password",
-                              labelText: "password",
+
                               errorText: _passwordError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -136,23 +137,34 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        CoolTextButton(gradient: Consts.kOrangeGradient, text: "Login", press:(){ValidateAndLogin();
-                        setState(() {
-                          isApiCallProcess=true;
-                        });
+                        Column(
 
-                        }),
+                          children: [
+                            CoolTextButton(gradient: Consts.kOrangeGradient, text: "Login", press:(){ValidateAndLogin();
+                            setState(() {
+                              isApiCallProcess=true;
+                            });
 
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Prima volta?"),
-                              TextButton(onPressed: (){Navigator.pushNamed(context, "RegistrationPage");}, child: Text("Registrati"))
-                            ],
-                          ),
-                        )
+                            }),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Row(
+
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CoolText(text: "Prima volta?", size: "s"),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: CoolTextButton(gradient: Consts.kBlueGradient, text: "Registrati", press: (){Navigator.pushNamed(context, "RegistrationPage");},width: 130,height: 40,),
+                                  )
+
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+
+
                       ],
                     ),
                   ),

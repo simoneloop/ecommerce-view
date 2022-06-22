@@ -13,8 +13,8 @@ class CoolTextButton extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-            width: 300,
-            height: 50,
+            width:width!=null?width: 300,
+            height:height!=null?height: 50,
             decoration: BoxDecoration(
               gradient: gradient,
             ),

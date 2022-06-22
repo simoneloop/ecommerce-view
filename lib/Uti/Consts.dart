@@ -55,7 +55,21 @@ class Consts{
   static const String TYPO_ORECCHINO="orecchino";
 
   static const String REQUIRED_LOGIN_EXCEPTION="Devi prima effettuare il login";
-
+  static const TextStyle smallTextStyle=TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
+  static const TextStyle mediumTextStyle=TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+    color: Colors.black,
+  );
+  static const TextStyle bigTextStyle=TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.w700,
+    color: Colors.black,
+  );
   static const bool TO_VALIDATE=false;
 
 
