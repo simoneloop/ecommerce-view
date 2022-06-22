@@ -31,13 +31,24 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
           else{
             Navigator.pushNamed(
                 context, 'LoginPage');
+            final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
 
         },
           icon: Icon(Icons.person),
           color: index==1?Colors.amber:null,
         ),
-        IconButton(onPressed: (){},
+        IconButton(onPressed: (){
+          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){Navigator.pushNamed(context, 'UserCartPage');}
+          else{
+
+            Navigator.pushNamed(
+                context, 'LoginPage');
+            final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
             icon: Icon(Icons.shopping_cart),
             color: index==2?Colors.amber:null,
 

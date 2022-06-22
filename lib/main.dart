@@ -3,6 +3,7 @@ import 'package:ecommerce_view/entities/Product.dart';
 import 'package:ecommerce_view/pages/LoginPage.dart';
 import 'package:ecommerce_view/pages/HomePage.dart';
 import 'package:ecommerce_view/pages/RegistrationPage.dart';
+import 'package:ecommerce_view/pages/UserCartPage.dart';
 import 'package:ecommerce_view/pages/UserDetailsPage.dart';
 import 'package:flutter/material.dart';
 
@@ -60,14 +61,15 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: 'RegistrationPage',
+      initialRoute: 'UserCartPage',
       routes: {
         '/':(context)=>HomePage(),
 
         'HomePage':(context)=>HomePage(),
         'LoginPage':(context)=>LoginPage(),
         'RegistrationPage':(context)=>RegistrationPage(),
-        "UserDetailsPage":(context)=>UserDetailsPage(),
+        'UserDetailsPage':(context)=>UserDetailsPage(),
+        'UserCartPage':(context)=>UserCartPage(),
       },
     );
   }

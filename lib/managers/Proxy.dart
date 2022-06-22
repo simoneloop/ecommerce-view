@@ -38,7 +38,13 @@ enum getProductResult{
 enum addToCartResult{
   added,
   quantityUnavailable,
+  setted,
   unknown
+}
+enum HttpResult{
+  done,
+  unknow,
+  notAmountException,
 }
 
 
@@ -178,15 +184,15 @@ class Proxy{
       return [];
     }
   }
-  Future<bool> buyMyCart()async{
+  Future<HttpResult> buyMyCart()async{
     try{
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_BUY_MY_CART);
-      if(!rawResult.contains(Consts.RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION)){return true;}
-      else{return false;}
+      if(!rawResult.contains(Consts.RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION)){return HttpResult.done;}
+      else{return HttpResult.notAmountException;}
     }
     catch(err){
       print(err);
-      return false;
+      return HttpResult.unknow;
     }
   }
   Future<List<ProductInPurchase>> getUserCart()async{
@@ -211,6 +217,22 @@ class Proxy{
       }
       List pip=jsonDecode(rawResult);
       return addToCartResult.added;
+    }catch(err){
+      print(err);
+      return addToCartResult.unknown;
+    }
+  }
+  Future<addToCartResult>setQuantity(String productName,int qty)async{
+    try{
+      Map<String,String> params={};
+      params['productName']=productName;
+      params['quantity']=qty.toString();
+      String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_SET_QUANTITY_TO_CART,params: params);
+      if(rawResult.contains(Consts.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){
+        return addToCartResult.quantityUnavailable;
+      }
+      List pip=jsonDecode(rawResult);
+      return addToCartResult.setted;
     }catch(err){
       print(err);
       return addToCartResult.unknown;

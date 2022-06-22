@@ -29,6 +29,7 @@ class Consts{
   static const String REQUEST_GET_MY_ORDERS="/purchase/getMyOrders";
   static const String REQUEST_GET_MY_DETAILS="/users/getMyDetails";
   static const String REQUEST_MODIFY_MY_DETAILS="/users/modifyMyDetails";
+  static const String REQUEST_SET_QUANTITY_TO_CART="/users/setQuantityToCart";
 
   //ADMIN/USER-REQUEST
   static const String REQUEST_GET_HOT_PRODUCTS="/products/getHotProduct";
@@ -52,6 +53,8 @@ class Consts{
   static const String TYPO_BRACCIALE="bracciale";
   static const String TYPO_COLLANA="collana";
   static const String TYPO_ORECCHINO="orecchino";
+
+  static const String REQUIRED_LOGIN_EXCEPTION="Devi prima effettuare il login";
 
   static const bool TO_VALIDATE=false;
 

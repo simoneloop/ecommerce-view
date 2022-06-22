@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -35,7 +39,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   bool isModifing=false;
   dynamic u=Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS);
   User user=new User(firstName: "simo", lastName: "prova",phoneNumber: "3482942524",email: "simo@",address: "via g bruno",);
-
+  late Future<List<Purchase>> orders;
   @override
   void initState() {
 
@@ -44,7 +48,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
         Navigator.pushNamed(context, "LoginPage");
       });
     }
-
+    orders=Proxy.sharedProxy.getMyOrders();
     super.initState();
 
   }
@@ -88,21 +92,26 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           SizedBox(
                             height: 30,
                           ),
-                          Row(mainAxisAlignment: MainAxisAlignment.center,
+                          Row(
+                            
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                                child: TextButton(
-                                  onPressed: (){
-                                    setState(() {
-                                      isModifing=true;
-                                    });
-                                  },
-                                  child: Text(
-                                    "Modifica i dettagli",
-                                    style: TextStyle(color: Colors.white),
+                              FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                                  child: TextButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        isModifing=true;
+                                      });
+                                    },
+                                    child: Text(
+                                      "Modifica i dettagli",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
                                   ),
-                                  style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
                                 ),
                               ),
                             ],
@@ -291,6 +300,50 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                   ),
                 )
               ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Theme.of(context).primaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Theme.of(context).hintColor.withOpacity(0.2),
+                            offset: Offset(0, 10),
+                            blurRadius: 20)
+                      ]),
+                  child:Column(
+                    children: [
+                      Text("Ordini effettuati",style: Theme.of(context).textTheme.headline3,),
+                      Container(
+                        constraints:BoxConstraints(minWidth:size.width,minHeight: size.height/4,maxWidth: size.width,maxHeight: size.height/4),
+                        child: FutureBuilder(
+                            future: orders,
+                            builder: (BuildContext ctx, AsyncSnapshot<List> snapshot){
+                              if(snapshot.connectionState==ConnectionState.done && snapshot.hasData){
+                                return ScrollConfiguration(behavior: ScrollConfiguration.of(context).copyWith(
+                                    dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context,i){
+                                        return OrderCart(purchase:snapshot.data![i]);
+                                        return Text(snapshot.data![i].purchaseTime.toString());
+                                      }),);
+                              }
+                              else{
+                                return CircularProgressIndicator();
+                              }
+                            }),
+                      )
+                    ],
+                  ),
+                )
+              ],
             )
           ],
         ),
@@ -358,7 +411,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   }
   void ValidateAndSave(){
     _canRegister=true;
-    if(Consts.TO_VALIDATE){
+    //TODO add Consts.toValidate
+    if(true){
       setState(() {
         Validate();
       });
@@ -396,11 +450,11 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 }
 class UserDetailsForm{
-  late String name;
-  late String lastName;
+  dynamic name;
+  dynamic lastName;
 
-  late String phone;
-  late String email;
-  late String address;
+  dynamic phone;
+  dynamic email;
+  dynamic address;
 
 }

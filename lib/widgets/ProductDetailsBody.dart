@@ -194,7 +194,7 @@ class _CartCounterState extends State<CartCounter> {
                         }
                         else{
                           Navigator.pushNamed(context, "LoginPage");
-                          final snackBar=SnackBar(content: Text("Per poter aggiungere al carrello devi prima effettuare il login"));
+                          final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
 
