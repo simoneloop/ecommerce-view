@@ -63,6 +63,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
         child: Column(
           children: [
             Stack(
+
               children: [
                 Container(
                   width: double.infinity,
@@ -79,32 +80,43 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     ]
                   ),
                   child: !isModifing?Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 50),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-                          u!=null?Text("Nome: "+u.firstName,style: Theme.of(context).textTheme.headline4,):Container(),
-                          u!=null?Text("Cognome: "+u.lastName,style: Theme.of(context).textTheme.headline4,):Container(),
-                          u!=null?Text("Email: "+u.email,style: Theme.of(context).textTheme.headline4,):Container(),
-                          u!=null?Text("Numero: "+u.phoneNumber,style: Theme.of(context).textTheme.headline4,):Container(),
-                          u!=null?Text("Indirizzo: "+u.address,style: Theme.of(context).textTheme.headline4,):Container(),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CoolTextButton(gradient: Consts.kOrangeGradient, text: "Modifica i dettagli", press: (){setState(() {
-                                isModifing=true;
-                              }); })
-                            ],
+                                u!=null?Text("Nome: "+u.firstName,style: Theme.of(context).textTheme.headline4,):Container(),
+                                u!=null?Text("Cognome: "+u.lastName,style: Theme.of(context).textTheme.headline4,):Container(),
+                                u!=null?Text("Email: "+u.email,style: Theme.of(context).textTheme.headline4,):Container(),
+                                u!=null?Text("Numero: "+u.phoneNumber,style: Theme.of(context).textTheme.headline4,):Container(),
+                                u!=null?Text("Indirizzo: "+u.address,style: Theme.of(context).textTheme.headline4,):Container(),
+                                SizedBox(
+                                  height: 30,
+                                ),
+
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      CoolTextButton(gradient: Consts.kBlueGradient, text: "LOGOUT", press: (){logOut(); })
+                      Column(
+
+                        children: [
+                          CoolTextButton(gradient: Consts.kOrangeGradient, text: "Modifica i dettagli", press: (){setState(() {
+                            isModifing=true;
+                          }); }),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 40),
+                            child: CoolTextButton(gradient: Consts.kBlueGradient, text: "LOGOUT", press: (){logOut(); }),
+                          ),
+                        ],
+                      )
                     ],
                   ):
                   Form(
@@ -127,6 +139,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
+
                               hintText: u.firstName,
                               errorText: _nameError,
                               enabledBorder: UnderlineInputBorder(
@@ -155,6 +169,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
+
                               hintText: u.lastName,
                               errorText: _lastNameError,
                               enabledBorder: UnderlineInputBorder(
@@ -182,6 +198,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           keyboardType: TextInputType.phone,
 
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
+
                               hintText: u.phoneNumber,
                               errorText: _phoneError,
                               enabledBorder: UnderlineInputBorder(
@@ -210,6 +228,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
+
                               hintText: u.address,
                               errorText: _addressError,
                               enabledBorder: UnderlineInputBorder(
@@ -246,6 +266,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               ? "Should be a valid email"
                               : null,
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
+
                               hintText: u.email,
                               errorText: _emailError,
                               enabledBorder: UnderlineInputBorder(
@@ -271,7 +293,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           height: 30,
                         ),
                         CoolTextButton(gradient: Consts.kOrangeGradient, text: "Salva", press: (){ValidateAndSave(); })
-                        
+
                       ],
                     ),
                   ),

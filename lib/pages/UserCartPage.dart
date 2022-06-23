@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/ProductInPurchase.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/material.dart';
 
 import '../managers/Proxy.dart';
@@ -127,45 +128,34 @@ class _UserCartPageState extends State<UserCartPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("totale: $totale",style: Theme.of(context).textTheme.headline3,),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                              child: Container(
-                                width: 150,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    gradient: Consts.kBlueGradient,
-                                  ),
-                                  child: TextButton(onPressed: (){
-                                    userCart.then((value) {
-                                      if(value.length>0){
-                                        Proxy.sharedProxy.buyMyCart().then((value) {
-                                          if(value==HttpResult.done){
-                                            final snackBar=SnackBar(content: Text("Pagamento avvenuto con successo"));
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                            cartModified();
-                                          }else if(value==HttpResult.notAmountException){
-                                            final snackBar=SnackBar(content: Text("Pagamento rifiutato, probabilmente non abbastanza credito"));
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }
-                                          else{
-                                            final snackBar=SnackBar(content: Text("Problema sconosciuto"));
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                            cartModified();
-                                          }
+                          CoolTextButton(text: "Compra tutto",gradient: Consts.kBlueGradient,press:  (){
+                            userCart.then((value) {
+                              if(value.length>0){
+                                Proxy.sharedProxy.buyMyCart().then((value) {
+                                  if(value==HttpResult.done){
+                                    final snackBar=SnackBar(content: Text("Pagamento avvenuto con successo"));
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    cartModified();
+                                  }else if(value==HttpResult.notAmountException){
+                                    final snackBar=SnackBar(content: Text("Pagamento rifiutato, probabilmente non abbastanza credito"));
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  }
+                                  else{
+                                    final snackBar=SnackBar(content: Text("Problema sconosciuto"));
+                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    cartModified();
+                                  }
 
-                                        });
-                                      }
-                                      else{
-                                        final snackBar=SnackBar(content: Text("Carrello vuoto"));
-                                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                      }
-                                    });
+                                });
+                              }
+                              else{
+                                final snackBar=SnackBar(content: Text("Carrello vuoto"));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
 
 
-                                  }, child:Text("Compra tutto",style: Theme.of(context)
-                                      .textTheme
-                                      .headline4
-                                      ?.copyWith(color: Colors.white,fontWeight: FontWeight.bold),) )))
+                          },)
                         ],
                       ),
                     )

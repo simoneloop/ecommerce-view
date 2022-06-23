@@ -1,5 +1,7 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/managers/Proxy.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
+import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,39 +36,14 @@ class ProductDetailsBody extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        "over",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            ?.copyWith(color: Colors.white),
-                      ),
-                      Text(
-                        product.name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline3
-                            ?.copyWith(color: Colors.white),
-                      ),
+
+                      CoolText(text:"${product.name}", size: "m",color: Colors.white,),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: "Prezzo\n",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    ?.copyWith(color: Colors.white)),
-                            TextSpan(
-                                text: "${product.price}€",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3
-                                    ?.copyWith(color: Colors.white))
-                          ])),
+                          CoolText(text:"Prezzo\n${product.price}€", size: "m",color: Colors.white,),
+
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: ClipRRect(
@@ -74,17 +51,14 @@ class ProductDetailsBody extends StatelessWidget {
                                 child: Container(
                                   child: Image.network(
                                       "https://picsum.photos/300"),
-                                  constraints: BoxConstraints(maxHeight: 200),
+                                  /*constraints: BoxConstraints(maxHeight: 200),*/
                                 )),
                           )
                         ],
                       ),
                       Padding(
                           padding: EdgeInsets.only(top:10,bottom: 30,left: 10,right:10),
-                          child: Text(
-                            product.description,
-                            style: Theme.of(context).textTheme.headline3,
-                          )),
+                          child: CoolText(text: product.description, size: 'm',)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -210,16 +184,31 @@ class _CartCounterState extends State<CartCounter> {
 
                             gradient: Consts.kBlueGradient
                         ),
-                        child: TextButton(
-                          child: Text(
-                            "BUY NOW",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline3
-                                ?.copyWith(color: Colors.white,fontWeight: FontWeight.bold),
-                          ),
-                          onPressed: () {},
-                        ),
+                        child: CoolTextButton(text: 'Compra ora',press: (){
+
+                          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){
+
+                            Proxy.sharedProxy.setQuantity(widget.product.name,numOfItems).then((value) {
+                              if(value==addToCartResult.setted){
+                                Navigator.pushNamed(context, "UserCartPage");
+                              }
+                              else if(value==addToCartResult.quantityUnavailable){
+                                final snackBar=SnackBar(content: Text("Non puoi aggiungere al carrello più della quantità disponibile"));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                              else{
+                                final snackBar=SnackBar(content: Text("errore sconosciuto"));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }
+                            });
+
+
+                          }
+                          else{
+                            Navigator.pushNamed(context, "LoginPage");
+                            final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }},gradient: Consts.kBlueGradient,),
                       ),
                     ),
                   )

@@ -1,8 +1,10 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:flutter/material.dart';
 import '../entities/User.dart';
 import '../managers/Proxy.dart';
+import '../widgets/CoolTextButton.dart';
 import '../widgets/ProgressHUD.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -67,7 +69,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        Text("Registrati",style: Theme.of(context).textTheme.headline2,),
+                        CoolText(text: "Registrati",size: "m",),
                         SizedBox(height: 25,),
 
 
@@ -79,6 +81,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                           decoration: InputDecoration(
                               hintText: "Nome",
+                              hintStyle: Consts.smallTextStyle,
                               errorText: _nameError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -107,6 +110,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                           decoration: InputDecoration(
                               hintText: "Cognome",
+                              hintStyle: Consts.smallTextStyle,
                               errorText: _lastNameError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -134,6 +138,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                           decoration: InputDecoration(
                               hintText: "Numero di cellulare",
+                              hintStyle: Consts.smallTextStyle,
                               errorText: _phoneError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -162,6 +167,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                           decoration: InputDecoration(
                               hintText: "Indirizzo",
+                              hintStyle: Consts.smallTextStyle,
                               errorText: _addressError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -198,6 +204,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               : null,
                           decoration: InputDecoration(
                               hintText: "Email",
+                              hintStyle: Consts.smallTextStyle,
                               errorText: _emailError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -225,7 +232,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           obscureText: hidePassword,
                           decoration: InputDecoration(
                               hintText: "Password",
-                              labelText: "Password",
+                              hintStyle: Consts.smallTextStyle,
                               errorText: _passwordError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -264,8 +271,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           input == null ? "Confirm password!" : null,
                           obscureText: hidePassword,
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
                               hintText: "Conferma password",
-                              labelText: "Conferma password",
+
                               errorText: _passwordConfirmationError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -300,28 +308,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Container(
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                          child: TextButton(
-                            onPressed: (){
-                              ValidateAndRegister();
-
-
-                            },
-                            child: Text(
-                              "Crea un account",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary)),
-                          ),
-                        ),
+                        CoolTextButton(gradient: Consts.kOrangeGradient, text: "Crea un account", press: (){
+                          ValidateAndRegister();},width: 200,height: 40,),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Hai già un account?"),
-                              TextButton(onPressed: (){Navigator.pushNamed(context, "LoginPage");}, child: Text("Accedi"))
+                              CoolText(text: "Hai già un account?", size: "s"),
+                              CoolTextButton(gradient: Consts.kBlueGradient, text: "Accedi", press: (){Navigator.pushNamed(context, "LoginPage");},width: 100,height: 40,),
+
                             ],
                           ),
                         )

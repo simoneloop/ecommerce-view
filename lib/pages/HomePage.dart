@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -59,10 +60,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
-                child: Text(
-              "Prodotti in vetrina",
-              style: Theme.of(context).textTheme.headline3,
-            )),
+                child:CoolText(text: "Prodotti in vetrina",size: "m",)),
           ),
           /*Container(
               constraints: BoxConstraints(maxWidth: 150, maxHeight: 150),
@@ -145,6 +143,8 @@ class _HomePageState extends State<HomePage> {
                           controller: _searchController,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
+                              hintStyle: Consts.smallTextStyle,
+
                               hintText: "Cerca prodotto per nome",
                               errorText:
                                   _searchError != null ? _searchError : null,
@@ -191,10 +191,7 @@ class _HomePageState extends State<HomePage> {
                                     });
                           });
                         }),
-                    Text(
-                      "Dal più economico",
-                      style: Theme.of(context).textTheme.headline4,
-                    )
+                    CoolText(text: "Dal più economico", size: "s")
                   ],
                 ),
                 Row(
@@ -220,10 +217,7 @@ class _HomePageState extends State<HomePage> {
                             /*_radioValue=value;*/
                           });
                         }),
-                    Text(
-                      "Dal più caro",
-                      style: Theme.of(context).textTheme.headline4,
-                    )
+                    CoolText(text: "Dal più caro", size: "s")
                   ],
                 )
               ],
