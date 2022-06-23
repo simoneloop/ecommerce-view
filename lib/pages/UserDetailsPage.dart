@@ -105,17 +105,19 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                           ),
                         ],
                       ),
-                      Column(
+                      Expanded(
+                        child: Column(
 
-                        children: [
-                          CoolTextButton(gradient: Consts.kOrangeGradient, text: "Modifica i dettagli", press: (){setState(() {
-                            isModifing=true;
-                          }); }),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 40),
-                            child: CoolTextButton(gradient: Consts.kBlueGradient, text: "LOGOUT", press: (){logOut(); }),
-                          ),
-                        ],
+                          children: [
+                            CoolTextButton(gradient: Consts.kOrangeGradient, text: "Modifica i dettagli", press: (){setState(() {
+                              isModifing=true;
+                            }); }),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 40),
+                              child: CoolTextButton(gradient: Consts.kBlueGradient, text: "LOGOUT", press: (){logOut(); }),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ):
