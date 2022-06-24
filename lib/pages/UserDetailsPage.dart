@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ecommerce_view/Uti/Support.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
@@ -425,18 +426,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             u=Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS);
             isModifing=false;
           });
-          final snackBar = SnackBar(
-              content: Text("Modificato con successo"));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+          showCoolSnackbar(context, "Modificato con successo", "ok");
         }
         else{
           setState(() {
             isModifing=false;
           });
-          final snackBar = SnackBar(
-              content: Text("Errore nella modifica"));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          showCoolSnackbar(context, "Errore nella modifica", "err");
+
         }
       });
     }

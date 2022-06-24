@@ -6,6 +6,7 @@ import 'package:ecommerce_view/widgets/AppBarWidget.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/material.dart';
 
+import '../Uti/Support.dart';
 import '../managers/Proxy.dart';
 import '../widgets/PIPCard.dart';
 class UserCartPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _UserCartPageState extends State<UserCartPage> {
       });
     }*/
     super.initState();
-    userCart=Proxy.sharedProxy.getUserCart();
+    /*userCart=Proxy.sharedProxy.getUserCart();*/
     cartModified();
     /*userCart.then((value) {
       List<ProductInPurchase> listPip=value;
@@ -112,7 +113,7 @@ class _UserCartPageState extends State<UserCartPage> {
                   children: [
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -130,27 +131,40 @@ class _UserCartPageState extends State<UserCartPage> {
                           Text("totale: $totale",style: Theme.of(context).textTheme.headline3,),
                           CoolTextButton(text: "Compra tutto",gradient: Consts.kBlueGradient,press:  (){
                             userCart.then((value) {
+                              cartModified();
                               if(value.length>0){
                                 Proxy.sharedProxy.buyMyCart().then((value) {
+
                                   if(value==HttpResult.done){
-                                    final snackBar=SnackBar(content: Text("Pagamento avvenuto con successo"));
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                     cartModified();
+                                    showCoolSnackbar(context,"Pagamento avvenuto con successo","ok");
+
                                   }else if(value==HttpResult.notAmountException){
-                                    final snackBar=SnackBar(content: Text("Pagamento rifiutato, probabilmente non abbastanza credito"));
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    showCoolSnackbar(context,"Pagamento rifiutato, probabilmente non abbastanza credito","err");
+                                  }
+                                  else if(value==HttpResult.quantityUnavailable){
+                                    userCart=Proxy.sharedProxy.getUserCart();
+                                    userCart.then((value) {
+                                      List<ProductInPurchase> listPip=value;
+                                      setState(() {
+                                        totale=0.0;
+                                        listPip.forEach((element) {
+                                        totale+=element.buyed.price*element.quantity;
+                                        totale=double.parse((totale).toStringAsFixed(2));
+                                        });
+                                      });
+                                    });
+                                    showCoolSnackbar(context,"Acquisto rifiutato, probabilmente è cambiata la quantità disponibile del prodotto","err");
+
                                   }
                                   else{
-                                    final snackBar=SnackBar(content: Text("Problema sconosciuto"));
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                    cartModified();
+                                    showCoolSnackbar(context,"Problema sconosciuto","err");
                                   }
 
                                 });
                               }
                               else{
-                                final snackBar=SnackBar(content: Text("Carrello vuoto"));
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                showCoolSnackbar(context,"Carrello vuoto","err");
                               }
                             });
 
@@ -168,19 +182,6 @@ class _UserCartPageState extends State<UserCartPage> {
         ),
       ),
     );
-  }
-  double calcolaTotale(){
-    totale=0.0;
-    if(listPip!=null){
-      setState(() {
-        listPip.forEach((element) {
-          totale+=element.buyed.price*element.quantity;
-          totale=double.parse((totale).toStringAsFixed(2));
-        });
-      });
-
-    }
-    return totale;
   }
   void cartModified(){
 

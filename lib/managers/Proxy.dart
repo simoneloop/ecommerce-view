@@ -45,6 +45,7 @@ enum HttpResult{
   done,
   unknow,
   notAmountException,
+  quantityUnavailable
 }
 
 
@@ -187,8 +188,9 @@ class Proxy{
   Future<HttpResult> buyMyCart()async{
     try{
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_BUY_MY_CART);
-      if(!rawResult.contains(Consts.RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION)){return HttpResult.done;}
-      else{return HttpResult.notAmountException;}
+      if(rawResult.contains(Consts.RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION)){return HttpResult.notAmountException;}
+      else if(rawResult.contains(Consts.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){return HttpResult.quantityUnavailable;}
+      else{return HttpResult.done;}
     }
     catch(err){
       print(err);

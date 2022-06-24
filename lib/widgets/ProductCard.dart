@@ -27,13 +27,13 @@ class ProductCard extends StatelessWidget {
                 )));
       },
       child: Container(
-        decoration: BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)),
+        decoration: product.quantity>0?BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)):BoxDecoration(gradient: Consts.kOrangeGradient,borderRadius: BorderRadius.circular(16)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
-                child: Image.network("https://picsum.photos/300")),
+                child: product.urlPropic!=null?Image.network(product.urlPropic):Image.network("https://picsum.photos/300")),
             Padding(
               padding: const EdgeInsets.only(left: 8.0,top: 8,bottom: 8),
               child: Row(

@@ -1,3 +1,4 @@
+import 'package:ecommerce_view/Uti/Support.dart';
 import 'package:flutter/material.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
@@ -15,7 +16,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
 
-      title: Text("ECOMMERCE",style:Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white)),
+      title: Text("I Gioielli e l'arte",style:Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white)),
       centerTitle: true,
 
       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -31,8 +32,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
           else{
             Navigator.pushNamed(
                 context, 'LoginPage');
-            final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
           }
 
         },
@@ -45,8 +45,7 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
 
             Navigator.pushNamed(
                 context, 'LoginPage');
-            final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
           }
         },
             icon: Icon(Icons.shopping_cart),

@@ -5,6 +5,7 @@ import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../Uti/Support.dart';
 import '../entities/Product.dart';
 
 class ProductDetailsBody extends StatelessWidget {
@@ -23,7 +24,7 @@ class ProductDetailsBody extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(top: size.height * 0.3),
+                  margin: EdgeInsets.only(top: size.height * 0.45),
                   height: 500,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -42,16 +43,17 @@ class ProductDetailsBody extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CoolText(text:"Prezzo\n${product.price}€", size: "m",color: Colors.white,),
-
+                          CoolText(text:"Prezzo\n${product.price}€\nDisponibilità\n${product.quantity}pz", size: "m",color: Colors.white,),
+                          /*CoolText(text: "Disponibile: ${product.quantity}pz", size: "m",color: Colors.white,),*/
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
-                                child: Container(
-                                  child: Image.network(
-                                      "https://picsum.photos/300"),
-                                  /*constraints: BoxConstraints(maxHeight: 200),*/
+                                child: InteractiveViewer(
+                                  child: Container(
+                                    child: product.urlPropic!=null?Image.network(product.urlPropic):Image.network("https://picsum.photos/300"),
+                                    /*constraints: BoxConstraints(maxHeight: 200),*/
+                                  ),
                                 )),
                           )
                         ],
@@ -130,6 +132,7 @@ class _CartCounterState extends State<CartCounter> {
                         });
                       }
                     }),
+
               ],
             ),
             Padding(
@@ -151,16 +154,15 @@ class _CartCounterState extends State<CartCounter> {
 
                           Proxy.sharedProxy.addToCart(widget.product.name,numOfItems).then((value) {
                             if(value==addToCartResult.added){
-                              final snackBar=SnackBar(content: Text("prodotto aggiunto con successo"));
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              showCoolSnackbar(context,"prodotto aggiunto con successo","ok");
+
                             }
                             else if(value==addToCartResult.quantityUnavailable){
-                              final snackBar=SnackBar(content: Text("Non puoi aggiungere al carrello più della quantità disponibile"));
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              showCoolSnackbar(context,"Non puoi aggiungere al carrello più della quantità disponibile","err");
+
                             }
                             else{
-                              final snackBar=SnackBar(content: Text("errore sconosciuto"));
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              showCoolSnackbar(context,"errore sconosciuto","err");
                             }
                           });
 
@@ -168,8 +170,8 @@ class _CartCounterState extends State<CartCounter> {
                         }
                         else{
                           Navigator.pushNamed(context, "LoginPage");
-                          final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          showCoolSnackbar(context,Consts.REQUIRED_LOGIN_EXCEPTION,"err");
+
                         }
 
                         },
@@ -193,12 +195,11 @@ class _CartCounterState extends State<CartCounter> {
                                 Navigator.pushNamed(context, "UserCartPage");
                               }
                               else if(value==addToCartResult.quantityUnavailable){
-                                final snackBar=SnackBar(content: Text("Non puoi aggiungere al carrello più della quantità disponibile"));
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                showCoolSnackbar(context,"Non puoi aggiungere al carrello più della quantità disponibile","err");
+
                               }
                               else{
-                                final snackBar=SnackBar(content: Text("errore sconosciuto"));
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                showCoolSnackbar(context,"errore sconosciuto","err");
                               }
                             });
 
@@ -206,8 +207,7 @@ class _CartCounterState extends State<CartCounter> {
                           }
                           else{
                             Navigator.pushNamed(context, "LoginPage");
-                            final snackBar=SnackBar(content: Text(Consts.REQUIRED_LOGIN_EXCEPTION));
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            showCoolSnackbar(context,Consts.REQUIRED_LOGIN_EXCEPTION,"err");
                           }},gradient: Consts.kBlueGradient,),
                       ),
                     ),

@@ -35,7 +35,7 @@ class _PurchaseCardState extends State<PurchaseCard> {
               children: [
                 ClipRRect(
                     borderRadius:BorderRadius.only(topLeft: Radius.circular(16),bottomLeft: Radius.circular(16)),
-                    child: Image.network("https://picsum.photos/300")),
+                    child: widget.purchase.buyed.urlPropic!=null?Image.network(widget.purchase.buyed.urlPropic):Image.network("https://picsum.photos/300")),
                 Container(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,

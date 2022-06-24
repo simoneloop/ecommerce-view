@@ -2,6 +2,7 @@ import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
 import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:flutter/material.dart';
+import '../Uti/Support.dart';
 import '../entities/User.dart';
 import '../managers/Proxy.dart';
 import '../widgets/CoolTextButton.dart';
@@ -405,21 +406,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
         if(value==RegistrationResult.registered){
           Proxy.sharedProxy.logIn(_emailController.text, _passwordController.text).then((value) {
             if(value==LogInResult.logged) {
-              final snackBar = SnackBar(
-                  content: Text("Registrato con successo"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              showCoolSnackbar(context,"Registrato con successo","ok");
               Navigator.pushNamed(
                   context, 'HomePage');
             }
           });
         }
         else if(value==RegistrationResult.emailAlreadyExist){
-          final snackBar=SnackBar(content: Text("Email già esistente"));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          showCoolSnackbar(context,"Email già esistente","err");
+
+
         }
         else if(value==RegistrationResult.unknown){
-          final snackBar=SnackBar(content: Text("errore nella registrazione"));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          showCoolSnackbar(context,"errore nella registrazione","err");
         }
         setState(() {
           isApiCallProcess=false;

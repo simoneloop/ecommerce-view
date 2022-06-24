@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:ui';
 
+import 'package:ecommerce_view/Uti/Support.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
 import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
@@ -210,14 +211,13 @@ class _LoginPageState extends State<LoginPage> {
           .then((value){
             if(value==LogInResult.logged){
               print(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS));
-              final snackBar=SnackBar(content: Text("Login Successfull"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
               Navigator.pushNamed(
                   context, 'HomePage');
+              showCoolSnackbar(context, "Benvenuto ${Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS).firstName}", "ok");
+
             }
             else{
-              final snackBar=SnackBar(content: Text("Error in Login"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              showCoolSnackbar(context, "errore", "err");
               print(LogInResult.error);
 
 

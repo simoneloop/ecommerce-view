@@ -5,6 +5,7 @@ import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
+import '../Uti/Support.dart';
 import '../entities/Product.dart';
 import '../managers/Proxy.dart';
 import '../widgets/Categories.dart';
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
       price: 3.14,
       typo: 'bracciale',
       hot: true);
-  dynamic typoSelected = "bracciale";
+  dynamic typoSelected = null;
   List<Product> _searchedProducts = [];
   TextEditingController _searchController = TextEditingController();
   String? _searchError = null;
@@ -135,8 +136,8 @@ class _HomePageState extends State<HomePage> {
                                     });
                                   }
                                   else if(value==getProductResult.notExist){
-                                    final snackBar=SnackBar(content: Text("Il prodotto non esiste"));
-                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                    showCoolSnackbar(context,"Il prodotto non esiste","err");
+
                                   }
                             }); /*Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);*/
                           },
