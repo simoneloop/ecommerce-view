@@ -43,8 +43,14 @@ class ProductDetailsBody extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CoolText(text:"Prezzo\n${product.price}€\nDisponibilità\n${product.quantity}pz", size: "m",color: Colors.white,),
-                          /*CoolText(text: "Disponibile: ${product.quantity}pz", size: "m",color: Colors.white,),*/
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CoolText(text:"Prezzo\n${product.price}€", size: "m",color: Colors.white,),
+                              CoolText(text: "Disponibilità: ${product.quantity}pz", size: "m",color: Colors.white,),
+
+                            ],
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: ClipRRect(
@@ -152,8 +158,8 @@ class _CartCounterState extends State<CartCounter> {
                       onPressed: () {
                         if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){
 
-                          Proxy.sharedProxy.addToCart(widget.product.name,numOfItems).then((value) {
-                            if(value==addToCartResult.added){
+                          Proxy.sharedProxy.setQuantity(widget.product.name,numOfItems).then((value) {
+                            if(value==addToCartResult.setted){
                               showCoolSnackbar(context,"prodotto aggiunto con successo","ok");
 
                             }

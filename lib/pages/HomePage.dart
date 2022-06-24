@@ -63,108 +63,104 @@ class _HomePageState extends State<HomePage> {
             child: Center(
                 child:CoolText(text: "Prodotti in vetrina",size: "m",)),
           ),
-          /*Container(
-              constraints: BoxConstraints(maxWidth: 150, maxHeight: 150),
-              child: FittedBox(
-                  fit: BoxFit.fill,
-                  child: ProductCard(
-                    product: pr,
-                    press: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailsPage(
-                                    product: pr,
-                                  )))
-                    },
-                    actions: [
-                      IconButton(
-                          onPressed: () {}, icon: Icon(Icons.add_shopping_cart,color: Colors.white,size: 20,))
-                    ],
-                  ))),*/
           homeHotProducts(data: hots),
+          Container(
+              margin: EdgeInsets.only(top: 40),
+              child: CoolText(text: "Cerca il prodotto perfetto per te", size: "m")),
           Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 15),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border(top: BorderSide(color: Consts.kBlueColor))),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: FractionallySizedBox(
-                      widthFactor: 1,
-                      child: Container(
-                          width: 1000,
-                          child: Categories(
-                              callback: (val){
-                                if (val!="all") {
-                                  typoSelected = val;}
-                                else{
-                                  typoSelected=null;}
-                                setState(() {
-                                  Proxy.sharedProxy
-                                      .getProductPageable(
-                                      order: _radioValue,
-                                      page: 0,
-                                      pageSize: 10,
-                                      typo: typoSelected)
-                                      .then((value) => {
-                                    setState(() {
-                                      productsList = value;
-                                    })
-                                  });
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: FractionallySizedBox(
+                    widthFactor: 1,
+                    child: Container(
+                        width: 1000,
+                        child: Categories(
+                            callback: (val){
+                              if (val!="all") {
+                                typoSelected = val;}
+                              else{
+                                typoSelected=null;}
+                              setState(() {
+                                Proxy.sharedProxy
+                                    .getProductPageable(
+                                    order: _radioValue,
+                                    page: 0,
+                                    pageSize: 10,
+                                    typo: typoSelected)
+                                    .then((value) => {
+                                  setState(() {
+                                    productsList = value;
+                                  })
                                 });
+                              });
 
-                              })),
-                    ),
+                            })),
                   ),
-                  Flexible(
-                    child: FractionallySizedBox(
-                      widthFactor: 0.5,
-                      child: Container(
-                        width: 200,
-                        child: TextFormField(
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (value) {
-                            Proxy.sharedProxy.getProductByName(
-                                value).then((value) {
-                                  if(value!=getProductResult.notExist){
-                                    setState(() {
-                                      productsList=[value];
-                                    });
-                                  }
-                                  else if(value==getProductResult.notExist){
-                                    showCoolSnackbar(context,"Il prodotto non esiste","err");
+                ),
+                Flexible(
+                  child: FractionallySizedBox(
+                    widthFactor: 0.5,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          /*padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),*/
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Theme.of(context).primaryColor,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Theme.of(context).hintColor.withOpacity(0.2),
+                                    offset: Offset(0, 10),
+                                    blurRadius: 20)
+                              ]),
 
-                                  }
-                            }); /*Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);*/
-                          },
-                          controller: _searchController,
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                          child: TextFormField(
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (value) {
+                              Proxy.sharedProxy.getProductByName(
+                                  value).then((value) {
+                                    if(value!=getProductResult.notExist){
+                                      setState(() {
+                                        productsList=[value];
+                                      });
+                                    }
+                                    else if(value==getProductResult.notExist){
+                                      showCoolSnackbar(context,"Il prodotto non esiste","err");
 
-                              hintText: "Cerca prodotto per nome",
-                              errorText:
-                                  _searchError != null ? _searchError : null,
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Consts.kTextLightBlack)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Consts.kBlueColor)),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Consts.kBlueColor,
-                              )),
+                                    }
+                              }); /*Proxy.sharedProxy.getProductPageable(order:_radioValue,page: 0,pageSize: 10,typo: typoSelected);*/
+                            },
+                            controller: _searchController,
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                                hintStyle: Consts.smallTextStyle,
+
+                                hintText: "Cerca prodotto per nome",
+                                errorText:
+                                    _searchError != null ? _searchError : null,
+                                enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent)),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent)),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Consts.kBlueColor,
+                                )),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Padding(
@@ -192,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                                     });
                           });
                         }),
-                    CoolText(text: "Dal più economico", size: "s")
+                    CoolText(text: "Dal meno caro", size: "s")
                   ],
                 ),
                 Row(
@@ -244,24 +240,21 @@ class _HomePageState extends State<HomePage> {
                             itemBuilder: (context, i) {
                               return Padding(
                                 padding: const EdgeInsets.all(10),
-                                child: Container(
-                                    constraints: BoxConstraints(
-                                        maxWidth: 200, maxHeight: 220),
-                                    child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: ProductCard(
-                                            product: productsList![i],
-                                            press: () {},
-                                            actions: [
-                                              IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                      Icons.wifi_tethering)),
-                                              IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                      Icons.add_shopping_cart))
-                                            ]))),
+                                child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: ProductCard(
+                                        product: productsList![i],
+                                        press: () {},
+                                        actions: [
+                                          IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                  Icons.wifi_tethering)),
+                                          IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                  Icons.add_shopping_cart))
+                                        ])),
                               );
                             }),
                       ),

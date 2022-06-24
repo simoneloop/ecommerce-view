@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     Key? key,
     required this.product,
@@ -14,6 +14,15 @@ class ProductCard extends StatelessWidget {
   final Product product;
   final Function()? press;
   final List<Widget>? actions;
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  bool isHover=false;
+  Offset mousePos=new Offset(0, 0);
+  double movFactor=0.98;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,17 +32,45 @@ class ProductCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => DetailsPage(
-                  product: product,
+                  product: widget.product,
                 )));
       },
       child: Container(
-        decoration: product.quantity>0?BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)):BoxDecoration(gradient: Consts.kOrangeGradient,borderRadius: BorderRadius.circular(16)),
+        decoration: widget.product.quantity>0?BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)):BoxDecoration(gradient: Consts.kOrangeGradient,borderRadius: BorderRadius.circular(16)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ClipRRect(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
-                child: product.urlPropic!=null?Image.network(product.urlPropic):Image.network("https://picsum.photos/300")),
+            MouseRegion(
+              onEnter:(e){
+                setState(() {
+                  isHover=true;
+
+                });
+              } ,
+              onHover:(e){
+                setState(() {
+                  mousePos+=e.delta*5;
+                  mousePos*=movFactor;
+
+                });
+              } ,
+              onExit:(e){
+                setState(() {
+                  isHover=false;
+
+                });
+              } ,
+              child: Container(
+                height: 300,
+                width: 300,
+                color: Colors.white,
+                child: Stack(
+                  children: [
+                    backImage(),
+                  ],
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0,top: 8,bottom: 8),
               child: Row(
@@ -50,10 +87,10 @@ class ProductCard extends StatelessWidget {
                           width: 200,
                           child: FittedBox(
                               fit: BoxFit.fitWidth,
-                              child: Text(product.name,style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),)),
+                              child: Text(widget.product.name,style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),)),
                         ),
                       ),
-                      Text(product.price.toString()+"€",style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
+                      Text(widget.product.price.toString()+"€",style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
 
                     ],
                   ),
@@ -70,6 +107,30 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+  backImage(){
+    ImageProvider imageP=widget.product.urlPropic!=null?NetworkImage(widget.product.urlPropic):NetworkImage("https://picsum.photos/300");
+    return AnimatedPositioned(
+
+      duration: Duration(milliseconds: 1000),
+      curve: Curves.easeOutCubic,
+      top: isHover?-100-mousePos.dy:0,
+      left: isHover?-100-mousePos.dx:-100,
+      width: 500,
+      height: isHover?600:300,
+      child: Container(
+        width: 500,
+        height: 600,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.fitHeight,
+
+
+            image: imageP
+          )
         ),
       ),
     );
