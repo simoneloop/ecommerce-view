@@ -35,7 +35,6 @@ class RestManager{
         Map<String, String> headers = {};
         headers[HttpHeaders.contentTypeHeader] = contentType;
         if (token != "") {
-          print("token:"+token);
           headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
         }
         switch (method) {
@@ -72,49 +71,5 @@ class RestManager{
     return _makeRequest(serverAddress, servicePath, "get", type, params: params);
   }
 
-
-  /*Future<String> refreshToken(String serverAddress,String servicePath)async{
-    Uri uri = Uri.http(serverAddress, servicePath);
-    int i=0;
-    int tents=3;
-
-    while(i<tents) {
-      i++;
-      try {
-        var response;
-        Map<String, String> headers = {};
-        headers[HttpHeaders.authorizationHeader] = contentType;
-        if (token != "") {
-          print("token:"+token);
-          headers[HttpHeaders.authorizationHeader] = 'bearer $token';
-        }
-        switch (method) {
-
-          case "post":
-            response = await post(
-              uri,
-              headers: headers,
-              body: formattedBody,
-
-            );
-            break;
-          case "get":
-            response = await get(
-              uri,
-              headers: headers,
-            );
-            break;
-        }
-        print("arrivo");
-        print(response.body);
-        return response.body;
-      } catch (err) {
-        print(err.toString());
-        await Future.delayed(const Duration(seconds: 5), () => null);
-      }
-    }
-    return "fail";
-  }
-*/
 
 }

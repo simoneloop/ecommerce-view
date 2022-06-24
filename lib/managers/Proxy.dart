@@ -10,6 +10,7 @@ import 'package:ecommerce_view/entities/ProductInPurchase.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/managers/RestManager.dart';
 import 'package:ecommerce_view/managers/StateManager.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 import '../entities/Product.dart';
 import '../entities/User.dart';
@@ -72,6 +73,14 @@ class Proxy{
       );
 
       appState.addValue(Consts.USER_LOGGED_DETAILS, await getMyDetails());
+      Map<String, dynamic> payload = Jwt.parseJwt(_restManager.token);
+      appState.addValue(Consts.USER_LOGGED_IS_ADMIN, false);
+      payload['roles'].forEach((element){
+        if(element.contains("ROLE_ADMIN")){
+          appState.addValue(Consts.USER_LOGGED_IS_ADMIN, true);
+        }
+      });
+      print(appState.getValue(Consts.USER_LOGGED_IS_ADMIN));
 
       return LogInResult.logged;
 
@@ -113,7 +122,6 @@ class Proxy{
       String rawResult = await _restManager.makeGetRequest(
           Consts.ADDRESS_SERVER, Consts.REQUEST_GET_MY_DETAILS,);
 
-      print("roaw"+rawResult);
       return User.fromJson(jsonDecode(rawResult));
     }
     catch(err){
@@ -128,7 +136,6 @@ class Proxy{
       params["isHot"]="true";
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_HOT_PRODUCTS,params: params);
       List products = jsonDecode(rawResult);
-      print(products);
       return products.map((e) => new Product.fromJson(e)).toList();
 
     }catch(err){
@@ -142,12 +149,11 @@ class Proxy{
       params['ordered']=order;
       params['pageSize']=pageSize.toString();
       params['page']=page.toString();
-      print(params);
       if(typo!=null){
         params['typo']=typo;
       }
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_PRODUCT_PAGEABLE,params: params);
-      print("raw: "+rawResult);//TODO refactor with pageable index
+      /*print("raw: "+rawResult);*///TODO refactor with pageable index
 
       Map<String, dynamic> res = jsonDecode(rawResult) as Map<String,dynamic>;
 

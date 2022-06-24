@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
 
-class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
+class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   const AppBarWidget({
     this.index,
     this.leadingFunction,
@@ -13,52 +13,85 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   final Function()? leadingFunction;
 
   @override
-  Widget build(BuildContext context) {
-    return AppBar(
-
-      title: Text("I Gioielli e l'arte",style:Theme.of(context).textTheme.headline3?.copyWith(color: Colors.white)),
-      centerTitle: true,
-
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      elevation: 10,
-      leading: IconButton(icon: Icon(Icons.home_rounded),
-        onPressed:leadingFunction != null?leadingFunction: () { Navigator.pushNamed(
-            context, 'HomePage'); },
-        color: index==0?Colors.amber:null,
-      ),
-      actions: <Widget>[
-        IconButton(onPressed: (){
-          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){Navigator.pushNamed(context, 'UserDetailsPage');}
-          else{
-            Navigator.pushNamed(
-                context, 'LoginPage');
-            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
-          }
-
-        },
-          icon: Icon(Icons.person),
-          color: index==1?Colors.amber:null,
-        ),
-        IconButton(onPressed: (){
-          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){Navigator.pushNamed(context, 'UserCartPage');}
-          else{
-
-            Navigator.pushNamed(
-                context, 'LoginPage');
-            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
-          }
-        },
-            icon: Icon(Icons.shopping_cart),
-            color: index==2?Colors.amber:null,
-
-        ),
-        SizedBox(width: 10,)
-      ],
-
-    );
-  }
+  State<AppBarWidget> createState() => _AppBarWidgetState();
 
   @override
   // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(Consts.kToolbarHeight);
+}
+
+class _AppBarWidgetState extends State<AppBarWidget> {
+  final bool isAdmin=Proxy.appState.existsValue(Consts.USER_LOGGED_IS_ADMIN)?Proxy.appState.getValue(Consts.USER_LOGGED_IS_ADMIN):false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text("I Gioielli e l'arte",
+          style: Theme.of(context)
+              .textTheme
+              .headline3
+              ?.copyWith(color: Colors.white)),
+      centerTitle: true,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      elevation: 10,
+      leading:widget.leadingFunction != null?IconButton(
+        icon: Icon(Icons.arrow_back_ios_outlined),
+        onPressed: widget.leadingFunction,
+      ): IconButton(
+        icon:Icon(Icons.home_rounded),
+        onPressed:() {
+                Navigator.pushNamed(context, 'HomePage');
+              },
+        color: widget.index == 0 ? Colors.amber : null,
+      ),
+      actions: isAdmin?adminWidgets(context):userWidgets(context),
+    );
+  }
+
+  List<Widget> userWidgets(BuildContext context) {
+    return <Widget>[
+      IconButton(
+        onPressed: () {
+          if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
+            Navigator.pushNamed(context, 'UserDetailsPage');
+          } else {
+            Navigator.pushNamed(context, 'LoginPage');
+            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+          }
+        },
+        icon: Icon(Icons.person),
+        color: widget.index == 1 ? Colors.amber : null,
+      ),
+      IconButton(
+        onPressed: () {
+          if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
+            Navigator.pushNamed(context, 'UserCartPage');
+          } else {
+            Navigator.pushNamed(context, 'LoginPage');
+            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+          }
+        },
+        icon: Icon(Icons.shopping_cart),
+        color: widget.index == 2 ? Colors.amber : null,
+      ),
+      SizedBox(
+        width: 10,
+      )
+    ];
+  }
+
+  List<Widget> adminWidgets(BuildContext context) {
+    return <Widget>[
+      IconButton(
+        onPressed: () {},
+        icon: Icon(Icons.settings),
+        color: widget.index == 1 ? Colors.amber : null,
+      ),
+      SizedBox(
+        width: 10,
+      )
+    ];
+  }
+
+
 }

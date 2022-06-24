@@ -64,10 +64,14 @@ class _ProductCardState extends State<ProductCard> {
                 height: 300,
                 width: 300,
                 color: Colors.white,
-                child: Stack(
-                  children: [
-                    backImage(),
-                  ],
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
+
+                  child: Stack(
+                    children: [
+                      backImage(),
+                    ],
+                  ),
                 ),
               ),
             ),

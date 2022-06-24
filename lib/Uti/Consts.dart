@@ -38,7 +38,7 @@ class Consts{
 
   //STORAGE
   static const String USER_LOGGED_DETAILS="userLoggedDetails";
-
+  static const String USER_LOGGED_IS_ADMIN="userLoggedIsAdmin";
 
   //EXCEPTIONS
   static const String RESPONSE_ERROR_USER_ALREADY_EXIST = "UserAlreadyExistException";
