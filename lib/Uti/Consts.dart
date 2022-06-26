@@ -6,7 +6,9 @@ class Consts{
 
 
   static const String ADDRESS_SERVER="localhost:8080";
-
+  static const String KEY_IMGBB="ab5164733cebc27977aa124a2190e060";
+  static const String ADDRESS_IMGBB="api.imgbb.com";
+  static const String REQUEST_UPLOAD_IMAGE_BB="/1/upload";
 
   //EVERYONE-REQUEST
   static const String REQUEST_REFRESH_TOKEN="/users/refreshToken";
@@ -30,6 +32,9 @@ class Consts{
   static const String REQUEST_GET_MY_DETAILS="/users/getMyDetails";
   static const String REQUEST_MODIFY_MY_DETAILS="/users/modifyMyDetails";
   static const String REQUEST_SET_QUANTITY_TO_CART="/users/setQuantityToCart";
+  static const String REQUEST_MODIFY_HOTS="/products/modifyHots";
+  static const String REQUEST_DELETE_PRODUCTS="/products/deleteProducts";
+
 
   //ADMIN/USER-REQUEST
   static const String REQUEST_GET_HOT_PRODUCTS="/products/getHotProduct";
@@ -55,6 +60,11 @@ class Consts{
   static const String TYPO_ORECCHINO="orecchino";
 
   static const String REQUIRED_LOGIN_EXCEPTION="Devi prima effettuare il login";
+  static const TextStyle extraSmallTextStyle=TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: Colors.black,
+  );
   static const TextStyle smallTextStyle=TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w400,
@@ -87,6 +97,13 @@ class Consts{
       Color(0xFFA1480D),
       Color(0xFFD27919),
       Color(0xFFF59642),
+    ],
+  );
+  static const LinearGradient kGreyGradient=LinearGradient(
+    colors: <Color>[
+      Color(0xFF646464),
+      Color(0xFF969696),
+      Color(0xFFC8C8C8),
     ],
   );
   static const double kToolbarHeight=50;
