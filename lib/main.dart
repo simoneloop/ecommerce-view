@@ -1,6 +1,7 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/Product.dart';
 import 'package:ecommerce_view/pages/AdminPage.dart';
+import 'package:ecommerce_view/pages/BalancePage.dart';
 import 'package:ecommerce_view/pages/LoginPage.dart';
 import 'package:ecommerce_view/pages/HomePage.dart';
 import 'package:ecommerce_view/pages/RegistrationPage.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
         'UserDetailsPage':(context)=>UserDetailsPage(),
         'UserCartPage':(context)=>UserCartPage(),
         'AdminPage':(context)=>AdminPage(),
+        'BalancePage':(context)=>BalancePage(),
       },
     );
   }

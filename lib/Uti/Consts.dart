@@ -21,6 +21,7 @@ class Consts{
   static const String REQUEST_ADD_PRODUCT="/products/add";
   static const String REQUEST_MODIFY_PRODUCT="/products/modify";
   static const String REQUEST_GET_ALL_PRODUCTS="/products/getAll";
+  static const String REQUEST_GET_ALL_PURCHASE="/purchase/getAllPurchase";
 
   //USER-REQUEST
   static const String REQUEST_ADD_PRODUCT_TO_CART="/users/addToCart";
@@ -34,6 +35,7 @@ class Consts{
   static const String REQUEST_SET_QUANTITY_TO_CART="/users/setQuantityToCart";
   static const String REQUEST_MODIFY_HOTS="/products/modifyHots";
   static const String REQUEST_DELETE_PRODUCTS="/products/deleteProducts";
+
 
 
   //ADMIN/USER-REQUEST
@@ -85,7 +87,7 @@ class Consts{
     color: Colors.black,
   );
   static const bool TO_VALIDATE=false;
-
+  static const int PAGE_SIZE=7;
 
   static const Color kTextLightBlack=Colors.black26;
   static const Color kBlueColor=Color(0xFF0D47A1);

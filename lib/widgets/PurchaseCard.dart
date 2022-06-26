@@ -1,6 +1,10 @@
+import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../managers/Proxy.dart';
+import 'CoolText.dart';
 class PurchaseCard extends StatefulWidget {
   final Purchase purchase;
 
@@ -90,6 +94,32 @@ class _PurchaseCardState extends State<PurchaseCard> {
                     ),
                   ],
                 ),
+                if(Proxy.appState.getValue(Consts.USER_LOGGED_IS_ADMIN))
+                  Column(
+                    children: [
+                      CoolText(text:"Utente",size:"m"),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CoolText(text:"Nome: "+widget.purchase.buyer.firstName, size:"s"),
+                            CoolText(text:"Cognome: "+widget.purchase.buyer.lastName, size:"s"),
+                            CoolText(text:"Email: "+widget.purchase.buyer.email, size:"s"),
+                            CoolText(text:"Numero: "+widget.purchase.buyer.phoneNumber, size:"s"),
+                            CoolText(text:"Indirizzo: "+widget.purchase.buyer.address, size:"s"),
+
+                            SizedBox(
+                              height: 30,
+                            ),
+
+                          ],
+                        ),
+                      )
+
+                    ],
+                  )
+
 
               ],
             ),

@@ -50,7 +50,8 @@ enum HttpResult{
   error,
   notAmountException,
   quantityUnavailable,
-  alreadyExist
+  alreadyExist,
+  cartIsEmpty
 }
 
 
@@ -59,7 +60,8 @@ class Proxy{
   static StateManager appState = StateManager();
   RestManager _restManager=RestManager();
   late AuthenticationData _authenticationData;
-  bool isLastPage=false;
+  static bool isLastPage=false;
+  static bool isFirstPage=true;
 
   Future<LogInResult> logIn(String email,String password)async{
     try{
@@ -159,7 +161,7 @@ class Proxy{
       return HttpResult.error;
     }
   }
-  Future<List<Product>> getProductPageable({String order="ascending",int page=0,int pageSize=20,String?typo})async{
+  Future<Map<String,dynamic>> getProductPageable({String order="ascending",int page=0,int pageSize=20,String?typo})async{
     try{
       Map<String,String> params={};
       params['ordered']=order;
@@ -170,17 +172,21 @@ class Proxy{
       }
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_PRODUCT_PAGEABLE,params: params);
       /*print("raw: "+rawResult);*///TODO refactor with pageable index
-
+      Map<String,dynamic> tores={};
       Map<String, dynamic> res = jsonDecode(rawResult) as Map<String,dynamic>;
+      print("res pageable"+res.toString());
 
       List<dynamic> content=res['content'];
       //TODO is lastPage?
       List<Product> products=[];
       content.forEach((element) { products.add(new Product.fromJson(element));});
-      return products;
+      tores['value']=products;
+      tores['isFirstPage']=res["first"];
+      tores['isLastPage']=res['last'];
+      return tores;
     }catch(err){
       print("errore"+err.toString());
-      return [];
+      return {};
     }
   }
   Future<List<Purchase>> getMyOrders()async{
@@ -212,6 +218,7 @@ class Proxy{
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_BUY_MY_CART);
       if(rawResult.contains(Consts.RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION)){return HttpResult.notAmountException;}
       else if(rawResult.contains(Consts.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){return HttpResult.quantityUnavailable;}
+      else if(rawResult.contains(Consts.RESPONSE_ERROR_CART_IS_EMPTY)){return HttpResult.cartIsEmpty;}
       else{return HttpResult.done;}
     }
     catch(err){
@@ -342,6 +349,22 @@ class Proxy{
     String propicUrl=jsonDecode(response.body)["data"]["url"];
     print(propicUrl);
     return propicUrl;
+  }
+
+  Future<List<Purchase>>getAllPurchase()async{
+    try{
+      String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_ALL_PURCHASE);
+      print(rawResult);
+      List purchases = jsonDecode(rawResult);
+
+      List<Purchase> res=purchases.map((e) => new Purchase.fromJson(e)).toList();
+
+      return res;
+    }catch(err){
+      print(err);
+      return [];
+    }
+
   }
 
 

@@ -92,6 +92,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
 
+
                                 u!=null?Text("Nome: "+u.firstName,style: Theme.of(context).textTheme.headline4,):Container(),
                                 u!=null?Text("Cognome: "+u.lastName,style: Theme.of(context).textTheme.headline4,):Container(),
                                 u!=null?Text("Email: "+u.email,style: Theme.of(context).textTheme.headline4,):Container(),

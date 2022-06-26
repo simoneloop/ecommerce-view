@@ -482,43 +482,52 @@ class _AdminPageState extends State<AdminPage> {
                                 }),
                           ),
                         ),
-                        FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Row(
-                            children: [
-                              CoolTextButton(gradient:_canModify? Consts.kBlueGradient:Consts.kGreyGradient, text: "MODIFICA", press: (){
-                                if(_canModify){
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: CoolTextButton(gradient:_canModify? Consts.kBlueGradient:Consts.kGreyGradient, text: "MODIFICA", press: (){
+                                    if(_canModify){
 
-                                  Product p;
-                                  Proxy.sharedProxy.getProductByName(selected[0]).then((value) {
-                                    print(value.toString());
-                                    if(value is Product){
-                                      p=value;
-                                      _nameHint=p.name;
-                                      _descriptionHint=p.description;
-                                      _priceHint=p.price.toString();
-                                      _quantityHint=p.quantity.toString();
-                                      _modifingRadioValue=p.typo;
-                                      _urlHint=p.urlPropic;
-                                      setState(() {
-                                        _isModifingProduct=p;
+                                      Product p;
+                                      Proxy.sharedProxy.getProductByName(selected[0]).then((value) {
+                                        print(value.toString());
+                                        if(value is Product){
+                                          p=value;
+                                          _nameHint=p.name;
+                                          _descriptionHint=p.description;
+                                          _priceHint=p.price.toString();
+                                          _quantityHint=p.quantity.toString();
+                                          _modifingRadioValue=p.typo;
+                                          _urlHint=p.urlPropic;
+                                          setState(() {
+                                            _isModifingProduct=p;
 
-                                        _isModifing=true;
-                                        print("modifico il prodotto"+selected[0]);
+                                            _isModifing=true;
+                                            print("modifico il prodotto"+selected[0]);
 
+                                          });
+
+                                        }
                                       });
 
+
                                     }
-                                  });
-
-
-                                }
-                                else{
-                                  showCoolSnackbar(context, "Seleziona uno e un solo prodotto", "err");
-                                }
-                              }),
-                              CoolTextButton(gradient: Consts.kOrangeGradient, text: "RIMUOVI", press: (){deleteProducts();})
-                            ],
+                                    else{
+                                      showCoolSnackbar(context, "Seleziona uno e un solo prodotto", "err");
+                                    }
+                                  }),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: CoolTextButton(gradient: Consts.kOrangeGradient, text: "RIMUOVI", press: (){deleteProducts();}),
+                                )
+                              ],
+                            ),
                           ),
                         )
 

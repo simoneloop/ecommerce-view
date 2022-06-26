@@ -91,6 +91,16 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       ),
       SizedBox(
         width: 10,
+      ),
+      IconButton(
+        onPressed: () {
+          Navigator.pushNamed(context, "BalancePage");
+        },
+        icon: Icon(Icons.account_balance_wallet),
+        color: widget.index == 2 ? Colors.amber : null,
+      ),
+      SizedBox(
+        width: 10,
       )
     ];
   }
