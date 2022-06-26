@@ -53,14 +53,18 @@ class ProductDetailsBody extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: InteractiveViewer(
-                                  child: Container(
-                                    child: product.urlPropic!=null?Image.network(product.urlPropic):Image.network("https://picsum.photos/300"),
-                                    /*constraints: BoxConstraints(maxHeight: 200),*/
-                                  ),
-                                )),
+                            child: Container(
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(16),
+                                  child: InteractiveViewer(
+                                    child: Container(
+                                      width: 300,
+                                      height: 300,
+                                      child: product.urlPropic!=null?FittedBox(fit:BoxFit.fill,child: Image.network(product.urlPropic)):Image.network("https://picsum.photos/300"),
+                                      /*constraints: BoxConstraints(maxHeight: 200),*/
+                                    ),
+                                  )),
+                            ),
                           )
                         ],
                       ),

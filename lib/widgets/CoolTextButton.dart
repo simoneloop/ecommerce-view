@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CoolTextButton extends StatelessWidget {
-  const CoolTextButton({Key? key, required this.gradient, required this.text, required this.press,this.height,this.width}) : super(key: key);
+  const CoolTextButton({Key? key, required this.gradient, required this.text, required this.press,this.height,this.width, this.textStyle}) : super(key: key);
 
   final Function() press;
   final LinearGradient gradient;
   final String text;
   final double? width;
   final double? height;
+  final TextStyle? textStyle;
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -18,7 +19,7 @@ class CoolTextButton extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: gradient,
             ),
-            child: TextButton(onPressed: press, child:Text(text,style: Theme.of(context)
+            child: TextButton(onPressed: press, child:Text(text,style:textStyle != null?textStyle: Theme.of(context)
                 .textTheme
                 .headline4
                 ?.copyWith(color: Colors.white,fontWeight: FontWeight.bold),) )));

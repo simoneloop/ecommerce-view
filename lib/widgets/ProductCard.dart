@@ -1,5 +1,6 @@
 import 'package:ecommerce_view/entities/Product.dart';
 import 'package:ecommerce_view/pages/DetailsPage.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -90,8 +91,8 @@ class _ProductCardState extends State<ProductCard> {
                           height: 50,
                           width: 200,
                           child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(widget.product.name,style: Theme.of(context).textTheme.headline1?.copyWith(color: Colors.white),)),
+                              fit: BoxFit.contain,
+                              child: CoolText(text: widget.product.name,size: "s",color: Colors.white,)),
                         ),
                       ),
                       Text(widget.product.price.toString()+"€",style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)

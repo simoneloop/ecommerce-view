@@ -83,7 +83,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   List<Widget> adminWidgets(BuildContext context) {
     return <Widget>[
       IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, "AdminPage");
+        },
         icon: Icon(Icons.settings),
         color: widget.index == 1 ? Colors.amber : null,
       ),

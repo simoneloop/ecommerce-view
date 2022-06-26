@@ -55,6 +55,7 @@ class RestManager{
             break;
         }
         return response.body;
+
       } catch (err) {
         print(err.toString());
         await Future.delayed(const Duration(seconds: 5), () => null);
