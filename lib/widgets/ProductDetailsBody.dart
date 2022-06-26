@@ -105,6 +105,7 @@ class CartCounter extends StatefulWidget {
 
 class _CartCounterState extends State<CartCounter> {
   int numOfItems = 1;
+  final bool isAdmin=Proxy.appState.existsValue(Consts.USER_LOGGED_IS_ADMIN)?Proxy.appState.getValue(Consts.USER_LOGGED_IS_ADMIN):false;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +161,7 @@ class _CartCounterState extends State<CartCounter> {
                     child: IconButton(
                       icon: Icon(Icons.add_shopping_cart),
                       onPressed: () {
-                        if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){
+                        if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null &&!isAdmin){
 
                           Proxy.sharedProxy.setQuantity(widget.product.name,numOfItems).then((value) {
                             if(value==addToCartResult.setted){
@@ -176,7 +177,9 @@ class _CartCounterState extends State<CartCounter> {
                             }
                           });
 
-
+                        }
+                        else if(isAdmin){
+                          showCoolSnackbar(context,Consts.IS_ADMIN_EXCEPTION,"err");
                         }
                         else{
                           Navigator.pushNamed(context, "LoginPage");
@@ -198,7 +201,7 @@ class _CartCounterState extends State<CartCounter> {
                         ),
                         child: CoolTextButton(text: 'Compra ora',press: (){
 
-                          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null){
+                          if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null && !isAdmin){
 
                             Proxy.sharedProxy.setQuantity(widget.product.name,numOfItems).then((value) {
                               if(value==addToCartResult.setted){
@@ -214,6 +217,9 @@ class _CartCounterState extends State<CartCounter> {
                             });
 
 
+                          }
+                          else if(isAdmin){
+                            showCoolSnackbar(context,Consts.IS_ADMIN_EXCEPTION,"err");
                           }
                           else{
                             Navigator.pushNamed(context, "LoginPage");

@@ -60,6 +60,10 @@ class Consts{
   static const String TYPO_ORECCHINO="orecchino";
 
   static const String REQUIRED_LOGIN_EXCEPTION="Devi prima effettuare il login";
+  static const String IS_ADMIN_EXCEPTION="Sei admin non hai a disposizione questa funzione";
+
+
+
   static const TextStyle extraSmallTextStyle=TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w400,

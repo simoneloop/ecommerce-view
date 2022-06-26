@@ -290,13 +290,13 @@ class Proxy{
       return HttpResult.done;
     }catch(err){print(err);return HttpResult.unknow;}
   }
-  Future<Product?> modifyProduct(Product product,String oldName)async{
+  Future<HttpResult> modifyProduct(Product product,String oldName)async{
     try{
       Map<String,String>params={};
       params['oldName']=oldName;
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_MODIFY_PRODUCT,body: product,params: params);
-      return Product.fromJson(jsonDecode(rawResult));
-    }catch(err){print(err);return null;}
+      return HttpResult.done;
+    }catch(err){print(err);return HttpResult.error;}
   }
 
   Future<ModifyResult> modifyMyDetails(User u)async{

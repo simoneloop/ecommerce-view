@@ -36,22 +36,32 @@ class _AdminPageState extends State<AdminPage> {
   String? _priceError=null;
   String? _descriptionError=null;
   String? _nameError=null;
+  String? _quantityError=null;
+
   File? image=null;
   Uint8List webImage=Uint8List(8);
+  File? modifingImage=null;
+  Uint8List modifingWebImage=Uint8List(8);
+
   String _radioValue = "";
 
 
   TextEditingController _nameModifingController=TextEditingController();
+
   TextEditingController _descriptionModifingController=TextEditingController();
   TextEditingController _priceModifingController=TextEditingController();
   TextEditingController _quantityModifingController=TextEditingController();
-
+  String _nameHint="nome";
+  String _descriptionHint="descrizione";
+  String _priceHint="prezzo";
+  String _quantityHint="quantità disponibile";
+  String? _urlHint=null;
+  List<String> selected=[];
   String _modifingRadioValue="";
   bool _canModify=false;
   bool _isModifing=false;
-
-  File? modifingImage=null;
-  Uint8List modifingWebImage=Uint8List(8);
+  bool _retrieveModifing=false;
+  Product? _isModifingProduct=null;
 
 
   @override
@@ -66,11 +76,15 @@ class _AdminPageState extends State<AdminPage> {
       });
 
     });
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
+    print("is_modific"+_isModifing.toString());
+
     return Scaffold(
       appBar: AppBarWidget(index: 1,),
       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -284,7 +298,7 @@ class _AdminPageState extends State<AdminPage> {
                                     hintStyle: Consts.smallTextStyle,
 
                                     hintText: "Quantità",
-                                    errorText: _priceError,
+                                    errorText: _quantityError,
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Theme.of(context)
@@ -360,7 +374,7 @@ class _AdminPageState extends State<AdminPage> {
 
                         SizedBox(height: 10),
                         GestureDetector(
-                          onTap: (){pickImage();},
+                          onTap: (){pickImage(false);},
                           child: Padding(
                               padding: EdgeInsets.all(8),
                               child:DottedBorder(
@@ -474,9 +488,30 @@ class _AdminPageState extends State<AdminPage> {
                             children: [
                               CoolTextButton(gradient:_canModify? Consts.kBlueGradient:Consts.kGreyGradient, text: "MODIFICA", press: (){
                                 if(_canModify){
-                                  setState(() {
-                                    _isModifing=true;
+
+                                  Product p;
+                                  Proxy.sharedProxy.getProductByName(selected[0]).then((value) {
+                                    print(value.toString());
+                                    if(value is Product){
+                                      p=value;
+                                      _nameHint=p.name;
+                                      _descriptionHint=p.description;
+                                      _priceHint=p.price.toString();
+                                      _quantityHint=p.quantity.toString();
+                                      _modifingRadioValue=p.typo;
+                                      _urlHint=p.urlPropic;
+                                      setState(() {
+                                        _isModifingProduct=p;
+
+                                        _isModifing=true;
+                                        print("modifico il prodotto"+selected[0]);
+
+                                      });
+
+                                    }
                                   });
+
+
                                 }
                                 else{
                                   showCoolSnackbar(context, "Seleziona uno e un solo prodotto", "err");
@@ -501,6 +536,12 @@ class _AdminPageState extends State<AdminPage> {
                               child: IconButton(icon:Icon(Icons.arrow_back_ios_outlined),color: Colors.deepPurpleAccent, onPressed: () {
                                 setState(() {
                                   _isModifing=false;
+                                  _isModifingProduct=null;
+                                  _nameModifingController=TextEditingController();
+                                  modifingImage=null;
+                                  _descriptionModifingController=TextEditingController();
+                                  _priceModifingController=TextEditingController();
+                                  _quantityModifingController=TextEditingController();
                                 });
                               },),
                             ),
@@ -523,7 +564,7 @@ class _AdminPageState extends State<AdminPage> {
                           decoration: InputDecoration(
                               hintStyle: Consts.smallTextStyle,
 
-                              hintText: "Nome del prodotto",
+                              hintText: _nameHint,
                               errorText: _nameError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -553,7 +594,7 @@ class _AdminPageState extends State<AdminPage> {
                           decoration: InputDecoration(
                               hintStyle: Consts.smallTextStyle,
 
-                              hintText: "Descrizione del prodotto",
+                              hintText: _descriptionHint,
                               errorText: _descriptionError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -585,7 +626,7 @@ class _AdminPageState extends State<AdminPage> {
                                 decoration: InputDecoration(
                                     hintStyle: Consts.smallTextStyle,
 
-                                    hintText: "Prezzo",
+                                    hintText: _priceHint,
                                     errorText: _priceError,
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -613,7 +654,7 @@ class _AdminPageState extends State<AdminPage> {
                                 decoration: InputDecoration(
                                     hintStyle: Consts.smallTextStyle,
 
-                                    hintText: "Quantità",
+                                    hintText: _quantityHint,
                                     errorText: _priceError,
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -690,7 +731,7 @@ class _AdminPageState extends State<AdminPage> {
 
                         SizedBox(height: 10),
                         GestureDetector(
-                          onTap: (){pickImage();},
+                          onTap: (){pickImage(true);},
                           child: Padding(
                               padding: EdgeInsets.all(8),
                               child:DottedBorder(
@@ -700,13 +741,14 @@ class _AdminPageState extends State<AdminPage> {
                                 child: Container(
                                   width: 200,
                                   height: 200,
-                                  child: modifingImage==null?Column(
+                                  child:modifingImage==null? _urlHint==null?Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(Icons.image_outlined),
                                       CoolText(text: "Carica una foto del prodotto", size: "xs"),
                                     ],
-                                  ):kIsWeb?Image.memory(modifingWebImage,fit: BoxFit.fill,):Image.file(modifingImage!,fit: BoxFit.fill,),
+                                  ):Image.network(_urlHint!,fit: BoxFit.fill):
+                                  kIsWeb?Image.memory(modifingWebImage,fit: BoxFit.fill,):Image.file(modifingImage!,fit: BoxFit.fill,),
                                 ),)
                           ),
                         ),
@@ -724,7 +766,7 @@ class _AdminPageState extends State<AdminPage> {
                               padding: const EdgeInsets.only(bottom: 30),
                               child: Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: CoolTextButton(gradient: Consts.kBlueGradient, text: "SALVA MODIFICHE", press: (){print("modify"); })),
+                                  child: CoolTextButton(gradient: Consts.kBlueGradient, text: "SALVA MODIFICHE", press: (){modifyProduct(); })),
                             ))
 
                       ],
@@ -739,49 +781,115 @@ class _AdminPageState extends State<AdminPage> {
       )
     );
   }
-Future pickImage() async{
-    if(!kIsWeb){
-      final ImagePicker _picker=ImagePicker();
-      XFile? image=await _picker.pickImage(source: ImageSource.gallery);
-      if(image!=null){
-        final imageTmp=File(image.path);
-        setState(() {
-          this.image=imageTmp;
-        });
+Future pickImage(bool isModifing) async{
+    if(isModifing){
+      if(!kIsWeb){
+        final ImagePicker _picker=ImagePicker();
+        XFile? image=await _picker.pickImage(source: ImageSource.gallery);
+        if(image!=null){
+          final imageTmp=File(image.path);
+          setState(() {
+            this.modifingImage=imageTmp;
+          });
 
+        }
+        else{return;}
       }
-      else{return;}
+      else if(kIsWeb){
+        final ImagePicker _picker=ImagePicker();
+        XFile? image=await _picker.pickImage(source: ImageSource.gallery);
+        if(image!=null){
+          var f=await image.readAsBytes();
+          setState(() {
+            modifingWebImage=f;
+            this.modifingImage=File('a');
+          });
+        }
+        else{
+          return;
+        }
+      }
     }
-    else if(kIsWeb){
-      final ImagePicker _picker=ImagePicker();
-      XFile? image=await _picker.pickImage(source: ImageSource.gallery);
-      if(image!=null){
-        var f=await image.readAsBytes();
-        setState(() {
-          webImage=f;
-          this.image=File('a');
-        });
+    else{
+      if(!kIsWeb){
+        final ImagePicker _picker=ImagePicker();
+        XFile? image=await _picker.pickImage(source: ImageSource.gallery);
+        if(image!=null){
+          final imageTmp=File(image.path);
+          setState(() {
+            this.image=imageTmp;
+          });
+
+        }
+        else{return;}
       }
-      else{
-        return;
+      else if(kIsWeb){
+        final ImagePicker _picker=ImagePicker();
+        XFile? image=await _picker.pickImage(source: ImageSource.gallery);
+        if(image!=null){
+          var f=await image.readAsBytes();
+          setState(() {
+            webImage=f;
+            this.image=File('a');
+          });
+        }
+        else{
+          return;
+        }
       }
     }
+
 
   }
 
   void addProduct(){
     bool _canAdd=true;
-    if(_nameController.text.isEmpty){
+    final avoidForInt = RegExp(r'^[a-zA-Z+_\-=@,\.;]+$');
+    final avoidForText = RegExp(r'^[0-9+_\-=@,\.;]+$');
+    final avoidForDouble = RegExp(r'^[a-zA-Z+_\-=@,\;]+$');
+    if(_nameController.text.isEmpty||avoidForText.hasMatch(_nameController.text)){
       _canAdd=false;
+      setState(() {
+        _nameError="Inserire un breve nome del prodotto, sono ammesse solo lettere";
+      });
     }
-    if(_quantityController.text.isEmpty){
-      _canAdd=false;
+    else{
+      setState(() {
+        _nameError=null;
+      });
     }
-    if(_descriptionController.text.isEmpty){
+    if(_quantityController.text.isEmpty||avoidForInt.hasMatch(_quantityController.text)){
       _canAdd=false;
+      setState(() {
+        _quantityError="Specificare il NUMERO INTERO";
+      });
     }
-    if(_priceController.text.isEmpty){
+    else{
+      setState(() {
+        _quantityError=null;
+      });
+    }
+    if(_descriptionController.text.isEmpty||avoidForText.hasMatch(_descriptionController.text)){
       _canAdd=false;
+      setState(() {
+        _descriptionError="Inserire una breve descrizione del prodotto, sono ammesse solo lettere";
+      });
+    }
+    else{
+      setState(() {
+        _descriptionError=null;
+      });
+    }
+    if(_priceController.text.isEmpty||avoidForDouble.hasMatch(_priceController.text)){
+      _canAdd=false;
+      setState(() {
+        _priceError="Specificare il prezzo, es 3.14";
+      });
+    }
+    else{
+      setState(() {
+        _priceError=null;
+      });
     }
     if(_radioValue==""){
       _canAdd=false;
@@ -799,16 +907,26 @@ Future pickImage() async{
           showCoolSnackbar(context, "Esiste già un prodotto con questo nome!", "err");
         }
         else{
-          Proxy.sharedProxy.addProPic(webImage, _nameController.text).then((value) {
-            Proxy.sharedProxy.addProduct(new Product(name: _nameController.text, description: _descriptionController.text, quantity: int.parse(_quantityController.text), price: double.parse((_priceController.text)), typo: _radioValue, hot: false,urlPropic: value)).then((value) {
-              if(value==HttpResult.done){
-                showCoolSnackbar(context,"Prodotto aggiunto con successo","ok");
-                setState(() {
 
+            try{
+
+              Proxy.sharedProxy.addProPic(webImage, _nameController.text).then((value) {
+                Product p=Product(name: _nameController.text, description: _descriptionController.text, quantity: int.parse(_quantityController.text), price: double.parse((_priceController.text)), typo: _radioValue, hot: false,urlPropic: value);
+                Proxy.sharedProxy.addProduct(p).then((value) {
+                  if(value==HttpResult.done){
+                    showCoolSnackbar(context,"Prodotto aggiunto con successo","ok");
+                    reloadAll();
+                  }
+                  else{
+                    showCoolSnackbar(context,"Problema con i campi inseriti, ricontrolla","err");
+                  }
                 });
-              }
-            });
-          });
+              });
+            }catch(err){
+              showCoolSnackbar(context,"Problema con i campi inseriti, ricontrolla","err");
+            }
+
+
         }
       });
 
@@ -816,7 +934,7 @@ Future pickImage() async{
 
   }
   void deleteProducts(){
-    List<String> selected=[];
+    selected=[];
     mapSelectedProduct.forEach((key, value) {
       if(value==true){
         selected.add(key);
@@ -830,6 +948,7 @@ Future pickImage() async{
     Proxy.sharedProxy.deleteProducts(selected).then((value) {
       if(value==HttpResult.done){
         showCoolSnackbar(context, text+" con successo", "ok");
+        reloadAll();
       }
       else{
         showCoolSnackbar(context, "Errore sconosciuto", "err");
@@ -839,13 +958,154 @@ Future pickImage() async{
   }
 
   void updateCanModify(){
-    List<String> selected=[];
+    selected=[];
     mapSelectedProduct.forEach((key, value) {
       if(value==true){
         selected.add(key);
       }
     });
     _canModify=selected.length==1?true:false;
+  }
+
+  void modifyProduct(){
+    bool _can=true;
+    final avoidForInt = RegExp(r'^[a-zA-Z+_\-=@,\.;]+$');
+    final avoidForText = RegExp(r'^[0-9+_\-=@,\.;]+$');
+    final avoidForDouble = RegExp(r'^[a-zA-Z+_\-=@,\;]+$');
+    if(!_nameModifingController.text.isEmpty && avoidForText.hasMatch(_nameModifingController.text)){
+      _can=false;
+      setState(() {
+        _nameError="Inserire un breve nome del prodotto, sono ammesse solo lettere";
+      });
+    }
+    else if(_nameModifingController.text.isEmpty){
+      _nameModifingController.text=_isModifingProduct!.name;
+    }
+    else{
+      setState(() {
+        _nameError=null;
+      });
+    }
+    if(_quantityModifingController.text.isEmpty && avoidForInt.hasMatch(_quantityModifingController.text)){
+      _can=false;
+      setState(() {
+        _quantityError="Specificare il NUMERO INTERO";
+      });
+    }
+    else if(_quantityModifingController.text.isEmpty){
+      _quantityModifingController.text=_isModifingProduct!.quantity.toString();
+    }
+    else{
+      setState(() {
+        _quantityError=null;
+      });
+    }
+    if(_descriptionModifingController.text.isEmpty && avoidForText.hasMatch(_descriptionModifingController.text)){
+      _can=false;
+      setState(() {
+        _descriptionError="Inserire una breve descrizione del prodotto, sono ammesse solo lettere";
+      });
+    }
+    else if(_descriptionModifingController.text.isEmpty){
+      _descriptionModifingController.text=_isModifingProduct!.description;
+    }
+    else{
+      setState(() {
+        _descriptionError=null;
+      });
+    }
+    if(_priceModifingController.text.isEmpty && avoidForDouble.hasMatch(_priceModifingController.text)){
+      _can=false;
+      setState(() {
+        _priceError="Specificare il prezzo, es 3.14";
+      });
+    }
+    else if(_priceModifingController.text.isEmpty){
+      _priceModifingController.text=_isModifingProduct!.price.toString();
+    }
+    else{
+      setState(() {
+        _priceError=null;
+      });
+    }
+    if(_modifingRadioValue==""){
+      _modifingRadioValue=_isModifingProduct!.typo;
+    }
+    String? urlPropic=null;
+    if(modifingImage==null){
+      urlPropic=_isModifingProduct!.urlPropic;
+    }
+    if(!_can){
+      showCoolSnackbar(context, "Compila tutti i campi del prodotto per poter aggiungerlo", "err");
+    }
+    else{
+
+        try{
+          if(modifingImage!=null){
+            Proxy.sharedProxy.addProPic(modifingWebImage, _nameController.text).then((value) {
+              Product p=Product(name: _nameModifingController.text, description: _descriptionModifingController.text, quantity: int.parse(_quantityModifingController.text), price: double.parse((_priceModifingController.text)), typo: _modifingRadioValue, hot: false,urlPropic: value);
+              Proxy.sharedProxy.modifyProduct(p,_isModifingProduct!.name).then((value) {
+                if(value==HttpResult.done){
+                  showCoolSnackbar(context,"Prodotto modificato con successo","ok");
+                  reloadAll();
+                }
+                else{
+                  showCoolSnackbar(context,"Problema con i campi inseriti, ricontrolla","err");
+                }
+              });
+            });
+          }
+          else{
+            Product p=Product(name: _nameModifingController.text, description: _descriptionModifingController.text, quantity: int.parse(_quantityModifingController.text), price: double.parse((_priceModifingController.text)), typo: _modifingRadioValue, hot: false,urlPropic: urlPropic);
+            Proxy.sharedProxy.modifyProduct(p,_isModifingProduct!.name).then((value) {
+              if(value==HttpResult.done){
+                showCoolSnackbar(context,"Prodotto modificato con successo","ok");
+                reloadAll();
+              }
+              else{
+                showCoolSnackbar(context,"Problema con i campi inseriti, ricontrolla","err");
+              }
+            });
+          }
+
+        }catch(err){
+          showCoolSnackbar(context,"Problema con i campi inseriti, ricontrolla","err");
+        }
+
+    }
+
+  }
+
+  void reloadAll(){
+    mapSelectedHotProduct={};
+    mapSelectedProduct={};
+    productList;
+    setState(() {
+      _nameController=TextEditingController();
+      _descriptionController=TextEditingController();
+      _priceController=TextEditingController();
+      _quantityController=TextEditingController();
+      _nameModifingController=TextEditingController();
+
+      _descriptionModifingController=TextEditingController();
+      _priceModifingController=TextEditingController();
+      _quantityModifingController=TextEditingController();
+      image=null;
+      _radioValue="";
+      _isModifing=false;
+      _isModifingProduct=null;
+      List<String> selected=[];updateCanModify();
+      productList=Proxy.sharedProxy.getAllProducts();
+      productList.then((value) {
+        setState(() {
+          value.forEach((element) {
+            mapSelectedHotProduct['${element.name}']=element.hot;
+            mapSelectedProduct['${element.name}']=false;
+          });
+        });
+
+      });
+    });
   }
 
 }
