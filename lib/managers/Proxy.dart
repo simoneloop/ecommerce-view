@@ -3,6 +3,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/AuthenticationData.dart';
@@ -10,6 +11,7 @@ import 'package:ecommerce_view/entities/ProductInPurchase.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/managers/RestManager.dart';
 import 'package:ecommerce_view/managers/StateManager.dart';
+import 'package:http/http.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 import '../entities/Product.dart';
@@ -45,8 +47,10 @@ enum addToCartResult{
 enum HttpResult{
   done,
   unknow,
+  error,
   notAmountException,
-  quantityUnavailable
+  quantityUnavailable,
+  alreadyExist
 }
 
 
@@ -141,6 +145,18 @@ class Proxy{
     }catch(err){
       print(err);
       return List.empty();
+    }
+  }
+  Future<HttpResult>modifyHots(Map<String,bool>body)async{
+    try{
+
+      await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_MODIFY_HOTS,body:body);
+      return HttpResult.done;
+
+
+    }catch(err){
+      print(err);
+      return HttpResult.error;
     }
   }
   Future<List<Product>> getProductPageable({String order="ascending",int page=0,int pageSize=20,String?typo})async{
@@ -258,11 +274,21 @@ class Proxy{
       return [];
     }
   }
-  Future<Product?> addProduct(Product product)async{
+  Future<HttpResult> addProduct(Product product)async{
     try{
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_ADD_PRODUCT,body: product);
-      return Product.fromJson(jsonDecode(rawResult));
-    }catch(err){print(err);return null;}
+      if(rawResult.contains(Consts.RESPONSE_ERROR_PRODUCT_ALREADY_EXIST)){
+        return HttpResult.alreadyExist;
+      }
+      return HttpResult.done;
+    }catch(err){print(err);return HttpResult.unknow;}
+  }
+  Future<HttpResult> deleteProducts(List<String> products)async{
+    try{
+      String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_DELETE_PRODUCTS,body: products);
+
+      return HttpResult.done;
+    }catch(err){print(err);return HttpResult.unknow;}
   }
   Future<Product?> modifyProduct(Product product,String oldName)async{
     try{
@@ -298,6 +324,26 @@ class Proxy{
       print(err);
       return null;}
   }
+
+  Future<String>addProPic(Uint8List img,String productName)async{
+
+    String base64Image;
+    Map<String,String>params=Map();
+    params["key"]=Consts.KEY_IMGBB;
+    params["name"]="product_"+productName;
+    base64Image=base64Encode(img);
+    Map<String,String> body=Map();
+    body["image"]=base64Image;
+
+
+    Uri uri = Uri.https(Consts.ADDRESS_IMGBB, Consts.REQUEST_UPLOAD_IMAGE_BB,params);
+
+    var response = await post(uri,body: body);
+    String propicUrl=jsonDecode(response.body)["data"]["url"];
+    print(propicUrl);
+    return propicUrl;
+  }
+
 
 
 }
