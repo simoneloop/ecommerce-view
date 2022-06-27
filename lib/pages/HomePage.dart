@@ -314,9 +314,7 @@ class _HomePageState extends State<HomePage> {
                             offset: Offset(0, 10),
                             blurRadius: 20)
                       ]),
-                  child: Text("Sembra che non ci siano prodotti",
-                    style: Theme.of(context).textTheme.headline4,
-                    textAlign: TextAlign.center,),
+                  child: CoolText(text:"Sembra che non ci siano prodotti" ,size: "m",textAlign: TextAlign.center,),
                 )
               ],
             ),
@@ -383,11 +381,11 @@ class _HomePageState extends State<HomePage> {
           Positioned.fill(
             child:press==null?Container(
               decoration: const BoxDecoration(
-                gradient: Consts.kOrangeGradient
+                gradient: Consts.SecondoGradient
               ),
             ):Container(
               decoration: const BoxDecoration(
-                gradient: Consts.kBlueGradient
+                gradient: Consts.PrimoGradient
               ),
             ),
           ),

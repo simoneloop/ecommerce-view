@@ -50,17 +50,17 @@ class _PurchaseCardState extends State<PurchaseCard> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Prodotto",style:Theme.of(context).textTheme.headline3),
+                      CoolText(text: "Prodotto",size: "m",),
                       Padding(
                         padding: const EdgeInsets.only(top: 90),
                         child: Container(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("${widget.purchase.buyed.name}",style:Theme.of(context).textTheme.headline4),
+                              CoolText(text:"${widget.purchase.buyed.name}",size: "s",),
                               Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: Text("${widget.purchase.buyed.price}€",style:Theme.of(context).textTheme.headline4),
+                                child: CoolText(text: "${widget.purchase.buyed.price}€",size: "s",),
                               ),
                             ],
                           ),
@@ -72,28 +72,28 @@ class _PurchaseCardState extends State<PurchaseCard> {
                 ),
                 Column(
                   children: [
-                    Text("Quantità",style:Theme.of(context).textTheme.headline3),
+                    CoolText(text: "Quantità",size: "m",),
                     Padding(
                       padding: const EdgeInsets.only(top: 100),
-                      child: Text("${widget.purchase.quantity}",style:Theme.of(context).textTheme.headline4),
+                      child: CoolText(text: "${widget.purchase.quantity}",size: "s",),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("Pagato",style:Theme.of(context).textTheme.headline3),
+                    CoolText(text: "Pagato",size: "m",),
                     Padding(
                       padding: const EdgeInsets.only(top: 100),
-                      child: Text("${widget.purchase.quantity*widget.purchase.buyed.price}€",style:Theme.of(context).textTheme.headline4),
+                      child: CoolText(text: "${widget.purchase.quantity*widget.purchase.buyed.price}€",size: "s",),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text("Data",style:Theme.of(context).textTheme.headline3),
+                    CoolText(text: "Data",size: "m",),
                     Padding(
                       padding: const EdgeInsets.only(top: 100),
-                      child: Text(formatData(widget.purchase.purchaseTime.toString()),style:Theme.of(context).textTheme.headline4),
+                      child: CoolText(text:formatData(widget.purchase.purchaseTime.toString()),size: "s",),
                     ),
                   ],
                 ),

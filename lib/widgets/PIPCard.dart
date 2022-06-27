@@ -68,7 +68,7 @@ class _PIPCardState extends State<PIPCard> {
                       child: widget.pip.buyed.urlPropic!=null?Image.network(widget.pip.buyed.urlPropic):Image.network("https://picsum.photos/300")),
                 ),
                 CoolText(text:widget.pip.buyed.name, size: "s"),
-                Text("${widget.pip.buyed.price}€",style: Theme.of(context).textTheme.headline4,),
+                CoolText(text: "${widget.pip.buyed.price}€",size: "s",),
                 CoolText(text:"Disponibilità: ${widget.pip.buyed.quantity}pz", size: "s"),
                   alert(productStatus),
                   CartCounter(callback: widget.callback,pip: widget.pip,productStatus:productStatus),
@@ -151,12 +151,9 @@ class _CartCounterState extends State<CartCounter> {
                 }),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                  "0".padLeft(2, "0"),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline4,
+              child: CoolText(
+                text: "0".padLeft(2, "0"),
+                size: "s",
               ),
             ),
             buildOutlinedButton(
@@ -187,12 +184,9 @@ class _CartCounterState extends State<CartCounter> {
                 }),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                numOfItems.toString().padLeft(2, "0"),
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline4,
+              child: CoolText(
+                text:numOfItems.toString().padLeft(2, "0"),
+                size: "s",
               ),
             ),
             buildOutlinedButton(
@@ -223,11 +217,11 @@ class _CartCounterState extends State<CartCounter> {
             Positioned.fill(
               child: productStatus==ProductStatus.unavailable?Container(
                 decoration: const BoxDecoration(
-                    gradient: Consts.kOrangeGradient
+                    gradient: Consts.SecondoGradient
                 ),
               ):Container(
                 decoration: const BoxDecoration(
-                  gradient: Consts.kBlueGradient
+                  gradient: Consts.PrimoGradient
                 ),
               )
             ),

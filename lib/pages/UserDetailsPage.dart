@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../Uti/Consts.dart';
 import '../entities/User.dart';
 import '../managers/Proxy.dart';
+import '../widgets/CoolText.dart';
 import '../widgets/PurchaseCard.dart';
 class UserDetailsPage extends StatefulWidget {
   @override
@@ -93,11 +94,11 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               children: [
 
 
-                                u!=null?Text("Nome: "+u.firstName,style: Theme.of(context).textTheme.headline4,):Container(),
-                                u!=null?Text("Cognome: "+u.lastName,style: Theme.of(context).textTheme.headline4,):Container(),
-                                u!=null?Text("Email: "+u.email,style: Theme.of(context).textTheme.headline4,):Container(),
-                                u!=null?Text("Numero: "+u.phoneNumber,style: Theme.of(context).textTheme.headline4,):Container(),
-                                u!=null?Text("Indirizzo: "+u.address,style: Theme.of(context).textTheme.headline4,):Container(),
+                                u!=null?CoolText(text:"Nome: "+u.firstName,size:"s"):Container(),
+                                u!=null?CoolText(text:"Cognome: "+u.lastName,size:"s"):Container(),
+                                u!=null?CoolText(text:"Email: "+u.email,size:"s"):Container(),
+                                u!=null?CoolText(text:"Numero: "+u.phoneNumber,size:"s"):Container(),
+                                u!=null?CoolText(text:"Indirizzo: "+u.address,size:"s"):Container(),
                                 SizedBox(
                                   height: 30,
                                 ),
@@ -111,12 +112,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         child: Column(
 
                           children: [
-                            CoolTextButton(gradient: Consts.kOrangeGradient, text: "Modifica i dettagli", press: (){setState(() {
+                            CoolTextButton(gradient: Consts.SecondoGradient, text: "Modifica i dettagli", press: (){setState(() {
                               isModifing=true;
                             }); }),
                             Padding(
                               padding: const EdgeInsets.only(top: 40),
-                              child: CoolTextButton(gradient: Consts.kBlueGradient, text: "LOGOUT", press: (){logOut(); }),
+                              child: CoolTextButton(gradient: Consts.PrimoGradient, text: "LOGOUT", press: (){logOut(); }),
                             ),
                           ],
                         ),
@@ -129,10 +130,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        Text(
-                          "Modifica i dettagli",
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
+                        CoolText(text: "Modifica i dettagli", size: "m"),
                         SizedBox(height: 25,),
 
 
@@ -296,7 +294,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        CoolTextButton(gradient: Consts.kOrangeGradient, text: "Salva", press: (){ValidateAndSave(); })
+                        CoolTextButton(gradient: Consts.SecondoGradient, text: "Salva", press: (){ValidateAndSave(); })
 
                       ],
                     ),
@@ -321,7 +319,8 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                       ]),
                   child:Column(
                     children: [
-                      Text("Ordini effettuati",style: Theme.of(context).textTheme.headline3,),
+
+                      CoolText(text:"Ordini effettuati",size: "m",),
                       Container(
                         constraints:BoxConstraints(minWidth:size.width,minHeight: size.height/4,maxWidth: size.width,maxHeight: size.height),
                         child: FutureBuilder(
@@ -335,7 +334,6 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                                       itemCount: snapshot.data!.length,
                                       itemBuilder: (context,i){
                                         return PurchaseCard(purchase:snapshot.data![i]);
-                                        return Text(snapshot.data![i].purchaseTime.toString());
                                       }),);
                               }
                               else{
@@ -370,11 +368,6 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 
     }
-    /*if(!(_passwordController.text.length>3)){
-      _passwordError="La password dovrebbe contenere più di 3 caratteri";
-      _canRegister=false;
-    }else{_passwordError=null;}
-    */
     if(_addressController.text.isEmpty){
       uForm.address=u.address;
     }
@@ -396,14 +389,6 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     else{
       uForm.lastName=_lastNameController.text;
     }
-    /*
-    if(_passwordConfirmationController.text!=_passwordController.text){
-      _passwordConfirmationError="Le due password devono essere uguali";
-    }
-    else{
-      _passwordConfirmationError=null;
-    }
-    */
     //TODO filter
     if(_phoneController.text.length<9 ||_phoneController.text.length>11){
       uForm.phone=u.phoneNumber;

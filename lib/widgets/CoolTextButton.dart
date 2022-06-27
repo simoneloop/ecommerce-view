@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../Uti/Consts.dart';
+import 'CoolText.dart';
+
 class CoolTextButton extends StatelessWidget {
   const CoolTextButton({Key? key, required this.gradient, required this.text, required this.press,this.height,this.width, this.textStyle}) : super(key: key);
 
@@ -19,9 +22,6 @@ class CoolTextButton extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: gradient,
             ),
-            child: TextButton(onPressed: press, child:Text(text,style:textStyle != null?textStyle: Theme.of(context)
-                .textTheme
-                .headline4
-                ?.copyWith(color: Colors.white,fontWeight: FontWeight.bold),) )));
+            child: TextButton(onPressed: press, child:CoolText(text:text,size: "m",textStyle:textStyle != null?textStyle: null,color:Consts.PRIMARY_COLOR,) )));
   }
 }

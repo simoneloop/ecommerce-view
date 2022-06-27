@@ -48,7 +48,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         onPressed: widget.leadingFunction,
       ): CoolIconButton(icon: Icons.home_rounded, press:() {
         Navigator.pushNamed(context, 'HomePage');
-      }, color: Colors.white, size: 20, colorShadow: Colors.blueGrey)/*IconButton(
+      }, color: Colors.white, size: 20, colorShadow: widget.index == 0?Colors.deepPurple:null)/*IconButton(
         icon:Icon(Icons.home_rounded),
         onPressed:() {
                 Navigator.pushNamed(context, 'HomePage');

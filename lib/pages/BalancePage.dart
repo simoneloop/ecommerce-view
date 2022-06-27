@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import "package:flutter/material.dart";
 import 'package:ecommerce_view/entities/Purchase.dart';
 
@@ -45,7 +46,7 @@ class _BalancePageState extends State<BalancePage> {
                       ]),
                   child:Column(
                     children: [
-                      Text("Ordini effettuati",style: Theme.of(context).textTheme.headline3,),
+                      CoolText(text: "Ordini effettuati", size: "m"),
                       Container(
                         constraints:BoxConstraints(minWidth:size.width,minHeight: size.height/4,maxWidth: size.width,maxHeight: size.height),
                         child: FutureBuilder(
@@ -59,7 +60,6 @@ class _BalancePageState extends State<BalancePage> {
                                       itemCount: snapshot.data!.length,
                                       itemBuilder: (context,i){
                                         return PurchaseCard(purchase:snapshot.data![i]);
-                                        return Text(snapshot.data![i].purchaseTime.toString());
                                       }),);
                               }
                               else{

@@ -78,7 +78,7 @@ class Consts{
     color: Colors.black,
   );
   static const TextStyle mediumTextStyle=TextStyle(
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );
@@ -92,21 +92,21 @@ class Consts{
 
   static const Color kTextLightBlack=Colors.black26;
   static const Color kBlueColor=Color(0xFF0D47A1);
-  static const LinearGradient kBlueGradient=LinearGradient(
+  static const LinearGradient PrimoGradient=LinearGradient(
     colors: <Color>[
       Color(0xFF0D47A1),
       Color(0xFF1976D2),
       Color(0xFF42A5F5),
     ],
   );
-  static const LinearGradient kOrangeGradient=LinearGradient(
+  static const LinearGradient SecondoGradient=LinearGradient(
     colors: <Color>[
       Color(0xFFA1480D),
       Color(0xFFD27919),
       Color(0xFFF59642),
     ],
   );
-  static const LinearGradient kGreyGradient=LinearGradient(
+  static const LinearGradient TerzoGradient=LinearGradient(
     colors: <Color>[
       Color(0xFF646464),
       Color(0xFF969696),
@@ -116,6 +116,7 @@ class Consts{
   static const double kToolbarHeight=50;
   static const Color PRIMARY_COLOR=Colors.white;
   static const Color SECONDARY_COLOR=Color(0xffff965e);
+
 
   //EXAMPLES
   /*Proxy.sharedProxy.logIn("user","user")*/

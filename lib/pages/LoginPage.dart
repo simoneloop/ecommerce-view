@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 25,
                         ),
-                        CoolText(text: "Login", size: "m"),
+                        CoolText(text: "Login", size: "m",color: Colors.white,),
                         SizedBox(height: 25),
                         TextFormField(
                           controller: _emailController,
@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         Column(
 
                           children: [
-                            CoolTextButton(gradient: Consts.kOrangeGradient, text: "Login", press:(){ValidateAndLogin();
+                            CoolTextButton(gradient: Consts.SecondoGradient, text: "Login", press:(){ValidateAndLogin();
                             setState(() {
                               isApiCallProcess=true;
                             });
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                   CoolText(text: "Prima volta?", size: "s"),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: CoolTextButton(gradient: Consts.kBlueGradient, text: "Registrati", press: (){Navigator.pushNamed(context, "RegistrationPage");},width: 130,height: 40,),
+                                    child: CoolTextButton(gradient: Consts.PrimoGradient, text: "Registrati", press: (){Navigator.pushNamed(context, "RegistrationPage");},width: 130,height: 40,),
                                   )
 
                                 ],
