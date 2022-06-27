@@ -129,9 +129,9 @@ class _CartCounterState extends State<CartCounter> {
                     }),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    numOfItems.toString().padLeft(2, "0"),
-                    style: Theme.of(context).textTheme.headline4,
+                  child: CoolText(
+                    text:numOfItems.toString().padLeft(2, "0"),
+                    size:"s",
                   ),
                 ),
                 buildOutlinedButton(
@@ -197,7 +197,7 @@ class _CartCounterState extends State<CartCounter> {
                       child: Container(
                         decoration: BoxDecoration(
 
-                            gradient: Consts.kBlueGradient
+                            gradient: Consts.PrimoGradient
                         ),
                         child: CoolTextButton(text: 'Compra ora',press: (){
 
@@ -224,7 +224,7 @@ class _CartCounterState extends State<CartCounter> {
                           else{
                             Navigator.pushNamed(context, "LoginPage");
                             showCoolSnackbar(context,Consts.REQUIRED_LOGIN_EXCEPTION,"err");
-                          }},gradient: Consts.kBlueGradient,),
+                          }},gradient: Consts.PrimoGradient,),
                       ),
                     ),
                   )

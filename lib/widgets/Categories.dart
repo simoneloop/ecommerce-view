@@ -1,3 +1,4 @@
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -45,12 +46,7 @@ class _CategoriesState extends State<Categories> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(categories[index],
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: selectedIndex == index ? Colors.black : Consts
-                          .kTextLightBlack
-                  )
+              CoolText(text:categories[index],size: "xs",color:  selectedIndex == index ? Colors.black : Consts.kTextLightBlack,
               ),
               Container(
                 height: 2,

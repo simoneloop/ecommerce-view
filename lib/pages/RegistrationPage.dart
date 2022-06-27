@@ -309,7 +309,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        CoolTextButton(gradient: Consts.kOrangeGradient, text: "Crea un account", press: (){
+                        CoolTextButton(gradient: Consts.SecondoGradient, text: "Crea un account", press: (){
                           ValidateAndRegister();},width: 200,height: 40,),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -317,7 +317,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CoolText(text: "Hai già un account?", size: "s"),
-                              CoolTextButton(gradient: Consts.kBlueGradient, text: "Accedi", press: (){Navigator.pushNamed(context, "LoginPage");},width: 100,height: 40,),
+                              CoolTextButton(gradient: Consts.PrimoGradient, text: "Accedi", press: (){Navigator.pushNamed(context, "LoginPage");},width: 100,height: 40,),
 
                             ],
                           ),

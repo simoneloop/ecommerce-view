@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/ProductInPurchase.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
+import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/material.dart';
 
@@ -33,17 +34,7 @@ class _UserCartPageState extends State<UserCartPage> {
       });
     }*/
     super.initState();
-    /*userCart=Proxy.sharedProxy.getUserCart();*/
     cartModified();
-    /*userCart.then((value) {
-      List<ProductInPurchase> listPip=value;
-      setState(() {
-        listPip.forEach((element) {totale+=(element.buyed.price*element.quantity);});
-      });
-    });*/
-
-
-
   }
 
 
@@ -88,9 +79,7 @@ class _UserCartPageState extends State<UserCartPage> {
                                       offset: Offset(0, 10),
                                       blurRadius: 20)
                                 ]),
-                            child: Text("Sembra che tu non abbia prodotti nel carrello",
-                              style: Theme.of(context).textTheme.headline4,
-                              textAlign: TextAlign.center,),
+                            child:CoolText(text:"Sembra che tu non abbia prodotti nel carrello" ,size: "m",textAlign: TextAlign.center,),
                           )
                         ],
                       )
@@ -128,8 +117,8 @@ class _UserCartPageState extends State<UserCartPage> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("totale: $totale",style: Theme.of(context).textTheme.headline3,),
-                          CoolTextButton(text: "Compra tutto",gradient: Consts.kBlueGradient,press:  (){
+                          CoolText(text: "totale: $totale", size: "m"),
+                          CoolTextButton(text: "Compra tutto",gradient: Consts.PrimoGradient,press:  (){
                             userCart.then((value) {
                               cartModified();
                               if(value.length>0){

@@ -37,7 +37,7 @@ class _ProductCardState extends State<ProductCard> {
                 )));
       },
       child: Container(
-        decoration: widget.product.quantity>0?BoxDecoration(gradient: Consts.kBlueGradient,borderRadius: BorderRadius.circular(16)):BoxDecoration(gradient: Consts.kOrangeGradient,borderRadius: BorderRadius.circular(16)),
+        decoration: widget.product.quantity>0?BoxDecoration(gradient: Consts.PrimoGradient,borderRadius: BorderRadius.circular(16)):BoxDecoration(gradient: Consts.SecondoGradient,borderRadius: BorderRadius.circular(16)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -95,7 +95,7 @@ class _ProductCardState extends State<ProductCard> {
                               child: CoolText(text: widget.product.name,size: "s",color: Colors.white,)),
                         ),
                       ),
-                      Text(widget.product.price.toString()+"€",style: Theme.of(context).textTheme.headline2?.copyWith(fontWeight: FontWeight.w900,color: Colors.white),)
+                      CoolText(text:widget.product.price.toString()+"€",size:"b",color:Colors.white,)
 
                     ],
                   ),

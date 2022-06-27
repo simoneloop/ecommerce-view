@@ -146,49 +146,11 @@ class _AdminPageState extends State<AdminPage> {
                                           }),
                                     ),
                                   );
-                                  /*return Text(totalProductHot![i].purchaseTime.toString());*/
-                                }):CoolCircularProgress(),/*FutureBuilder(
-                              future: productList,
-                                builder: (BuildContext ctx,AsyncSnapshot<List> snapshot){
-                                  if(snapshot.connectionState==ConnectionState.done && snapshot.hasData){
-                                    return ScrollConfiguration(behavior: ScrollConfiguration.of(context).copyWith(
-                                        dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context,i){
 
-                                            return Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                              child: Container(
-                                                  decoration: BoxDecoration(
-                                                  border: Border(bottom: BorderSide(width: 1.0,color:i<snapshot.data!.length-1? Colors.blueGrey.withOpacity(0.5):Colors.transparent))
-                                              ),
-                                                child: CheckboxListTile(
-                                                  title: CoolText(text:snapshot.data![i].name, size: 's',),
-                                                    value: mapSelectedHotProduct[snapshot.data![i].name],
-                                                    onChanged: (bool? value){
-                                                    setState(() {
-                                                      mapSelectedHotProduct[snapshot.data![i].name]=value!;
-                                                    });
-                                                    }),
-                                              ),
-                                            );
-                                            return Text(snapshot.data![i].purchaseTime.toString());
-                                          }),
-
-
-
-
-                                    );
-                                  }
-                                  else{
-                                    return CircularProgressIndicator();
-                                  }
-                                }),*/
+                                }):CoolCircularProgress(),
                           ),
                         ),
-                        CoolTextButton(gradient: Consts.kBlueGradient,
+                        CoolTextButton(gradient: Consts.PrimoGradient,
                             text: "SALVA",
                             press: (){
                           Proxy.sharedProxy.modifyHots(mapSelectedHotProduct).then((value) {
@@ -426,21 +388,12 @@ class _AdminPageState extends State<AdminPage> {
                                 ),)
                           ),
                         ),
-
-                        /*ElevatedButton(onPressed: (){pickImage();},
-                            child:Row(
-
-                              children: [
-                                Icon(Icons.image),
-                                Expanded(child: CoolText(text: "Carica foto prodotto", size: "s",textAlign: TextAlign.center,color: Colors.white,))
-                              ],
-                            )),*/
                         Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 30),
                               child: Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: CoolTextButton(gradient: Consts.kBlueGradient, text: "AGGIUNGI", press: (){addProduct(); })),
+                                  child: CoolTextButton(gradient: Consts.PrimoGradient, text: "AGGIUNGI", press: (){addProduct(); })),
                             ))
 
                       ],
@@ -510,7 +463,7 @@ class _AdminPageState extends State<AdminPage> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: CoolTextButton(gradient:_canModify? Consts.kBlueGradient:Consts.kGreyGradient, text: "MODIFICA", press: (){
+                                  child: CoolTextButton(gradient:_canModify? Consts.PrimoGradient:Consts.TerzoGradient, text: "MODIFICA", press: (){
                                     if(_canModify){
 
                                       Product p;
@@ -544,7 +497,7 @@ class _AdminPageState extends State<AdminPage> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: CoolTextButton(gradient: Consts.kOrangeGradient, text: "RIMUOVI", press: (){deleteProducts();}),
+                                  child: CoolTextButton(gradient: Consts.SecondoGradient, text: "RIMUOVI", press: (){deleteProducts();}),
                                 )
                               ],
                             ),
@@ -781,21 +734,12 @@ class _AdminPageState extends State<AdminPage> {
                                 ),)
                           ),
                         ),
-
-                        /*ElevatedButton(onPressed: (){pickImage();},
-                            child:Row(
-
-                              children: [
-                                Icon(Icons.image),
-                                Expanded(child: CoolText(text: "Carica foto prodotto", size: "s",textAlign: TextAlign.center,color: Colors.white,))
-                              ],
-                            )),*/
                         Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 30),
                               child: Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: CoolTextButton(gradient: Consts.kBlueGradient, text: "SALVA MODIFICHE", press: (){modifyProduct(); })),
+                                  child: CoolTextButton(gradient: Consts.PrimoGradient, text: "SALVA MODIFICHE", press: (){modifyProduct(); })),
                             ))
 
                       ],
@@ -983,7 +927,6 @@ Future pickImage(bool isModifing) async{
         showCoolSnackbar(context, "Errore sconosciuto", "err");
       }
     });
-    print(selected);
   }
 
   void updateCanModify(){
