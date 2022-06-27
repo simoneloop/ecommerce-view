@@ -34,6 +34,8 @@ dependencies:
   jwt_decode: 0.3.1
   image_picker: ^0.8.5+3
   dotted_border: 2.0.0+2
+  neon: ^0.1.0
+  google_fonts: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

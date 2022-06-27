@@ -1,5 +1,6 @@
 import 'package:ecommerce_view/Uti/Support.dart';
 import 'package:flutter/material.dart';
+import 'package:neon/neon.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
 
@@ -26,7 +27,13 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text("I Gioielli e l'arte",
+      title: /*Neon(text: "3DMade",
+      color: Colors.yellow,
+      fontSize: 35,
+      font: NeonFont.Beon,
+      flickeringText: true,
+        flickeringLetters: null,
+      )*/Text("I Gioielli e l'arte",
           style: Theme.of(context)
               .textTheme
               .headline3
