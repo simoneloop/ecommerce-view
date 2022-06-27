@@ -43,15 +43,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       leading:widget.leadingFunction != null?IconButton(
         icon: Icon(Icons.arrow_back_ios_outlined),
         onPressed: widget.leadingFunction,
-      ): CoolIconButton(icon: Icons.home_rounded, press:() {
+      ): /*CoolIconButton(icon: Icons.home_rounded, press:() {
         Navigator.pushNamed(context, 'HomePage');
-      }, color: Colors.white, size: 20, colorShadow: widget.index == 0?Colors.deepPurple:null)/*IconButton(
+      }, color: Colors.white, size: 20, colorShadow: widget.index == 0?Colors.deepPurple:null)*/IconButton(
         icon:Icon(Icons.home_rounded),
         onPressed:() {
                 Navigator.pushNamed(context, 'HomePage');
               },
         color: widget.index == 0 ? Colors.amber : null,
-      )*/,
+      ),
       actions: isAdmin?adminWidgets(context):userWidgets(context),
     );
   }
