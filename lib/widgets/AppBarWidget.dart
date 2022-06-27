@@ -27,17 +27,17 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: /*Neon(text: "3DMade",
+      title: Neon(text: "3DMade",
       color: Colors.yellow,
       fontSize: 35,
       font: NeonFont.Beon,
       flickeringText: true,
         flickeringLetters: null,
-      )*/Text("I Gioielli e l'arte",
+      )/*Text("I Gioielli e l'arte",
           style: Theme.of(context)
               .textTheme
               .headline3
-              ?.copyWith(color: Colors.white)),
+              ?.copyWith(color: Colors.white))*/,
       centerTitle: true,
       backgroundColor: Theme.of(context).colorScheme.secondary,
       elevation: 10,
