@@ -65,7 +65,7 @@ class Consts{
   static const String REQUIRED_LOGIN_EXCEPTION="Devi prima effettuare il login";
   static const String IS_ADMIN_EXCEPTION="Sei admin non hai a disposizione questa funzione";
 
-
+  static const String TITLE="I gioielli e l'arte";
 
   static const TextStyle extraSmallTextStyle=TextStyle(
     fontSize: 15,
@@ -114,10 +114,8 @@ class Consts{
     ],
   );
   static const double kToolbarHeight=50;
-  static const Color BRACCIALE_COLOR=Color(0xffd4b483);
-  static const Color ORECCHINO_COLOR=Color(0xffccfbfe);
-  static const Color COLLANA_COLOR=Color(0xffa26769);
-  static const Color proviamoColor=Color(0xffff965e);
+  static const Color PRIMARY_COLOR=Colors.white;
+  static const Color SECONDARY_COLOR=Color(0xffff965e);
 
   //EXAMPLES
   /*Proxy.sharedProxy.logIn("user","user")*/
