@@ -1,4 +1,5 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
+import 'package:ecommerce_view/Uti/Support.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +15,10 @@ class PurchaseCard extends StatefulWidget {
 }
 
 class _PurchaseCardState extends State<PurchaseCard> {
+
   @override
   Widget build(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     return Stack(
       children: [
         Container(
@@ -118,7 +121,35 @@ class _PurchaseCardState extends State<PurchaseCard> {
                       )
 
                     ],
+                  ),
+                if(Proxy.appState.getValue(Consts.USER_LOGGED_IS_ADMIN))
+                  Column(
+                    children: [
+                      CoolText(text: "Servito", size: "m"),
+                      Padding(
+                        padding: EdgeInsets.only(top: 100),
+                        child: Container(
+                          constraints: BoxConstraints(maxWidth: size.width/15,maxHeight: size.height/15),
+                          child: CheckboxListTile(
+                              value: widget.purchase.done, onChanged: (value){
+                                setState(() {
+                                  widget.purchase.done=!widget.purchase.done;
+                                  Proxy.sharedProxy.setPurchaseDone(widget.purchase.id, widget.purchase.done).then((value) {
+                                    if(value==HttpResult.done){
+                                      showCoolSnackbar(context, "Salvato", "ok");
+                                    }
+                                    else{
+                                      showCoolSnackbar(context, "Errore", "err");
+                                    }
+                                  });
+                                });
+                          }),
+                        ),
+                      )
+                    ],
                   )
+
+
 
 
               ],

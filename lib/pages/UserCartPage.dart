@@ -143,7 +143,12 @@ class _UserCartPageState extends State<UserCartPage> {
                                     showCoolSnackbar(context,"Pagamento rifiutato, probabilmente non abbastanza credito","err");
                                   }
                                   else if(value==HttpResult.cartIsEmpty){
+                                    cartModified();
                                     showCoolSnackbar(context,"Il carrello è vuoto, forse qualche prodotto è stato eliminato","err");
+                                  }
+                                  else if(value==HttpResult.productDoesNotExist){
+                                    cartModified();
+                                    showCoolSnackbar(context,"Un prodotto che avevi nel carrello è stato recentemente eliminato","err");
                                   }
                                   else if(value==HttpResult.quantityUnavailable){
                                     userCart=Proxy.sharedProxy.getUserCart();

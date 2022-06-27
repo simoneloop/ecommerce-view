@@ -22,6 +22,7 @@ class Consts{
   static const String REQUEST_MODIFY_PRODUCT="/products/modify";
   static const String REQUEST_GET_ALL_PRODUCTS="/products/getAll";
   static const String REQUEST_GET_ALL_PURCHASE="/purchase/getAllPurchase";
+  static const String REQUEST_SET_PURCHASE_DONE="/purchase/setPurchaseDone";
 
   //USER-REQUEST
   static const String REQUEST_ADD_PRODUCT_TO_CART="/users/addToCart";

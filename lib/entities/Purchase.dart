@@ -14,6 +14,7 @@ class Purchase {
     required this.buyer,
     required this.buyed,
     required this.quantity,
+    required this.done,
   });
 
   dynamic id;
@@ -21,6 +22,7 @@ class Purchase {
   User buyer;
   Product buyed;
   int quantity;
+  bool done;
 
   factory Purchase.fromJson(Map<String, dynamic> json) => Purchase(
     id: json["id"],
@@ -28,6 +30,7 @@ class Purchase {
     buyer: User.fromJson(json["buyer"]),
     buyed: Product.fromJson(json["buyed"]),
     quantity: json["quantity"],
+    done: json['done'],
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +39,7 @@ class Purchase {
     "buyer": buyer.toJson(),
     "buyed": buyed.toJson(),
     "quantity": quantity,
+    "done":done,
   };
 
   DateTime getPurchaseTime(){
@@ -43,7 +47,7 @@ class Purchase {
   }
   @override
   String toString() {
-    return "purhcase{when: "+purchaseTime.toString()+" buyer: "+buyer.toString()+" buyed: "+buyed.toString()+"quantity: "+quantity.toString()+"}";
+    return "purhcase{when: "+purchaseTime.toString()+" buyer: "+buyer.toString()+" buyed: "+buyed.toString()+"quantity: "+quantity.toString()+" done:"+done.toString()+"}";
   }
 
 }

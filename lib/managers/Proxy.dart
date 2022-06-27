@@ -51,7 +51,8 @@ enum HttpResult{
   notAmountException,
   quantityUnavailable,
   alreadyExist,
-  cartIsEmpty
+  cartIsEmpty,
+  productDoesNotExist
 }
 
 
@@ -219,6 +220,7 @@ class Proxy{
       if(rawResult.contains(Consts.RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION)){return HttpResult.notAmountException;}
       else if(rawResult.contains(Consts.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){return HttpResult.quantityUnavailable;}
       else if(rawResult.contains(Consts.RESPONSE_ERROR_CART_IS_EMPTY)){return HttpResult.cartIsEmpty;}
+      else if(rawResult.contains(Consts.RESPONSE_ERROR_PRODUCT_DOES_NOT_EXIST)){return HttpResult.productDoesNotExist;}
       else{return HttpResult.done;}
     }
     catch(err){
@@ -354,17 +356,29 @@ class Proxy{
   Future<List<Purchase>>getAllPurchase()async{
     try{
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_ALL_PURCHASE);
-      print(rawResult);
+      print("quaaaa"+rawResult);
       List purchases = jsonDecode(rawResult);
-
+      print("quaaaa"+purchases.toString());
       List<Purchase> res=purchases.map((e) => new Purchase.fromJson(e)).toList();
-
+      print("quaaaa"+res.toString());
       return res;
     }catch(err){
       print(err);
       return [];
     }
 
+  }
+  Future<HttpResult> setPurchaseDone(int id,bool done)async{
+    try{
+      Map<String,String>params=Map();
+      params['done']=done.toString();
+      params['id']=id.toString();
+      String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_SET_PURCHASE_DONE,params: params);
+      return HttpResult.done;
+    }catch(err){
+      print(err);
+      return HttpResult.error;
+    }
   }
 
 

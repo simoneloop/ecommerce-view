@@ -14,6 +14,8 @@ import 'package:image_picker/image_picker.dart';
 
 import '../entities/Product.dart';
 import '../managers/Proxy.dart';
+import '../widgets/CoolCircularProgress.dart';
+import '../widgets/SearchForm.dart';
 class AdminPage extends StatefulWidget {
   @override
   _AdminPageState createState() => _AdminPageState();
@@ -62,6 +64,9 @@ class _AdminPageState extends State<AdminPage> {
   bool _isModifing=false;
   bool _retrieveModifing=false;
   Product? _isModifingProduct=null;
+  List<Product>? totalProductHot=null;
+  List<Product>? searchedProductHot=null;
+  List<Product>? searchedProductModify=null;
 
 
   @override
@@ -69,6 +74,9 @@ class _AdminPageState extends State<AdminPage> {
     productList=Proxy.sharedProxy.getAllProducts();
     productList.then((value) {
       setState(() {
+        totalProductHot=value;
+        searchedProductHot=value;
+        searchedProductModify=value;
         value.forEach((element) {
           mapSelectedHotProduct['${element.name}']=element.hot;
           mapSelectedProduct['${element.name}']=false;
@@ -83,8 +91,6 @@ class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     Size size=MediaQuery.of(context).size;
-    print("is_modific"+_isModifing.toString());
-
     return Scaffold(
       appBar: AppBarWidget(index: 1,),
       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -98,8 +104,6 @@ class _AdminPageState extends State<AdminPage> {
               child: Stack(
                 children: [
                   Container(
-                    /*width: double.infinity,*/
-                    /*margin: EdgeInsets.only(top: 10,bottom: 10),*/
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Theme.of(context).primaryColor,
@@ -116,11 +120,34 @@ class _AdminPageState extends State<AdminPage> {
                         SizedBox(height: 10,),
                         CoolText(text: "Modifica vetrina", size: "m"),
                         SizedBox(height: 15,),
+                        SearchForm(press:(value){filterHot(value);}),
 
                         SingleChildScrollView(
                           child: Container(
                             constraints:BoxConstraints(/*minWidth:size.width/3,*/minHeight: size.height/4,/*maxWidth: size.width/3,*/maxHeight: size.height/1.5),
-                            child: FutureBuilder(
+                            child:searchedProductHot!=null? ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: searchedProductHot!.length,
+                                itemBuilder: (context,i){
+
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(bottom: BorderSide(width: 1.0,color:i<searchedProductHot!.length-1? Colors.blueGrey.withOpacity(0.5):Colors.transparent))
+                                      ),
+                                      child: CheckboxListTile(
+                                          title: CoolText(text:searchedProductHot![i].name, size: 's',),
+                                          value: mapSelectedHotProduct[searchedProductHot![i].name],
+                                          onChanged: (bool? value){
+                                            setState(() {
+                                              mapSelectedHotProduct[searchedProductHot![i].name]=value!;
+                                            });
+                                          }),
+                                    ),
+                                  );
+                                  /*return Text(totalProductHot![i].purchaseTime.toString());*/
+                                }):CoolCircularProgress(),/*FutureBuilder(
                               future: productList,
                                 builder: (BuildContext ctx,AsyncSnapshot<List> snapshot){
                                   if(snapshot.connectionState==ConnectionState.done && snapshot.hasData){
@@ -148,12 +175,17 @@ class _AdminPageState extends State<AdminPage> {
                                               ),
                                             );
                                             return Text(snapshot.data![i].purchaseTime.toString());
-                                          }),);
+                                          }),
+
+
+
+
+                                    );
                                   }
                                   else{
                                     return CircularProgressIndicator();
                                   }
-                                }),
+                                }),*/
                           ),
                         ),
                         CoolTextButton(gradient: Consts.kBlueGradient,
@@ -442,44 +474,32 @@ class _AdminPageState extends State<AdminPage> {
                         SizedBox(height: 10,),
                         CoolText(text: "Magazzino", size: "m"),
                         SizedBox(height: 15,),
-
+                        SearchForm(press:(value){filterModify(value);}),
                         SingleChildScrollView(
                           child: Container(
                             constraints:BoxConstraints(/*minWidth:size.width/3,*/minHeight: size.height/4,/*maxWidth: size.width/3,*/maxHeight: size.height/1.5),
-                            child: FutureBuilder(
-                                future: productList,
-                                builder: (BuildContext ctx,AsyncSnapshot<List> snapshot){
-                                  if(snapshot.connectionState==ConnectionState.done && snapshot.hasData){
-                                    return ScrollConfiguration(behavior: ScrollConfiguration.of(context).copyWith(
-                                        dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse}),
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          itemCount: snapshot.data!.length,
-                                          itemBuilder: (context,i){
-                                            return Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 10),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border(bottom: BorderSide(width: 1.0,color:i<snapshot.data!.length-1? Colors.blueGrey.withOpacity(0.5):Colors.transparent))
-                                                ),
-                                                child: CheckboxListTile(
-                                                    title: CoolText(text:snapshot.data![i].name, size: 's',),
-                                                    value: mapSelectedProduct[snapshot.data![i].name],
-                                                    onChanged: (bool? value){
-                                                      setState(() {
-                                                        mapSelectedProduct[snapshot.data![i].name]=value!;
-                                                        updateCanModify();
-                                                      });
-                                                    }),
-                                              ),
-                                            );
-                                            return Text(snapshot.data![i].purchaseTime.toString());
-                                          }),);
-                                  }
-                                  else{
-                                    return CircularProgressIndicator();
-                                  }
-                                }),
+                            child: searchedProductModify!=null?ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: searchedProductModify!.length,
+                                itemBuilder: (context,i){
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(bottom: BorderSide(width: 1.0,color:i<searchedProductModify!.length-1? Colors.blueGrey.withOpacity(0.5):Colors.transparent))
+                                      ),
+                                      child: CheckboxListTile(
+                                          title: CoolText(text:searchedProductModify![i].name, size: 's',),
+                                          value: mapSelectedProduct[searchedProductModify![i].name],
+                                          onChanged: (bool? value){
+                                            setState(() {
+                                              mapSelectedProduct[searchedProductModify![i].name]=value!;
+                                              updateCanModify();
+                                            });
+                                          }),
+                                    ),
+                                  );
+                                }):CoolCircularProgress(),
                           ),
                         ),
                         Padding(
@@ -1052,7 +1072,7 @@ Future pickImage(bool isModifing) async{
         try{
           if(modifingImage!=null){
             Proxy.sharedProxy.addProPic(modifingWebImage, _nameController.text).then((value) {
-              Product p=Product(name: _nameModifingController.text, description: _descriptionModifingController.text, quantity: int.parse(_quantityModifingController.text), price: double.parse((_priceModifingController.text)), typo: _modifingRadioValue, hot: false,urlPropic: value);
+              Product p=Product(name: _nameModifingController.text, description: _descriptionModifingController.text, quantity: int.parse(_quantityModifingController.text), price: double.parse((_priceModifingController.text)), typo: _modifingRadioValue, hot: false,urlPropic: value,enabled:true);
               Proxy.sharedProxy.modifyProduct(p,_isModifingProduct!.name).then((value) {
                 if(value==HttpResult.done){
                   showCoolSnackbar(context,"Prodotto modificato con successo","ok");
@@ -1065,7 +1085,7 @@ Future pickImage(bool isModifing) async{
             });
           }
           else{
-            Product p=Product(name: _nameModifingController.text, description: _descriptionModifingController.text, quantity: int.parse(_quantityModifingController.text), price: double.parse((_priceModifingController.text)), typo: _modifingRadioValue, hot: false,urlPropic: urlPropic);
+            Product p=Product(name: _nameModifingController.text, description: _descriptionModifingController.text, quantity: int.parse(_quantityModifingController.text), price: double.parse((_priceModifingController.text)), typo: _modifingRadioValue, hot: false,urlPropic: urlPropic,enabled:true);
             Proxy.sharedProxy.modifyProduct(p,_isModifingProduct!.name).then((value) {
               if(value==HttpResult.done){
                 showCoolSnackbar(context,"Prodotto modificato con successo","ok");
@@ -1090,6 +1110,10 @@ Future pickImage(bool isModifing) async{
     mapSelectedProduct={};
     productList;
     setState(() {
+      searchedProductModify=null;
+      searchedProductHot=null;
+      totalProductHot=null;
+
       _nameController=TextEditingController();
       _descriptionController=TextEditingController();
       _priceController=TextEditingController();
@@ -1107,6 +1131,9 @@ Future pickImage(bool isModifing) async{
       productList=Proxy.sharedProxy.getAllProducts();
       productList.then((value) {
         setState(() {
+          totalProductHot=value;
+          searchedProductModify=value;
+          searchedProductHot=value;
           value.forEach((element) {
             mapSelectedHotProduct['${element.name}']=element.hot;
             mapSelectedProduct['${element.name}']=false;
@@ -1116,5 +1143,46 @@ Future pickImage(bool isModifing) async{
       });
     });
   }
+  filterHot(String value){
+    searchedProductHot=[];
+    if(value==""){
+      setState(() {
+        searchedProductHot=totalProductHot;
+      });
+    }
+    else{
+      totalProductHot!.forEach((element) {
+        if(element.name==value){
+          setState(() {
+            searchedProductHot!.add(element);
+          });
+
+        }
+      });
+    }
+
+  }
+  filterModify(String value){
+    searchedProductModify=[];
+    if(value==""){
+      setState(() {
+        searchedProductModify=totalProductHot;
+      });
+    }
+    else{
+      totalProductHot!.forEach((element) {
+        if(element.name==value){
+          setState(() {
+            searchedProductModify!.add(element);
+          });
+
+        }
+      });
+    }
+
+  }
+  /*Future<List<Product>>getProduct(String name){
+    Future<Product> res=productList.then((value) )
+  }*/
 
 }

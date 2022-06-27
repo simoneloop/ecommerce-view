@@ -99,15 +99,6 @@ class _ProductCardState extends State<ProductCard> {
 
                     ],
                   ),
-                  /*if (actions!=null) Container(
-                    margin: EdgeInsets.only(left: 70),
-                    padding: const EdgeInsets.only(left: 10),
-                    constraints:BoxConstraints(maxWidth: actions!.length*60.0,maxHeight: 30.0),
-                    child: ListView.builder(
-                        scrollDirection:Axis.horizontal,
-                        itemCount:actions?.length,
-                        itemBuilder: (context,i){final action=actions![i];return action;}),
-                  )*/
                 ],
               ),
             ),
@@ -141,13 +132,3 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
-/*Material(
-borderRadius: BorderRadius.circular(16),
-clipBehavior: Clip.antiAliasWithSaveLayer,
-child: Container(width:130,height: 60,child: Image.network("https://picsum.photos/200/100")))*/
-/*Container(
-height: 180,
-width: 160,
-decoration: BoxDecoration(color: Consts.BRACCIALE_COLOR,
-borderRadius: BorderRadius.circular(16)),
-child: Image.network("https://picsum.photos/100"),*/

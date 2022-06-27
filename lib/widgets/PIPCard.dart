@@ -17,6 +17,7 @@ enum ProductStatus{
   available,
   unavailable,
   lessAvailable,
+  disabled,
 }
 
 class _PIPCardState extends State<PIPCard> {
@@ -30,6 +31,9 @@ class _PIPCardState extends State<PIPCard> {
     }
     else if(widget.pip.quantity>widget.pip.buyed.quantity){
       productStatus=ProductStatus.lessAvailable;
+    }
+    else if(!widget.pip.buyed.enabled){
+      productStatus=ProductStatus.disabled;
     }
   }
   @override
@@ -90,6 +94,14 @@ class _PIPCardState extends State<PIPCard> {
          children: [
            Icon(Icons.warning_amber_outlined,color: Colors.transparent,),
            CoolText(text: "prodotto non più disponibile", size: "s",color: Colors.transparent,),
+         ],
+       );
+     }
+     else if(ps==ProductStatus.disabled){
+       return Column(
+         children: [
+           Icon(Icons.warning_amber_outlined,color: Colors.red,),
+           CoolText(text: "Prodotto non più disponibile", size: "s",color: Colors.transparent,),
          ],
        );
      }

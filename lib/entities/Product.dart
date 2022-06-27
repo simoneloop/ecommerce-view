@@ -20,6 +20,7 @@ class Product {
     required this.typo,
     this.urlPropic,
     required this.hot,
+    required this.enabled
   });
 
   dynamic id;
@@ -30,6 +31,7 @@ class Product {
   String typo;
   dynamic urlPropic;
   bool hot;
+  bool enabled;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -40,6 +42,7 @@ class Product {
     typo: json["typo"],
     urlPropic: json["urlPropic"],
     hot: json["hot"],
+    enabled:json['enabled']
   );
 
   Map<String, dynamic> toJson() => {
@@ -51,11 +54,12 @@ class Product {
     "typo": typo,
     "urlPropic": urlPropic,
     "hot": hot,
+    "enabled":enabled
   };
 
   @override
   String toString() {
     // TODO: implement toString
-    return "product{name: "+name+" desc: "+description+" quantity: "+quantity.toString()+"\n  price: "+price.toString()+" typo: "+typo+" urlPropic: "+(urlPropic!=null?urlPropic:"")+" isHot: "+hot.toString()+"}";
+    return "product{name: "+name+" desc: "+description+" quantity: "+quantity.toString()+"\n  price: "+price.toString()+" typo: "+typo+" urlPropic: "+(urlPropic!=null?urlPropic:"")+" isHot: "+hot.toString()+" enabled: "+enabled.toString()+"}";
   }
 }
