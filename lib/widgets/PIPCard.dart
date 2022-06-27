@@ -202,7 +202,7 @@ class _CartCounterState extends State<CartCounter> {
                 }),
             IconButton(onPressed: (){
               Proxy.sharedProxy.removeFromMyCart(widget.pip.buyed.name).then((value) {callback();});
-              }, icon: Icon(Icons.delete))
+              }, icon: Icon(Icons.delete,color:Consts.secondary_color,))
           ],
         ),
       ),

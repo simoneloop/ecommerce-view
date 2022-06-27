@@ -30,58 +30,58 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title:/*Neon(text: "3DMade",
+      title:Neon(text: Consts.TITLE,
       color: Colors.yellow,
       fontSize: 35,
-      font: NeonFont.Beon,
+      font: NeonFont.Cyberpunk,
       flickeringText: true,
         flickeringLetters: null,
-      )*/CoolText(text:Consts.TITLE,size:"b"),
+      )/*CoolText(text:Consts.TITLE,size:"b")*/,
       centerTitle: true,
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Colors.black,
       elevation: 10,
-      leading:widget.leadingFunction != null?IconButton(
-        icon: Icon(Icons.arrow_back_ios_outlined),
-        onPressed: widget.leadingFunction,
-      ): CoolIconButton(icon: Icons.home_rounded, press:() {
+      leading:widget.leadingFunction != null?
+      CoolIconButton(
+          icon: Icons.arrow_back_ios_outlined,
+          press: widget.leadingFunction!,
+          color: Colors.white,
+          size: 20,
+          colorShadow: widget.index == 0?Consts.secondary_color:null)
+          :CoolIconButton(icon: Icons.home_rounded, press:() {
         Navigator.pushNamed(context, 'HomePage');
-      }, color: Colors.white, size: 20, colorShadow: widget.index == 0?Colors.deepPurple:null)/*IconButton(
-        icon:Icon(Icons.home_rounded),
-        onPressed:() {
-                Navigator.pushNamed(context, 'HomePage');
-              },
-        color: widget.index == 0 ? Colors.amber : null,
-      )*/,
+      }, color: Colors.white, size: 20, colorShadow: widget.index == 0?Consts.secondary_color:null),
       actions: isAdmin?adminWidgets(context):userWidgets(context),
     );
   }
 
   List<Widget> userWidgets(BuildContext context) {
     return <Widget>[
-      IconButton(
-        onPressed: () {
-          if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
-            Navigator.pushNamed(context, 'UserDetailsPage');
-          } else {
-            Navigator.pushNamed(context, 'LoginPage');
-            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
-          }
-        },
-        icon: Icon(Icons.person),
-        color: widget.index == 1 ? Colors.amber : null,
-      ),
-      IconButton(
-        onPressed: () {
-          if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
-            Navigator.pushNamed(context, 'UserCartPage');
-          } else {
-            Navigator.pushNamed(context, 'LoginPage');
-            showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
-          }
-        },
-        icon: Icon(Icons.shopping_cart),
-        color: widget.index == 2 ? Colors.amber : null,
-      ),
+      CoolIconButton(
+          icon: Icons.person,
+          press: () {
+            if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
+              Navigator.pushNamed(context, 'UserDetailsPage');
+            } else {
+              Navigator.pushNamed(context, 'LoginPage');
+              showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+            }
+          },
+          color: Colors.white,
+          size: 20,
+          colorShadow: widget.index == 1?Consts.secondary_color:null),
+      CoolIconButton(
+          icon: Icons.shopping_cart,
+          press: () {
+            if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
+              Navigator.pushNamed(context, 'UserCartPage');
+            } else {
+              Navigator.pushNamed(context, 'LoginPage');
+              showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+            }
+          },
+          color: Colors.white,
+          size: 20,
+          colorShadow: widget.index == 2?Consts.secondary_color:null),
       SizedBox(
         width: 10,
       )
@@ -90,23 +90,25 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   List<Widget> adminWidgets(BuildContext context) {
     return <Widget>[
-      IconButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "AdminPage");
-        },
-        icon: Icon(Icons.settings),
-        color: widget.index == 1 ? Colors.amber : null,
-      ),
+      CoolIconButton(
+          icon: Icons.settings,
+          press: () {
+            Navigator.pushNamed(context, "AdminPage");
+          },
+          color: Colors.white,
+          size: 20,
+          colorShadow: widget.index == 1?Consts.secondary_color:null),
       SizedBox(
         width: 10,
       ),
-      IconButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "BalancePage");
-        },
-        icon: Icon(Icons.account_balance_wallet),
-        color: widget.index == 2 ? Colors.amber : null,
-      ),
+      CoolIconButton(
+          icon: Icons.account_balance_wallet,
+          press: () {
+            Navigator.pushNamed(context, "BalancePage");
+          },
+          color: Colors.white,
+          size: 20,
+          colorShadow: widget.index == 2?Consts.secondary_color:null),
       SizedBox(
         width: 10,
       )

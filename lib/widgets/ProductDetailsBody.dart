@@ -1,5 +1,6 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/managers/Proxy.dart';
+import 'package:ecommerce_view/widgets/CoolIconButton.dart';
 import 'package:ecommerce_view/widgets/CoolText.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +28,7 @@ class ProductDetailsBody extends StatelessWidget {
                   margin: EdgeInsets.only(top: size.height * 0.45),
                   height: 500,
                   decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(24),
                           topRight: Radius.circular(24))),
@@ -150,46 +151,35 @@ class _CartCounterState extends State<CartCounter> {
               padding: const EdgeInsets.only(right: 60,top: 50),
               child: Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 15),
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(
-                            width: 2, color: Consts.kBlueColor)),
-                    child: IconButton(
-                      icon: Icon(Icons.add_shopping_cart),
-                      onPressed: () {
-                        if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null &&!isAdmin){
+                  CoolIconButton(color: Colors.white,colorShadow:Consts.secondary_color ,icon: Icons.add_shopping_cart,size:25 ,
+                    press:() {
+                      if(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS)!=null &&!isAdmin){
 
-                          Proxy.sharedProxy.setQuantity(widget.product.name,numOfItems).then((value) {
-                            if(value==addToCartResult.setted){
-                              showCoolSnackbar(context,"prodotto aggiunto con successo","ok");
+                        Proxy.sharedProxy.setQuantity(widget.product.name,numOfItems).then((value) {
+                          if(value==addToCartResult.setted){
+                            showCoolSnackbar(context,"prodotto aggiunto con successo","ok");
 
-                            }
-                            else if(value==addToCartResult.quantityUnavailable){
-                              showCoolSnackbar(context,"Non puoi aggiungere al carrello più della quantità disponibile","err");
+                          }
+                          else if(value==addToCartResult.quantityUnavailable){
+                            showCoolSnackbar(context,"Non puoi aggiungere al carrello più della quantità disponibile","err");
 
-                            }
-                            else{
-                              showCoolSnackbar(context,"errore sconosciuto","err");
-                            }
-                          });
+                          }
+                          else{
+                            showCoolSnackbar(context,"errore sconosciuto","err");
+                          }
+                        });
 
-                        }
-                        else if(isAdmin){
-                          showCoolSnackbar(context,Consts.IS_ADMIN_EXCEPTION,"err");
-                        }
-                        else{
-                          Navigator.pushNamed(context, "LoginPage");
-                          showCoolSnackbar(context,Consts.REQUIRED_LOGIN_EXCEPTION,"err");
+                      }
+                      else if(isAdmin){
+                        showCoolSnackbar(context,Consts.IS_ADMIN_EXCEPTION,"err");
+                      }
+                      else{
+                        Navigator.pushNamed(context, "LoginPage");
+                        showCoolSnackbar(context,Consts.REQUIRED_LOGIN_EXCEPTION,"err");
 
-                        }
+                      }
 
-                        },
-                    ),
-                  ),
+                    } ,),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: SizedBox(

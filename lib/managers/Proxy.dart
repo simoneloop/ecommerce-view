@@ -87,13 +87,9 @@ class Proxy{
           appState.addValue(Consts.USER_LOGGED_IS_ADMIN, true);
         }
       });
-      print(appState.getValue(Consts.USER_LOGGED_IS_ADMIN));
 
       return LogInResult.logged;
-
     }catch(err){
-      print(err);
-      print(LogInResult.error);
       return LogInResult.error;
     }
 
@@ -107,7 +103,6 @@ class Proxy{
       _restManager.token = _authenticationData.accessToken;
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -117,10 +112,8 @@ class Proxy{
         Consts.ADDRESS_SERVER, Consts.REQUEST_ADD_USER,
         body: user.toJson());
     if(rawResult.contains(Consts.RESPONSE_ERROR_USER_ALREADY_EXIST)){
-      print(Consts.RESPONSE_ERROR_USER_ALREADY_EXIST);
       return RegistrationResult.emailAlreadyExist;
     }
-    /*appState.addValue(Consts.USER_LOGGED_DETAILS, User.fromJson(jsonDecode(rawResult)));*/
     return RegistrationResult.registered;
 
   }
@@ -132,7 +125,6 @@ class Proxy{
       return User.fromJson(jsonDecode(rawResult));
     }
     catch(err){
-      print(err);
       return User.def();
     }
   }
@@ -146,7 +138,6 @@ class Proxy{
       return products.map((e) => new Product.fromJson(e)).toList();
 
     }catch(err){
-      print(err);
       return List.empty();
     }
   }
@@ -158,7 +149,6 @@ class Proxy{
 
 
     }catch(err){
-      print(err);
       return HttpResult.error;
     }
   }
@@ -172,13 +162,9 @@ class Proxy{
         params['typo']=typo;
       }
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_PRODUCT_PAGEABLE,params: params);
-      /*print("raw: "+rawResult);*///TODO refactor with pageable index
       Map<String,dynamic> tores={};
       Map<String, dynamic> res = jsonDecode(rawResult) as Map<String,dynamic>;
-      print("res pageable"+res.toString());
-
       List<dynamic> content=res['content'];
-      //TODO is lastPage?
       List<Product> products=[];
       content.forEach((element) { products.add(new Product.fromJson(element));});
       tores['value']=products;
@@ -186,7 +172,6 @@ class Proxy{
       tores['isLastPage']=res['last'];
       return tores;
     }catch(err){
-      print("errore"+err.toString());
       return {};
     }
   }
@@ -197,7 +182,6 @@ class Proxy{
       List<Purchase> res=purchases.map((e) => new Purchase.fromJson(e)).toList();
       return res;
     }catch(err){
-      print(err);
       return [];}
   }
 
@@ -210,7 +194,6 @@ class Proxy{
       return cart.map((e) => ProductInPurchase.fromJson(e)).toList();
     }
     catch(err){
-      print(err);
       return [];
     }
   }
@@ -224,7 +207,6 @@ class Proxy{
       else{return HttpResult.done;}
     }
     catch(err){
-      print(err);
       return HttpResult.unknow;
     }
   }
@@ -235,7 +217,6 @@ class Proxy{
       return pip.map((e) => ProductInPurchase.fromJson(e)).toList();
 
     }catch(err){
-      print(err);
       return [];
     }
   }
@@ -251,7 +232,6 @@ class Proxy{
       List pip=jsonDecode(rawResult);
       return addToCartResult.added;
     }catch(err){
-      print(err);
       return addToCartResult.unknown;
     }
   }
@@ -267,7 +247,6 @@ class Proxy{
       List pip=jsonDecode(rawResult);
       return addToCartResult.setted;
     }catch(err){
-      print(err);
       return addToCartResult.unknown;
     }
   }
@@ -279,7 +258,6 @@ class Proxy{
       return products.map((e) => Product.fromJson(e)).toList();
     }
     catch(err){
-      print(err);
       return [];
     }
   }
@@ -290,14 +268,14 @@ class Proxy{
         return HttpResult.alreadyExist;
       }
       return HttpResult.done;
-    }catch(err){print(err);return HttpResult.unknow;}
+    }catch(err){return HttpResult.unknow;}
   }
   Future<HttpResult> deleteProducts(List<String> products)async{
     try{
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_DELETE_PRODUCTS,body: products);
 
       return HttpResult.done;
-    }catch(err){print(err);return HttpResult.unknow;}
+    }catch(err){return HttpResult.unknow;}
   }
   Future<HttpResult> modifyProduct(Product product,String oldName)async{
     try{
@@ -305,7 +283,7 @@ class Proxy{
       params['oldName']=oldName;
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_MODIFY_PRODUCT,body: product,params: params);
       return HttpResult.done;
-    }catch(err){print(err);return HttpResult.error;}
+    }catch(err){return HttpResult.error;}
   }
 
   Future<ModifyResult> modifyMyDetails(User u)async{
@@ -313,7 +291,7 @@ class Proxy{
       String rawResult=await _restManager.makePostRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_MODIFY_MY_DETAILS,body: u);
       appState.updateValue(Consts.USER_LOGGED_DETAILS, User.fromJson(jsonDecode(rawResult)));
       return ModifyResult.modified;
-    }catch(err){print(err);return ModifyResult.error;}
+    }catch(err){return ModifyResult.error;}
   }
 
 
@@ -330,7 +308,6 @@ class Proxy{
       else{return Product.fromJson(jsonDecode(rawResult));}
 
     }catch(err){
-      print(err);
       return null;}
   }
 
@@ -349,21 +326,16 @@ class Proxy{
 
     var response = await post(uri,body: body);
     String propicUrl=jsonDecode(response.body)["data"]["url"];
-    print(propicUrl);
     return propicUrl;
   }
 
   Future<List<Purchase>>getAllPurchase()async{
     try{
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_GET_ALL_PURCHASE);
-      print("quaaaa"+rawResult);
       List purchases = jsonDecode(rawResult);
-      print("quaaaa"+purchases.toString());
       List<Purchase> res=purchases.map((e) => new Purchase.fromJson(e)).toList();
-      print("quaaaa"+res.toString());
       return res;
     }catch(err){
-      print(err);
       return [];
     }
 
@@ -376,7 +348,6 @@ class Proxy{
       String rawResult=await _restManager.makeGetRequest(Consts.ADDRESS_SERVER, Consts.REQUEST_SET_PURCHASE_DONE,params: params);
       return HttpResult.done;
     }catch(err){
-      print(err);
       return HttpResult.error;
     }
   }

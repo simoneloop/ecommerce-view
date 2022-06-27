@@ -6,6 +6,7 @@ import "package:flutter/material.dart";
 import 'package:ecommerce_view/entities/Purchase.dart';
 
 import '../managers/Proxy.dart';
+import '../widgets/LogOutButton.dart';
 import '../widgets/PurchaseCard.dart';
 class BalancePage extends StatefulWidget {
   @override
@@ -26,6 +27,7 @@ class _BalancePageState extends State<BalancePage> {
 
     return Scaffold(
       appBar: AppBarWidget(index: 2,),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SingleChildScrollView(
         child:Column(
           children: [
@@ -46,6 +48,7 @@ class _BalancePageState extends State<BalancePage> {
                       ]),
                   child:Column(
                     children: [
+                      LogOutButton(),
                       CoolText(text: "Ordini effettuati", size: "m"),
                       Container(
                         constraints:BoxConstraints(minWidth:size.width,minHeight: size.height/4,maxWidth: size.width,maxHeight: size.height),

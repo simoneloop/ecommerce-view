@@ -25,13 +25,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Consts.TITLE,
       theme: ThemeData(
+        unselectedWidgetColor: Consts.secondary_color,
         fontFamily: 'Aladin',
         primaryColor: Consts.primary_color,
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           elevation: 0,
           foregroundColor: Colors.white,
         ),
-        textTheme: TextTheme(
+        /*textTheme: TextTheme(
           headline1: TextStyle(fontSize: 40,  fontWeight: FontWeight.w700,
             color: Colors.black,),
           headline2: TextStyle(
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w400,
             color: Colors.blueAccent,
           ),
-        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.secondary_color),
+        ),*/ colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.secondary_color),
       ),
       debugShowCheckedModeBanner: false,
 

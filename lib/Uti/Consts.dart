@@ -40,54 +40,79 @@ class Consts{
 
 
   //ADMIN/USER-REQUEST
+  // ignore: constant_identifier_names
   static const String REQUEST_GET_HOT_PRODUCTS="/products/getHotProduct";
+  // ignore: constant_identifier_names
   static const String REQUEST_GET_PRODUCT_PAGEABLE="products/getProductPageable";
 
 
   //STORAGE
+  // ignore: constant_identifier_names
   static const String USER_LOGGED_DETAILS="userLoggedDetails";
+  // ignore: constant_identifier_names
   static const String USER_LOGGED_IS_ADMIN="userLoggedIsAdmin";
 
   //EXCEPTIONS
   static const String RESPONSE_ERROR_USER_ALREADY_EXIST = "UserAlreadyExistException";
   static const String RESPONSE_ERROR_CART_IS_EMPTY = "CartIsEmptyException";
+  // ignore: constant_identifier_names
   static const String RESPONSE_ERROR_INSUFFICIENT_AMOUNT_EXCEPTION = "InsufficientAmountException";
+  // ignore: constant_identifier_names
   static const String RESPONSE_ERROR_PRODUCT_ALREADY_EXIST = "ProductAlreadyExistException";
+  // ignore: constant_identifier_names
   static const String RESPONSE_ERROR_PRODUCT_DOES_NOT_EXIST = "ProductDoesNotExistException";
+  // ignore: constant_identifier_names
   static const String RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE = "QuantityProductUnavailableException";
+  // ignore: constant_identifier_names
   static const String RESPONSE_ERROR_USER_DOES_NOT_EXIST = "UserDoesNotExistException";
 
 
+  // ignore: constant_identifier_names
   static const String REQUIRED_LOGIN_EXCEPTION="Devi prima effettuare il login";
+  // ignore: constant_identifier_names
   static const String IS_ADMIN_EXCEPTION="Sei admin non hai a disposizione questa funzione";
 
 
 
-  static const String TITLE="I gioielli e l'arte";
+  // ignore: constant_identifier_names
+  static const String TITLE="3DMade";
 
   static const double extraSmallText=15;
   static const double smallText=20;
   static const double mediumText=25;
   static const double bigText=30;
+  // ignore: constant_identifier_names
   static const bool TO_VALIDATE=false;
+  // ignore: constant_identifier_names
   static const int PAGE_SIZE=7;
+  // ignore: constant_identifier_names
+  static const int shadow_intensity=2;
 
   static const Color kTextLightBlack=Colors.black26;
+  // ignore: constant_identifier_names
+  static const Color checkbox_radio_color=Colors.white;
+  // ignore: constant_identifier_names
+  static const Color checkbox_check_color=Colors.black;
+  // ignore: constant_identifier_names
+  static const Color checkbox_active_color=kBlueColor;
   static const Color kBlueColor=Color(0xFF0D47A1);
+  // ignore: constant_identifier_names
   static const LinearGradient PrimoGradient=LinearGradient(
     colors: <Color>[
-      Color(0xFF0D47A1),
-      Color(0xFF1976D2),
-      Color(0xFF42A5F5),
+      Color(0xFF002A76),
+      Color(0xFF002D5F),
+      Color(0xFF230063),
     ],
   );
+  // ignore: constant_identifier_names
   static const LinearGradient SecondoGradient=LinearGradient(
     colors: <Color>[
-      Color(0xFFA1480D),
-      Color(0xFFD27919),
-      Color(0xFFF59642),
+      Color(0xFF960000),
+      Color(0xFF5E1C00),
+      Color(0xFF7A16FF),
     ],
   );
+  // ignore: constant_identifier_names
   static const LinearGradient TerzoGradient=LinearGradient(
     colors: <Color>[
       Color(0xFF646464),
@@ -96,8 +121,10 @@ class Consts{
     ],
   );
   static const double kToolbarHeight=50;
-  static const Color primary_color=Colors.white;
-  static const Color secondary_color=Color(0xffff965e);
+  // ignore: constant_identifier_names
+  static const Color primary_color=Color(0xff001055);
+  // ignore: constant_identifier_names
+  static const Color secondary_color=Colors.yellowAccent;
 
 
 

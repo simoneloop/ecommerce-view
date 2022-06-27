@@ -4,6 +4,7 @@ import 'package:ecommerce_view/Uti/Support.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/widgets/AppBarWidget.dart';
 import 'package:ecommerce_view/widgets/CoolTextButton.dart';
+import 'package:ecommerce_view/widgets/LogOutButton.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -115,10 +116,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                             CoolTextButton(gradient: Consts.SecondoGradient, text: "Modifica i dettagli", press: (){setState(() {
                               isModifing=true;
                             }); }),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 40),
-                              child: CoolTextButton(gradient: Consts.PrimoGradient, text: "LOGOUT", press: (){logOut(); }),
-                            ),
+                            LogOutButton(),
                           ],
                         ),
                       )
@@ -430,12 +428,6 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     }
     //todo to finish
   }
-  void logOut(){
-    Proxy.appState.resetState();
-    Navigator.pushNamed(context, "LoginPage");
-  }
-
-
 
 }
 class UserDetailsForm{

@@ -15,13 +15,7 @@ class DetailsPage extends StatelessWidget {
       appBar: AppBarWidget(leadingFunction:()=> {Navigator.pop(context)},),
       body:Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[
-                Color(0xFF0D47A1),
-                Color(0xFF1976D2),
-                Color(0xFF42A5F5),
-              ],
-            ),
+            gradient: Consts.PrimoGradient,
           ),
           child: SingleChildScrollView(child: ProductDetailsBody(product: product,))),
     );

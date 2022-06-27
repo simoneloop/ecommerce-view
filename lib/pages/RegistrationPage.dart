@@ -54,7 +54,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
-                  margin: EdgeInsets.symmetric(vertical: 85,horizontal: 20),
+                  margin: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).primaryColor,
@@ -379,7 +379,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
     else{
       _lastNameError=null;
     }
-    print(_passwordConfirmationController.text!=_passwordController.text);
     if(_passwordConfirmationController.text!=_passwordController.text){
       _passwordConfirmationError="Le due password devono essere uguali";
       _canRegister=false;

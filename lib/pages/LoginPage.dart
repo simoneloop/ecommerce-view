@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
 
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CoolText(text: "Prima volta?", size: "s",color: Colors.black,),
+                                  CoolText(text: "Prima volta?", size: "s",),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 10),
                                     child: CoolTextButton(gradient: Consts.PrimoGradient, text: "Registrati", press: (){Navigator.pushNamed(context, "RegistrationPage");},width: 130,height: 40,),
@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
     return col;
   }
   void ValidateAndLogin(){
-    print(parseColor("#FF7E75"));
+    print(parseColor("#00ffaa"));
     _canLogin=true;
     if(Consts.TO_VALIDATE){
       setState(() {
@@ -212,7 +212,6 @@ class _LoginPageState extends State<LoginPage> {
       Proxy.sharedProxy.logIn(_emailController.text,_passwordController.text)
           .then((value){
             if(value==LogInResult.logged){
-              print(Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS));
               Navigator.pushNamed(
                   context, 'HomePage');
               showCoolSnackbar(context, "Benvenuto ${Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS).firstName}", "ok");
@@ -220,7 +219,6 @@ class _LoginPageState extends State<LoginPage> {
             }
             else{
               showCoolSnackbar(context, "errore", "err");
-              print(LogInResult.error);
 
 
             }

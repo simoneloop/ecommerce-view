@@ -120,7 +120,9 @@ class _AdminPageState extends State<AdminPage> {
                         SizedBox(height: 10,),
                         CoolText(text: "Modifica vetrina", size: "m"),
                         SizedBox(height: 15,),
-                        SearchForm(press:(value){filterHot(value);}),
+                        SearchForm(
+                            widthFactor: 0.8,
+                            press:(value){filterHot(value);}),
 
                         SingleChildScrollView(
                           child: Container(
@@ -137,6 +139,9 @@ class _AdminPageState extends State<AdminPage> {
                                           border: Border(bottom: BorderSide(width: 1.0,color:i<searchedProductHot!.length-1? Colors.blueGrey.withOpacity(0.5):Colors.transparent))
                                       ),
                                       child: CheckboxListTile(
+
+                                        checkColor: Consts.checkbox_check_color,
+                                          activeColor: Consts.checkbox_active_color,
                                           title: CoolText(text:searchedProductHot![i].name, size: 's',),
                                           value: mapSelectedHotProduct[searchedProductHot![i].name],
                                           onChanged: (bool? value){
@@ -327,7 +332,8 @@ class _AdminPageState extends State<AdminPage> {
                               Column(
                                 children: [
                                   Radio(
-                                    value: "bracciale",
+                                    activeColor: Consts.checkbox_active_color,
+                                    value: "estetica",
                                     groupValue: _radioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -335,13 +341,14 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Bracciale", size: "xs")
+                                  CoolText(text: "Estetica", size: "xs")
                                 ],
                               ),
                               Column(
                                 children: [
                                   Radio(
-                                    value: "collana",
+                                    activeColor: Consts.checkbox_active_color,
+                                    value: "utilita",
                                     groupValue: _radioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -349,13 +356,14 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Collana", size: "xs")
+                                  CoolText(text: "Utilità", size: "xs")
                                 ],
                               ),
                               Column(
                                 children: [
                                   Radio(
-                                    value: "orecchino",
+                                    activeColor: Consts.checkbox_active_color,
+                                    value: "speciali",
                                     groupValue: _radioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -363,7 +371,7 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Orecchino", size: "xs")
+                                  CoolText(text: "Speciali", size: "xs")
                                 ],
                               )
                             ],
@@ -385,10 +393,17 @@ class _AdminPageState extends State<AdminPage> {
                                   child: image==null?Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.image_outlined),
-                                      CoolText(text: "Carica una foto del prodotto", size: "xs"),
+                                      Icon(Icons.image_outlined,color: Consts.secondary_color,),
+                                      FittedBox(
+                                          fit: BoxFit.contain,
+                                          child: CoolText(text: "Carica una foto del prodotto", size: "xs")),
                                     ],
-                                  ):kIsWeb?Image.memory(webImage,fit: BoxFit.fill,):Image.file(image!,fit: BoxFit.fill,),
+                                  ):kIsWeb?ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Image.memory(webImage,fit: BoxFit.fill,)):
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Image.file(image!,fit: BoxFit.fill,)),
                                 ),)
                           ),
                         ),
@@ -431,7 +446,9 @@ class _AdminPageState extends State<AdminPage> {
                         SizedBox(height: 10,),
                         CoolText(text: "Magazzino", size: "m"),
                         SizedBox(height: 15,),
-                        SearchForm(press:(value){filterModify(value);}),
+                        SearchForm(
+                            widthFactor: 0.8,
+                            press:(value){filterModify(value);}),
                         SingleChildScrollView(
                           child: Container(
                             constraints:BoxConstraints(/*minWidth:size.width/3,*/minHeight: size.height/4,/*maxWidth: size.width/3,*/maxHeight: size.height/1.5),
@@ -446,6 +463,8 @@ class _AdminPageState extends State<AdminPage> {
                                           border: Border(bottom: BorderSide(width: 1.0,color:i<searchedProductModify!.length-1? Colors.blueGrey.withOpacity(0.5):Colors.transparent))
                                       ),
                                       child: CheckboxListTile(
+                                          checkColor: Consts.checkbox_check_color,
+                                          activeColor: Consts.checkbox_active_color,
                                           title: CoolText(text:searchedProductModify![i].name, size: 's',),
                                           value: mapSelectedProduct[searchedProductModify![i].name],
                                           onChanged: (bool? value){
@@ -472,7 +491,6 @@ class _AdminPageState extends State<AdminPage> {
 
                                       Product p;
                                       Proxy.sharedProxy.getProductByName(selected[0]).then((value) {
-                                        print(value.toString());
                                         if(value is Product){
                                           p=value;
                                           _nameHint=p.name;
@@ -676,7 +694,7 @@ class _AdminPageState extends State<AdminPage> {
                               Column(
                                 children: [
                                   Radio(
-                                    value: "bracciale",
+                                    value: "estetica",
                                     groupValue: _modifingRadioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -690,7 +708,7 @@ class _AdminPageState extends State<AdminPage> {
                               Column(
                                 children: [
                                   Radio(
-                                    value: "collana",
+                                    value: "utilita",
                                     groupValue: _modifingRadioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -698,13 +716,13 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Collana", size: "xs")
+                                  CoolText(text: "Utilità", size: "xs")
                                 ],
                               ),
                               Column(
                                 children: [
                                   Radio(
-                                    value: "orecchino",
+                                    value: "speciali",
                                     groupValue: _modifingRadioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -712,7 +730,7 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Orecchino", size: "xs")
+                                  CoolText(text: "Speciali", size: "xs")
                                 ],
                               )
                             ],
@@ -737,8 +755,12 @@ class _AdminPageState extends State<AdminPage> {
                                       Icon(Icons.image_outlined),
                                       CoolText(text: "Carica una foto del prodotto", size: "xs"),
                                     ],
-                                  ):Image.network(_urlHint!,fit: BoxFit.fill):
-                                  kIsWeb?Image.memory(modifingWebImage,fit: BoxFit.fill,):Image.file(modifingImage!,fit: BoxFit.fill,),
+                                  ):ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Image.network(_urlHint!,fit: BoxFit.fill)):
+                                  kIsWeb?ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Image.memory(modifingWebImage,fit: BoxFit.fill,)):Image.file(modifingImage!,fit: BoxFit.fill,),
                                 ),)
                           ),
                         ),
@@ -825,13 +847,14 @@ Future pickImage(bool isModifing) async{
 
   void addProduct(){
     bool _canAdd=true;
-    final avoidForInt = RegExp(r'^[a-zA-Z+_\-=@,\.;]+$');
-    final avoidForText = RegExp(r'^[0-9+_\-=@,\.;]+$');
-    final avoidForDouble = RegExp(r'^[a-zA-Z+_\-=@,\;]+$');
-    if(_nameController.text.isEmpty||avoidForText.hasMatch(_nameController.text)){
+    final regexInt = RegExp(r'^[0-9]+$');
+    final regexText = RegExp(r'^[a-zA-Z0-9]+$');
+    final regexDouble = RegExp(r'(^\d*\.?\d*)$');
+    final avoidSpecial = RegExp(r'^,;:-!"=?$');
+    if(!regexText.hasMatch(_nameController.text)){
       _canAdd=false;
       setState(() {
-        _nameError="Inserire un breve nome del prodotto, sono ammesse solo lettere";
+        _nameError="Inserire un breve nome del prodotto";
       });
     }
     else{
@@ -839,10 +862,11 @@ Future pickImage(bool isModifing) async{
         _nameError=null;
       });
     }
-    if(_quantityController.text.isEmpty||avoidForInt.hasMatch(_quantityController.text)){
+
+    if(!regexInt.hasMatch(_quantityController.text)){
       _canAdd=false;
       setState(() {
-        _quantityError="Specificare il NUMERO INTERO";
+        _quantityError="Specificare la quantità";
       });
     }
     else{
@@ -850,10 +874,10 @@ Future pickImage(bool isModifing) async{
         _quantityError=null;
       });
     }
-    if(_descriptionController.text.isEmpty||avoidForText.hasMatch(_descriptionController.text)){
+    if(!regexText.hasMatch(_descriptionController.text)){
       _canAdd=false;
       setState(() {
-        _descriptionError="Inserire una breve descrizione del prodotto, sono ammesse solo lettere";
+        _descriptionError="Inserire una descrizione del prodotto";
       });
     }
     else{
@@ -861,7 +885,7 @@ Future pickImage(bool isModifing) async{
         _descriptionError=null;
       });
     }
-    if(_priceController.text.isEmpty||avoidForDouble.hasMatch(_priceController.text)){
+    if(!regexDouble.hasMatch(_priceController.text)){
       _canAdd=false;
       setState(() {
         _priceError="Specificare il prezzo, es 3.14";

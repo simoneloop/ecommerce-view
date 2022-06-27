@@ -11,8 +11,8 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = ["Tutti i prodotti","Bracciali", "Collane", "Orecchini"];
-  List<String> categories_tag=['all',"bracciale","collana","orecchino"];
+  List<String> categories = ["Tutti i prodotti","Estetica", "Utilità", "Speciali"];
+  List<String> categories_tag=['all',"estetica","utilita","speciali"];
   int selectedIndex = 0;
   final Function callback;
 
@@ -46,12 +46,12 @@ class _CategoriesState extends State<Categories> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CoolText(text:categories[index],size: "xs",color:  selectedIndex == index ? Colors.black : Consts.kTextLightBlack,
+              CoolText(text:categories[index],size: "xs",color:  selectedIndex == index ? Colors.white : Colors.white.withOpacity(0.2),
               ),
               Container(
                 height: 2,
                 width: 30,
-                color: selectedIndex == index ? Colors.black : Colors
+                color: selectedIndex == index ? Theme.of(context).colorScheme.secondary: Colors
                     .transparent,
                 margin: EdgeInsets.only(top: 2),
               )

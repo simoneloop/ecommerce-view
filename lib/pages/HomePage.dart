@@ -10,6 +10,7 @@ import '../entities/Product.dart';
 import '../managers/Proxy.dart';
 import '../widgets/Categories.dart';
 import '../widgets/ProductCard.dart';
+import '../widgets/SearchForm.dart';
 import '../widgets/homeHotProducts.dart';
 import 'DetailsPage.dart';
 
@@ -57,6 +58,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBarWidget(
         index: 0,
       ),
+      backgroundColor: Theme.of(context).primaryColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -108,87 +110,41 @@ class _HomePageState extends State<HomePage> {
                               })),
                     ),
                   ),
-                  Flexible(
-                    child: FractionallySizedBox(
+                  SearchForm(
                       widthFactor: 0.5,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            /*padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),*/
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Theme.of(context).primaryColor,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Theme.of(context).hintColor.withOpacity(0.2),
-                                      offset: Offset(0, 10),
-                                      blurRadius: 20)
-                                ]),
+                      press:(value){
+                    if(value.isEmpty){
+                      Proxy.sharedProxy
+                          .getProductPageable(
+                          order: _radioValue,
+                          page: 0,
+                          pageSize: Consts.PAGE_SIZE,
+                          typo: typoSelected)
+                          .then((value) => {
+                        setState(() {
+                          productsList = value['value'];
+                          isFirstPage=value['isFirstPage'];
+                          if(isFirstPage){
+                            indexOfPage=0;
+                          }
+                          isLastPage=value['isLastPage'];
+                        })
+                      });
+                    }
+                    else{
+                      Proxy.sharedProxy.getProductByName(
+                          value).then((value) {
+                        if(value!=getProductResult.notExist){
+                          setState(() {
+                            productsList=[value];
+                          });
+                        }
+                        else if(value==getProductResult.notExist){
+                          showCoolSnackbar(context,"Il prodotto non esiste","err");
 
-                            child: TextFormField(
-                              style: getTextStyle(size: Consts.smallText),
-                              textInputAction: TextInputAction.done,
-                              onFieldSubmitted: (value) {
-                                if(value.isEmpty){
-                                  Proxy.sharedProxy
-                                      .getProductPageable(
-                                      order: _radioValue,
-                                      page: 0,
-                                      pageSize: Consts.PAGE_SIZE,
-                                      typo: typoSelected)
-                                      .then((value) => {
-                                    setState(() {
-                                      productsList = value['value'];
-                                      isFirstPage=value['isFirstPage'];
-                                      if(isFirstPage){
-                                        indexOfPage=0;
-                                      }
-                                      isLastPage=value['isLastPage'];
-                                    })
-                                  });
-                                }
-                                else{
-                                  Proxy.sharedProxy.getProductByName(
-                                      value).then((value) {
-                                    if(value!=getProductResult.notExist){
-                                      setState(() {
-                                        productsList=[value];
-                                      });
-                                    }
-                                    else if(value==getProductResult.notExist){
-                                      showCoolSnackbar(context,"Il prodotto non esiste","err");
-
-                                    }
-                                  });
-                                }
-
-                              },
-                              controller: _searchController,
-                              keyboardType: TextInputType.name,
-                              decoration: InputDecoration(
-                                  hintStyle: getTextStyle(size: Consts.smallText),
-
-                                  hintText: "Cerca prodotto per nome",
-                                  errorText:
-                                      _searchError != null ? _searchError : null,
-                                  enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.transparent)),
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.transparent)),
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    color: Consts.kBlueColor,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        }
+                      });
+                    }}),
                 ],
               ),
             ),
@@ -241,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                                       typo: typoSelected)
                                   .then((value) => {
 
-                                        setState(() {print(_radioValue);
+                                        setState(() {
                                         productsList = value['value'];
                                         isFirstPage=value['isFirstPage'];
                                         if(isFirstPage){

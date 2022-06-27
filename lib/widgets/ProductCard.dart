@@ -41,33 +41,32 @@ class _ProductCardState extends State<ProductCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MouseRegion(
-              onEnter:(e){
-                setState(() {
-                  isHover=true;
+            ClipRRect(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
+              child: MouseRegion(
+                onEnter:(e){
+                  setState(() {
+                    isHover=true;
 
-                });
-              } ,
-              onHover:(e){
-                setState(() {
-                  mousePos+=e.delta*5;
-                  mousePos*=movFactor;
+                  });
+                } ,
+                onHover:(e){
+                  setState(() {
+                    mousePos+=e.delta*5;
+                    mousePos*=movFactor;
 
-                });
-              } ,
-              onExit:(e){
-                setState(() {
-                  isHover=false;
+                  });
+                } ,
+                onExit:(e){
+                  setState(() {
+                    isHover=false;
 
-                });
-              } ,
-              child: Container(
-                height: 300,
-                width: 300,
-                color: Colors.white,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16)),
-
+                  });
+                } ,
+                child: Container(
+                  height: 300,
+                  width: 300,
+                  color: Colors.white,
                   child: Stack(
                     children: [
                       backImage(),
