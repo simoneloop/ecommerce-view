@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 void showCoolSnackbar(BuildContext context,String text,String action){
   Color? col;
   if(action=="ok"){
@@ -21,3 +21,11 @@ void showCoolSnackbar(BuildContext context,String text,String action){
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
+TextStyle getTextStyle({Color? color,double? size,FontWeight? fontWeight}){
+  return GoogleFonts.abhayaLibre(
+    fontSize:size!=null?size:25,
+    fontWeight: fontWeight!=null?fontWeight:FontWeight.w400,
+    color: color != null?color:Colors.black,
+  );
+}
+

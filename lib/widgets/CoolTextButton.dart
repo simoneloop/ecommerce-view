@@ -22,6 +22,6 @@ class CoolTextButton extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: gradient,
             ),
-            child: TextButton(onPressed: press, child:CoolText(text:text,size: "m",textStyle:textStyle != null?textStyle: null,color:Consts.PRIMARY_COLOR,) )));
+            child: TextButton(onPressed: press, child:CoolText(text:text,size: "m",textStyle:textStyle != null?textStyle: null,color:Theme.of(context).primaryColor,) )));
   }
 }

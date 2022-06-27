@@ -65,26 +65,10 @@ class Consts{
 
   static const String TITLE="I gioielli e l'arte";
 
-  static const TextStyle extraSmallTextStyle=TextStyle(
-    fontSize: 15,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
-  );
-  static const TextStyle smallTextStyle=TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
-  );
-  static const TextStyle mediumTextStyle=TextStyle(
-    fontSize: 25,
-    fontWeight: FontWeight.w700,
-    color: Colors.black,
-  );
-  static const TextStyle bigTextStyle=TextStyle(
-    fontSize: 40,
-    fontWeight: FontWeight.w700,
-    color: Colors.black,
-  );
+  static const double extraSmallText=15;
+  static const double smallText=20;
+  static const double mediumText=25;
+  static const double bigText=30;
   static const bool TO_VALIDATE=false;
   static const int PAGE_SIZE=7;
 
@@ -112,8 +96,8 @@ class Consts{
     ],
   );
   static const double kToolbarHeight=50;
-  static const Color PRIMARY_COLOR=Colors.white;
-  static const Color SECONDARY_COLOR=Color(0xffff965e);
+  static const Color primary_color=Colors.white;
+  static const Color secondary_color=Color(0xffff965e);
 
 
 

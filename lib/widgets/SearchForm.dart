@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
+import '../Uti/Support.dart';
 import '../managers/Proxy.dart';
 class SearchForm extends StatelessWidget {
   final Function(String value) press;
@@ -29,11 +30,12 @@ class SearchForm extends StatelessWidget {
                   ]),
 
               child: TextFormField(
+                style: getTextStyle(size: Consts.smallText),
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (value) {press(value);},
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
-                    hintStyle: Consts.smallTextStyle,
+                    hintStyle: getTextStyle(size: Consts.smallText),
                     hintText: "Cerca prodotto per nome",
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(

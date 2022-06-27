@@ -77,12 +77,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _nameController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
                               hintText: "Nome",
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               errorText: _nameError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -106,12 +107,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _lastNameController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
                               hintText: "Cognome",
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               errorText: _lastNameError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -134,12 +136,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
 
                           decoration: InputDecoration(
                               hintText: "Numero di cellulare",
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               errorText: _phoneError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -163,12 +166,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _addressController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
                               hintText: "Indirizzo",
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               errorText: _addressError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -198,6 +202,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: (input) => !input!.contains("@")
@@ -205,7 +210,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               : null,
                           decoration: InputDecoration(
                               hintText: "Email",
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               errorText: _emailError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -226,6 +231,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         SizedBox(height: 20),
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _passwordController,
                           keyboardType: TextInputType.text,
                           validator: (input) =>
@@ -233,7 +239,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           obscureText: hidePassword,
                           decoration: InputDecoration(
                               hintText: "Password",
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               errorText: _passwordError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -266,13 +272,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               )),
                         ),
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _passwordConfirmationController,
                           keyboardType: TextInputType.text,
                           validator: (input) =>
                           input == null ? "Confirm password!" : null,
                           obscureText: hidePassword,
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               hintText: "Conferma password",
 
                               errorText: _passwordConfirmationError,
