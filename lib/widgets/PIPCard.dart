@@ -33,7 +33,7 @@ class _PIPCardState extends State<PIPCard> {
       productStatus=ProductStatus.lessAvailable;
     }
     else if(!widget.pip.buyed.enabled){
-      productStatus=ProductStatus.disabled;
+      productStatus=ProductStatus.unavailable;
     }
   }
   @override
@@ -94,14 +94,6 @@ class _PIPCardState extends State<PIPCard> {
          children: [
            Icon(Icons.warning_amber_outlined,color: Colors.transparent,),
            CoolText(text: "prodotto non più disponibile", size: "s",color: Colors.transparent,),
-         ],
-       );
-     }
-     else if(ps==ProductStatus.disabled){
-       return Column(
-         children: [
-           Icon(Icons.warning_amber_outlined,color: Colors.red,),
-           CoolText(text: "Prodotto non più disponibile", size: "s",color: Colors.transparent,),
          ],
        );
      }

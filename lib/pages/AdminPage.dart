@@ -940,7 +940,7 @@ Future pickImage(bool isModifing) async{
             try{
 
               Proxy.sharedProxy.addProPic(webImage, _nameController.text).then((value) {
-                Product p=Product(name: _nameController.text, description: _descriptionController.text, quantity: int.parse(_quantityController.text), price: double.parse((_priceController.text)), typo: _radioValue, hot: false,urlPropic: value);
+                Product p=Product(name: _nameController.text, description: _descriptionController.text, quantity: int.parse(_quantityController.text), price: double.parse((_priceController.text)), typo: _radioValue, hot: false,urlPropic: value, enabled: true);
                 Proxy.sharedProxy.addProduct(p).then((value) {
                   if(value==HttpResult.done){
                     showCoolSnackbar(context,"Prodotto aggiunto con successo","ok");
@@ -1181,8 +1181,5 @@ Future pickImage(bool isModifing) async{
     }
 
   }
-  /*Future<List<Product>>getProduct(String name){
-    Future<Product> res=productList.then((value) )
-  }*/
 
 }
