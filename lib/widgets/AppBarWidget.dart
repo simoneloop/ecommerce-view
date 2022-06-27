@@ -1,8 +1,10 @@
 import 'package:ecommerce_view/Uti/Support.dart';
+import 'package:ecommerce_view/widgets/CoolIcon.dart';
 import 'package:flutter/material.dart';
 import 'package:neon/neon.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
+import 'CoolIconButton.dart';
 
 class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   const AppBarWidget({
@@ -33,7 +35,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       font: NeonFont.Beon,
       flickeringText: true,
         flickeringLetters: null,
-      )*/Text("I Gioielli e l'arte",
+      )*/Text(Consts.TITLE,
           style: Theme.of(context)
               .textTheme
               .headline3
@@ -44,13 +46,15 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       leading:widget.leadingFunction != null?IconButton(
         icon: Icon(Icons.arrow_back_ios_outlined),
         onPressed: widget.leadingFunction,
-      ): IconButton(
+      ): CoolIconButton(icon: Icons.home_rounded, press:() {
+        Navigator.pushNamed(context, 'HomePage');
+      }, color: Colors.white, size: 20, colorShadow: Colors.blueGrey)/*IconButton(
         icon:Icon(Icons.home_rounded),
         onPressed:() {
                 Navigator.pushNamed(context, 'HomePage');
               },
         color: widget.index == 0 ? Colors.amber : null,
-      ),
+      )*/,
       actions: isAdmin?adminWidgets(context):userWidgets(context),
     );
   }

@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "I Gioielli e l'arte",
+      title: Consts.TITLE,
       theme: ThemeData(
         fontFamily: 'Poppins',
-        primaryColor: Colors.white,
+        primaryColor: Consts.PRIMARY_COLOR,
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           elevation: 0,
           foregroundColor: Colors.white,
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w400,
             color: Colors.blueAccent,
           ),
-        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.proviamoColor),
+        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.SECONDARY_COLOR),
       ),
       debugShowCheckedModeBanner: false,
 
