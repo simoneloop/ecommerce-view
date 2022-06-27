@@ -128,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                                 ]),
 
                             child: TextFormField(
+                              style: getTextStyle(size: Consts.smallText),
                               textInputAction: TextInputAction.done,
                               onFieldSubmitted: (value) {
                                 if(value.isEmpty){
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                               controller: _searchController,
                               keyboardType: TextInputType.name,
                               decoration: InputDecoration(
-                                  hintStyle: Consts.smallTextStyle,
+                                  hintStyle: getTextStyle(size: Consts.smallText),
 
                                   hintText: "Cerca prodotto per nome",
                                   errorText:

@@ -195,11 +195,12 @@ class _AdminPageState extends State<AdminPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _nameController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: "Nome del prodotto",
                               errorText: _nameError,
@@ -225,11 +226,12 @@ class _AdminPageState extends State<AdminPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _descriptionController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: "Descrizione del prodotto",
                               errorText: _descriptionError,
@@ -257,11 +259,12 @@ class _AdminPageState extends State<AdminPage> {
                           children: [
                             Flexible(
                               child: TextFormField(
+                                style: getTextStyle(size: Consts.smallText),
                                 controller: _priceController,
                                 keyboardType: TextInputType.phone,
 
                                 decoration: InputDecoration(
-                                    hintStyle: Consts.smallTextStyle,
+                                    hintStyle:getTextStyle(size: Consts.smallText),
 
                                     hintText: "Prezzo",
                                     errorText: _priceError,
@@ -285,11 +288,12 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                             Flexible(
                               child: TextFormField(
+                                style: getTextStyle(size: Consts.smallText),
                                 controller: _quantityController,
                                 keyboardType: TextInputType.number,
 
                                 decoration: InputDecoration(
-                                    hintStyle: Consts.smallTextStyle,
+                                    hintStyle: getTextStyle(size: Consts.smallText),
 
                                     hintText: "Quantità",
                                     errorText: _quantityError,
@@ -540,11 +544,12 @@ class _AdminPageState extends State<AdminPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _nameModifingController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: _nameHint,
                               errorText: _nameError,
@@ -570,11 +575,12 @@ class _AdminPageState extends State<AdminPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _descriptionModifingController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: _descriptionHint,
                               errorText: _descriptionError,
@@ -602,11 +608,12 @@ class _AdminPageState extends State<AdminPage> {
                           children: [
                             Flexible(
                               child: TextFormField(
+                                style: getTextStyle(size: Consts.smallText),
                                 controller: _priceModifingController,
                                 keyboardType: TextInputType.phone,
 
                                 decoration: InputDecoration(
-                                    hintStyle: Consts.smallTextStyle,
+                                    hintStyle: getTextStyle(size: Consts.smallText),
 
                                     hintText: _priceHint,
                                     errorText: _priceError,
@@ -630,11 +637,12 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                             Flexible(
                               child: TextFormField(
+                                style: getTextStyle(size: Consts.smallText),
                                 controller: _quantityModifingController,
                                 keyboardType: TextInputType.number,
 
                                 decoration: InputDecoration(
-                                    hintStyle: Consts.smallTextStyle,
+                                    hintStyle: getTextStyle(size: Consts.smallText),
 
                                     hintText: _quantityHint,
                                     errorText: _priceError,

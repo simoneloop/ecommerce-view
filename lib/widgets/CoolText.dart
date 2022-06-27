@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
+import '../Uti/Support.dart';
 
 class CoolText extends StatelessWidget {
   final String text;
@@ -16,18 +17,18 @@ class CoolText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(size=='s'){
-      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: Consts.smallTextStyle.copyWith(color: color != null?color:null,fontWeight: fontWeight),);
+      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle:getTextStyle(color:color!=null?color:null,size: Consts.smallText),);
     }
     if(size=='xs'){
-      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: Consts.extraSmallTextStyle.copyWith(color: color != null?color:null,fontWeight: fontWeight),);
+      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: getTextStyle(color:color!=null?color:null,size: Consts.extraSmallText),);
     }
     else if(size=="m"){
-      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: Consts.mediumTextStyle.copyWith(color: color != null?color:null,fontWeight: fontWeight),);
+      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: getTextStyle(color:color!=null?color:null,size: Consts.mediumText),);
     }
     else if(size=="b"){
-      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: Consts.bigTextStyle.copyWith(color: color != null?color:null,fontWeight: fontWeight),);
+      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: getTextStyle(color:color!=null?color:null,size: Consts.bigText),);
     }else{
-      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle: Consts.mediumTextStyle.copyWith(color: color != null?color:null,fontWeight: fontWeight),);
+      return Text(text,textAlign: textAlign,style:textStyle!=null?textStyle:getTextStyle(color:color!=null?color:null,size: Consts.mediumText),);
     }
 
   }

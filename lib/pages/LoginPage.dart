@@ -67,13 +67,14 @@ class _LoginPageState extends State<LoginPage> {
                         CoolText(text: "Login", size: "m",color: Colors.white,),
                         SizedBox(height: 25),
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: (input) => !input!.contains("@")
                               ? "Should be a valid email"
                               : null,
                           decoration: InputDecoration(
-                            hintStyle: Consts.smallTextStyle,
+                            hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: "Email",
                               errorText: _emailError,
@@ -95,13 +96,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 20),
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _passwordController,
                           keyboardType: TextInputType.text,
                           validator: (input) =>
                               input == null ? "Please enter a password" : null,
                           obscureText: hidePassword,
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
                               hintText: "Password",
 
                               errorText: _passwordError,
@@ -153,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
 
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CoolText(text: "Prima volta?", size: "s"),
+                                  CoolText(text: "Prima volta?", size: "s",color: Colors.black,),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 10),
                                     child: CoolTextButton(gradient: Consts.PrimoGradient, text: "Registrati", press: (){Navigator.pushNamed(context, "RegistrationPage");},width: 130,height: 40,),

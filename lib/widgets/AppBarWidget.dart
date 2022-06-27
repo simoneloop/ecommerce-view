@@ -5,6 +5,7 @@ import 'package:neon/neon.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
 import 'CoolIconButton.dart';
+import 'CoolText.dart';
 
 class AppBarWidget extends StatefulWidget with PreferredSizeWidget {
   const AppBarWidget({
@@ -35,11 +36,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       font: NeonFont.Beon,
       flickeringText: true,
         flickeringLetters: null,
-      )*/Text(Consts.TITLE,
-          style: Theme.of(context)
-              .textTheme
-              .headline3
-              ?.copyWith(color: Colors.white)),
+      )*/CoolText(text:Consts.TITLE,size:"b"),
       centerTitle: true,
       backgroundColor: Theme.of(context).colorScheme.secondary,
       elevation: 10,

@@ -137,11 +137,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _nameController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: u.firstName,
                               errorText: _nameError,
@@ -167,11 +168,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _lastNameController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: u.lastName,
                               errorText: _lastNameError,
@@ -196,11 +198,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _phoneController,
                           keyboardType: TextInputType.phone,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: u.phoneNumber,
                               errorText: _phoneError,
@@ -226,11 +229,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _addressController,
                           keyboardType: TextInputType.name,
 
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: u.address,
                               errorText: _addressError,
@@ -262,13 +266,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
 
                         TextFormField(
+                          style: getTextStyle(size: Consts.smallText),
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: (input) => !input!.contains("@")
                               ? "Should be a valid email"
                               : null,
                           decoration: InputDecoration(
-                              hintStyle: Consts.smallTextStyle,
+                              hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: u.email,
                               errorText: _emailError,

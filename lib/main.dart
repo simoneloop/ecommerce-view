@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: Consts.TITLE,
       theme: ThemeData(
-        fontFamily: 'Poppins',
-        primaryColor: Consts.PRIMARY_COLOR,
+        fontFamily: 'Aladin',
+        primaryColor: Consts.primary_color,
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           elevation: 0,
           foregroundColor: Colors.white,
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w400,
             color: Colors.blueAccent,
           ),
-        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.SECONDARY_COLOR),
+        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Consts.secondary_color),
       ),
       debugShowCheckedModeBanner: false,
 
