@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:neon/neon.dart';
 import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
+import '../managers/WebStorage.dart';
 import 'CoolIconButton.dart';
 import 'CoolText.dart';
 
@@ -29,6 +30,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     return AppBar(
       title:Neon(text: Consts.TITLE,
       color: Colors.yellow,
@@ -60,10 +62,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           icon: Icons.person,
           press: () {
             if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
+
               Navigator.pushNamed(context, 'UserDetailsPage');
             } else {
-              Navigator.pushNamed(context, 'LoginPage');
-              showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+              Proxy.sharedProxy.autoLogin(context, 1);
+              /*Navigator.pushNamed(context, 'LoginPage');
+              showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");*/
             }
           },
           color: Colors.white,
@@ -73,10 +77,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           icon: Icons.shopping_cart,
           press: () {
             if (Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS) != null) {
+
               Navigator.pushNamed(context, 'UserCartPage');
             } else {
-              Navigator.pushNamed(context, 'LoginPage');
-              showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+              Proxy.sharedProxy.autoLogin(context, 2);
+              /*Navigator.pushNamed(context, 'LoginPage');
+              showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");*/
             }
           },
           color: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/Product.dart';
+import 'package:ecommerce_view/managers/WebStorage.dart';
 import 'package:ecommerce_view/pages/AdminPage.dart';
 import 'package:ecommerce_view/pages/BalancePage.dart';
 import 'package:ecommerce_view/pages/LoginPage.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       title: Consts.TITLE,
       theme: ThemeData(
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: 'UserCartPage',
+      initialRoute: 'HomePage',
       routes: {
         '/':(context)=>HomePage(),
 

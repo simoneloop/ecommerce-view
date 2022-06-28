@@ -11,8 +11,8 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  List<String> categories = ["Tutti i prodotti","Estetica", "Utilità", "Speciali"];
-  List<String> categories_tag=['all',"estetica","utilita","speciali"];
+  List<String> categories = ["Tutti i prodotti","Estetica", "Utilità", "Speciale"];
+  List<String> categories_tag=['all',"estetica","utilita","speciale"];
   int selectedIndex = 0;
   final Function callback;
 

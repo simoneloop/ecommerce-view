@@ -3,21 +3,27 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:html';
+import 'dart:io';
 
+import 'dart:typed_data';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:ecommerce_view/Uti/Consts.dart';
 import 'package:ecommerce_view/entities/AuthenticationData.dart';
 import 'package:ecommerce_view/entities/ProductInPurchase.dart';
 import 'package:ecommerce_view/entities/Purchase.dart';
 import 'package:ecommerce_view/managers/RestManager.dart';
 import 'package:ecommerce_view/managers/StateManager.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
+import '../Uti/Support.dart';
 import '../entities/Product.dart';
 import '../entities/User.dart';
 import 'StateManager.dart';
 import 'StateManager.dart';
+import 'WebStorage.dart';
 
 enum LogInResult {
   logged,
@@ -59,6 +65,7 @@ enum HttpResult{
 class Proxy{
   static Proxy sharedProxy=Proxy();
   static StateManager appState = StateManager();
+  static bool isFirstTime=true;
   RestManager _restManager=RestManager();
   late AuthenticationData _authenticationData;
   static bool isLastPage=false;
@@ -78,7 +85,8 @@ class Proxy{
         _refreshToken();
         }
       );
-
+      WebStorage.instance.storeData({"email":email,"password":password});
+      print("dopp"+WebStorage.instance.loadData(["email","password","name"]).toString());
       appState.addValue(Consts.USER_LOGGED_DETAILS, await getMyDetails());
       Map<String, dynamic> payload = Jwt.parseJwt(_restManager.token);
       appState.addValue(Consts.USER_LOGGED_IS_ADMIN, false);
@@ -94,6 +102,57 @@ class Proxy{
     }
 
   }
+  void autoLogin(BuildContext context,int route){
+    if(isFirstTime){
+      Map<String,dynamic> authData=WebStorage.instance.loadData(["email","password"]);
+      if(authData["email"]!=null && authData["password"]!=null){
+        Proxy.sharedProxy.logIn(authData["email"], authData["password"]).then((value) {
+          if(value==LogInResult.logged){
+            String? nameRoute=null;
+            if(appState.getValue(Consts.USER_LOGGED_IS_ADMIN)){
+              if(route==1){
+                nameRoute="AdminPage";
+              }
+              else if(route==2){
+                nameRoute="BalancePage";
+              }
+            }
+            else{
+              if(route==1){
+                nameRoute="UserDetailsPage";
+              }
+              else if(route==2){
+                nameRoute="UserCartPage";
+              }
+            }
+            Navigator.pushNamed(context, nameRoute!=null?nameRoute:"HomePage");
+            showCoolSnackbar(context, "Benvenuto ${appState.getValue(Consts.USER_LOGGED_DETAILS).firstName}", "ok");
+            isFirstTime=false;
+            return;
+          }
+          Navigator.pushNamed(context, "LoginPage");
+          showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+          isFirstTime=false;
+          return;
+        });
+      }
+      else{
+        Navigator.pushNamed(context, "LoginPage");
+        showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+        isFirstTime=false;
+        return;
+      }
+
+    }
+    else{
+      Navigator.pushNamed(context, "LoginPage");
+      showCoolSnackbar(context, Consts.REQUIRED_LOGIN_EXCEPTION, "err");
+      return;
+    }
+
+
+  }
+
   Future<bool> _refreshToken() async {
 
     try {

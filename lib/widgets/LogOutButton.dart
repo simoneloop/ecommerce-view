@@ -1,3 +1,4 @@
+import 'package:ecommerce_view/managers/WebStorage.dart';
 import 'package:flutter/material.dart';
 
 import '../Uti/Consts.dart';
@@ -19,6 +20,7 @@ class _LogOutButtonState extends State<LogOutButton> {
 
   void logOut(){
     Proxy.appState.resetState();
+    WebStorage.instance.eraseData();
     Navigator.pushNamed(context, "LoginPage");
   }
 }

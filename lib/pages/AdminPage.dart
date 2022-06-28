@@ -71,6 +71,11 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   void initState() {
+    if(!Proxy.appState.existsValue(Consts.USER_LOGGED_DETAILS)){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Proxy.sharedProxy.autoLogin(context,1);
+      });
+    }
     productList=Proxy.sharedProxy.getAllProducts();
     productList.then((value) {
       setState(() {
@@ -363,7 +368,7 @@ class _AdminPageState extends State<AdminPage> {
                                 children: [
                                   Radio(
                                     activeColor: Consts.checkbox_active_color,
-                                    value: "speciali",
+                                    value: "speciale",
                                     groupValue: _radioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -371,7 +376,7 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Speciali", size: "xs")
+                                  CoolText(text: "Speciale", size: "xs")
                                 ],
                               )
                             ],
@@ -722,7 +727,7 @@ class _AdminPageState extends State<AdminPage> {
                               Column(
                                 children: [
                                   Radio(
-                                    value: "speciali",
+                                    value: "speciale",
                                     groupValue: _modifingRadioValue,
                                     onChanged: (value){
                                       setState(() {
@@ -730,7 +735,7 @@ class _AdminPageState extends State<AdminPage> {
                                       });
                                     },
                                   ),
-                                  CoolText(text: "Speciali", size: "xs")
+                                  CoolText(text: "Speciale", size: "xs")
                                 ],
                               )
                             ],
@@ -848,9 +853,9 @@ Future pickImage(bool isModifing) async{
   void addProduct(){
     bool _canAdd=true;
     final regexInt = RegExp(r'^[0-9]+$');
-    final regexText = RegExp(r'^[a-zA-Z0-9]+$');
-    final regexDouble = RegExp(r'(^\d*\.?\d*)$');
-    final avoidSpecial = RegExp(r'^,;:-!"=?$');
+    final regexText = RegExp(r'^[a-zA-Z0-9 ,.!?]+$');
+    final regexDouble = RegExp(r'(^\d+\.?\d*)$');
+
     if(!regexText.hasMatch(_nameController.text)){
       _canAdd=false;
       setState(() {

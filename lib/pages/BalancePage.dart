@@ -5,6 +5,7 @@ import 'package:ecommerce_view/widgets/CoolText.dart';
 import "package:flutter/material.dart";
 import 'package:ecommerce_view/entities/Purchase.dart';
 
+import '../Uti/Consts.dart';
 import '../managers/Proxy.dart';
 import '../widgets/LogOutButton.dart';
 import '../widgets/PurchaseCard.dart';
@@ -17,6 +18,11 @@ class _BalancePageState extends State<BalancePage> {
   late Future<List<Purchase>> purchases;
   @override
   void initState() {
+    if(!Proxy.appState.existsValue(Consts.USER_LOGGED_DETAILS)){
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Proxy.sharedProxy.autoLogin(context,2);
+      });
+    }
     // TODO: implement initState
     super.initState();
     purchases=Proxy.sharedProxy.getAllPurchase();

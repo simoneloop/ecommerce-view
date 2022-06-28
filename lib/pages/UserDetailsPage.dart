@@ -42,14 +42,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
   bool isModifing=false;
   dynamic u=Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS);
-  User user=new User(firstName: "simo", lastName: "prova",phoneNumber: "3482942524",email: "simo@",address: "via g bruno",);
+
   late Future<List<Purchase>> orders;
   @override
   void initState() {
 
-    if(u==null){
+    if(!Proxy.appState.existsValue(Consts.USER_LOGGED_DETAILS)){
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamed(context, "LoginPage");
+        Proxy.sharedProxy.autoLogin(context,1);
       });
     }
     orders=Proxy.sharedProxy.getMyOrders();

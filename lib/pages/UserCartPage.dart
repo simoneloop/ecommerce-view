@@ -27,12 +27,13 @@ class _UserCartPageState extends State<UserCartPage> {
 
   @override
   void initState() {
+
     // TODO: implement initState
-    /*if(!Proxy.appState.existsValue(Consts.USER_LOGGED_DETAILS)){
+    if(!Proxy.appState.existsValue(Consts.USER_LOGGED_DETAILS)){
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pushNamed(context, "LoginPage");
+       Proxy.sharedProxy.autoLogin(context,2);
       });
-    }*/
+    }
     super.initState();
     cartModified();
   }
@@ -43,6 +44,7 @@ class _UserCartPageState extends State<UserCartPage> {
     Size size=MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBarWidget(index: 2,),
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Container(
         height: size.height,
         child: Column(
@@ -117,7 +119,7 @@ class _UserCartPageState extends State<UserCartPage> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CoolText(text: "totale: $totale", size: "m"),
+                          CoolText(text: "totale: $totale€", size: "m"),
                           CoolTextButton(text: "Compra tutto",gradient: Consts.PrimoGradient,press:  (){
                             userCart.then((value) {
                               cartModified();
