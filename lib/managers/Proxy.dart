@@ -98,6 +98,7 @@ class Proxy{
 
       return LogInResult.logged;
     }catch(err){
+      print("sono qua"+err.toString());
       return LogInResult.error;
     }
 

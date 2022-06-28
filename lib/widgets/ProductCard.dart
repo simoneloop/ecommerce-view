@@ -37,7 +37,26 @@ class _ProductCardState extends State<ProductCard> {
                 )));
       },
       child: Container(
-        decoration: widget.product.quantity>0?BoxDecoration(gradient: Consts.PrimoGradient,borderRadius: BorderRadius.circular(16)):BoxDecoration(gradient: Consts.SecondoGradient,borderRadius: BorderRadius.circular(16)),
+        decoration: widget.product.quantity>0?
+          isHover?
+            BoxDecoration(
+              boxShadow:[
+                BoxShadow(color: Consts.secondary_color,blurRadius: 3),
+                BoxShadow(color: Consts.secondary_color,blurRadius: 6),
+                BoxShadow(color: Consts.secondary_color,blurRadius: 9),
+              ],
+              gradient: Consts.PrimoGradient,borderRadius: BorderRadius.circular(16)):
+            BoxDecoration(
+                gradient: Consts.PrimoGradient,borderRadius: BorderRadius.circular(16))
+          :isHover?
+            BoxDecoration(
+                boxShadow:[
+                  BoxShadow(color: Consts.secondary_color,blurRadius: 3),
+                  BoxShadow(color: Consts.secondary_color,blurRadius: 6),
+                  BoxShadow(color: Consts.secondary_color,blurRadius: 9),
+                ],
+                gradient: Consts.SecondoGradient,borderRadius: BorderRadius.circular(16)):
+            BoxDecoration(gradient: Consts.SecondoGradient,borderRadius: BorderRadius.circular(16)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
