@@ -387,7 +387,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _passwordConfirmationError=null;
     }
     //TODO filter
+    final regexInt = RegExp(r'^[0-9]+$');
     if(_phoneController.text.length<9 ||_phoneController.text.length>11){
+      _phoneError="Inserisci un numero di cellulare valido";
+      _canRegister=false;
+    }
+    else if(regexInt.hasMatch(_phoneController.text)){
       _phoneError="Inserisci un numero di cellulare valido";
       _canRegister=false;
     }

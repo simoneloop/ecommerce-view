@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../Uti/Support.dart';
 import '../managers/Proxy.dart';
+import '../managers/Proxy.dart';
 import '../widgets/PIPCard.dart';
 class UserCartPage extends StatefulWidget {
   const UserCartPage({Key? key}) : super(key: key);
@@ -22,12 +23,15 @@ class _UserCartPageState extends State<UserCartPage> {
   late Future<List<ProductInPurchase>> userCart;
   double totale=0.0;
   late List<ProductInPurchase> listPip;
+  bool isTotaleModified=false;
+  bool isInit=false;
+  bool isIncrementedByUser=false;
 
 
 
   @override
   void initState() {
-
+    isInit=true;
     // TODO: implement initState
     if(!Proxy.appState.existsValue(Consts.USER_LOGGED_DETAILS)){
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -63,7 +67,7 @@ class _UserCartPageState extends State<UserCartPage> {
                       scrollDirection: Axis.vertical,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context,i){
-                        return PIPCard(pip:snapshot.data![i],callback: cartModified,);
+                        return PIPCard(pip:snapshot.data![i],callback: (){isIncrementedByUser=true;cartModified();},);
                       }):
                       Stack(
 
@@ -122,49 +126,67 @@ class _UserCartPageState extends State<UserCartPage> {
                           CoolText(text: "totale: $totale€", size: "m"),
                           CoolTextButton(text: "Compra tutto",gradient: Consts.PrimoGradient,press:  (){
                             userCart.then((value) {
-                              cartModified();
                               if(value.length>0){
-                                Proxy.sharedProxy.buyMyCart().then((value) {
-
+                                cartModified().then((value) {
                                   if(value==HttpResult.done){
-                                    cartModified();
-                                    showCoolSnackbar(context,"Pagamento avvenuto con successo","ok");
-
-                                  }else if(value==HttpResult.notAmountException){
-                                    showCoolSnackbar(context,"Pagamento rifiutato, probabilmente non abbastanza credito","err");
-                                  }
-                                  else if(value==HttpResult.cartIsEmpty){
-                                    cartModified();
-                                    showCoolSnackbar(context,"Il carrello è vuoto, forse qualche prodotto è stato eliminato","err");
-                                  }
-                                  else if(value==HttpResult.productDoesNotExist){
-                                    cartModified();
-                                    showCoolSnackbar(context,"Un prodotto che avevi nel carrello è stato recentemente eliminato","err");
-                                  }
-                                  else if(value==HttpResult.quantityUnavailable){
-                                    userCart=Proxy.sharedProxy.getUserCart();
-                                    userCart.then((value) {
-                                      List<ProductInPurchase> listPip=value;
+                                    if(isTotaleModified){
                                       setState(() {
-                                        totale=0.0;
-                                        listPip.forEach((element) {
-                                        totale+=element.buyed.price*element.quantity;
-                                        totale=double.parse((totale).toStringAsFixed(2));
-                                        });
+                                        isTotaleModified=false;
+                                        showCoolSnackbar(context, "Attenzione, il totale è stato modificato controlla prima di cliccare di nuovo", "tip",seconds: 4);
                                       });
-                                    });
-                                    showCoolSnackbar(context,"Acquisto rifiutato, probabilmente è cambiata la quantità disponibile del prodotto","err");
+                                    }
+                                    else{
+                                      Proxy.sharedProxy.buyMyCart().then((value) {
 
-                                  }
-                                  else{
-                                    showCoolSnackbar(context,"Problema sconosciuto","err");
-                                  }
+                                        if(value==HttpResult.done){
+                                          cartModified();
+                                          showCoolSnackbar(context,"Pagamento avvenuto con successo","ok");
 
+                                        }else if(value==HttpResult.notAmountException){
+                                          showCoolSnackbar(context,"Pagamento rifiutato, probabilmente non abbastanza credito","err");
+                                        }
+                                        else if(value==HttpResult.cartIsEmpty){
+                                          cartModified();
+                                          showCoolSnackbar(context,"Il carrello è vuoto, forse qualche prodotto è stato eliminato","err");
+                                        }
+                                        else if(value==HttpResult.productDoesNotExist){
+                                          cartModified();
+                                          showCoolSnackbar(context,"Un prodotto che avevi nel carrello è stato recentemente eliminato","err");
+                                        }
+                                        else if(value==HttpResult.quantityUnavailable){
+                                          /*userCart=Proxy.sharedProxy.getUserCart();
+                                          userCart.then((value) {
+                                            List<ProductInPurchase> listPip=value;
+                                            setState(() {
+                                              totale=0.0;
+                                              listPip.forEach((element) {
+                                                if(element.buyed.quantity==0){
+                                                  totale+=0;
+                                                }
+                                                else{totale+=element.buyed.price*element.quantity;}
+                                                totale+=element.buyed.price*element.quantity;
+                                                totale=double.parse((totale).toStringAsFixed(2));
+                                              });
+                                            });
+                                          });*/
+                                          cartModified();
+                                          showCoolSnackbar(context,"Acquisto rifiutato, probabilmente è cambiata la quantità disponibile del prodotto","err");
+
+                                        }
+                                        else{
+                                          showCoolSnackbar(context,"Problema sconosciuto","err");
+                                        }
+
+                                      });
+
+                                    }
+                                  }
                                 });
-                              }
-                              else{
-                                showCoolSnackbar(context,"Carrello vuoto","err");
-                              }
+                                }
+                                else{
+                                  showCoolSnackbar(context,"Carrello vuoto","err");
+                                }
+
                             });
 
 
@@ -182,18 +204,41 @@ class _UserCartPageState extends State<UserCartPage> {
       ),
     );
   }
-  void cartModified(){
-
+  Future<HttpResult> cartModified()async {
+    double newTotale=0.0;
     userCart=Proxy.sharedProxy.getUserCart();
-    userCart.then((value) {
+    await userCart.then((value) {
       List<ProductInPurchase> listPip=value;
       setState(() {
-        totale=0.0;
-        listPip.forEach((element) {
-          totale+=element.buyed.price*element.quantity;
-          totale=double.parse((totale).toStringAsFixed(2));
-        });
+        for (var element in listPip) {
+          if(element.buyed.quantity==0){
+            newTotale+=0;
+          }
+          else{newTotale+=element.buyed.price*element.quantity;}
+
+          newTotale=double.parse((newTotale).toStringAsFixed(2));
+        }
+        if(isInit ){
+          isInit=false;
+          totale=newTotale;
+          return ;
+        }
+        if(isIncrementedByUser){
+          isIncrementedByUser=false;
+          totale=newTotale;
+          return;
+
+        }
+
+        if(totale!=newTotale){
+          isTotaleModified=true;
+          totale=newTotale;
+        }
+        totale=newTotale;
+
       });
+      return HttpResult.done;
     });
+    return HttpResult.done;
   }
 }

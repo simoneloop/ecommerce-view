@@ -60,7 +60,7 @@ class _PurchaseCardState extends State<PurchaseCard> {
                               CoolText(text:"${widget.purchase.buyed.name}",size: "s",),
                               Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: CoolText(text: "${widget.purchase.buyed.price}€",size: "s",),
+                                child: CoolText(text: "${double.parse((widget.purchase.fixedPrice).toStringAsFixed(2))}€",size: "s",),
                               ),
                             ],
                           ),
@@ -84,7 +84,7 @@ class _PurchaseCardState extends State<PurchaseCard> {
                     CoolText(text: "Pagato",size: "m",),
                     Padding(
                       padding: const EdgeInsets.only(top: 100),
-                      child: CoolText(text: "${widget.purchase.quantity*widget.purchase.buyed.price}€",size: "s",),
+                      child: CoolText(text: "${double.parse((widget.purchase.quantity*widget.purchase.fixedPrice).toStringAsFixed(2))}€",size: "s",),
                     ),
                   ],
                 ),

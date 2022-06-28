@@ -40,6 +40,11 @@ class _AdminPageState extends State<AdminPage> {
   String? _nameError=null;
   String? _quantityError=null;
 
+  String? _priceModifingError=null;
+  String? _descriptionModifingError=null;
+  String? _nameModifingError=null;
+  String? _quantityModifingError=null;
+
   File? image=null;
   Uint8List webImage=Uint8List(8);
   File? modifingImage=null;
@@ -575,7 +580,7 @@ class _AdminPageState extends State<AdminPage> {
                               hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: _nameHint,
-                              errorText: _nameError,
+                              errorText: _nameModifingError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Theme.of(context)
@@ -606,7 +611,7 @@ class _AdminPageState extends State<AdminPage> {
                               hintStyle: getTextStyle(size: Consts.smallText),
 
                               hintText: _descriptionHint,
-                              errorText: _descriptionError,
+                              errorText: _descriptionModifingError,
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color: Theme.of(context)
@@ -639,7 +644,7 @@ class _AdminPageState extends State<AdminPage> {
                                     hintStyle: getTextStyle(size: Consts.smallText),
 
                                     hintText: _priceHint,
-                                    errorText: _priceError,
+                                    errorText: _priceModifingError,
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Theme.of(context)
@@ -668,7 +673,7 @@ class _AdminPageState extends State<AdminPage> {
                                     hintStyle: getTextStyle(size: Consts.smallText),
 
                                     hintText: _quantityHint,
-                                    errorText: _priceError,
+                                    errorText: _quantityModifingError,
                                     enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Theme.of(context)
@@ -978,13 +983,15 @@ Future pickImage(bool isModifing) async{
 
   void modifyProduct(){
     bool _can=true;
-    final avoidForInt = RegExp(r'^[a-zA-Z+_\-=@,\.;]+$');
-    final avoidForText = RegExp(r'^[0-9+_\-=@,\.;]+$');
-    final avoidForDouble = RegExp(r'^[a-zA-Z+_\-=@,\;]+$');
-    if(!_nameModifingController.text.isEmpty && avoidForText.hasMatch(_nameModifingController.text)){
+
+    final regexInt = RegExp(r'^[0-9]+$');
+    final regexText = RegExp(r'^[a-zA-Z0-9 ,.!?]+$');
+    final regexDouble = RegExp(r'(^\d+\.?\d*)$');
+
+    if(!_nameModifingController.text.isEmpty && !regexText.hasMatch(_nameModifingController.text)){
       _can=false;
       setState(() {
-        _nameError="Inserire un breve nome del prodotto, sono ammesse solo lettere";
+        _nameModifingError="Inserire un breve nome del prodotto";
       });
     }
     else if(_nameModifingController.text.isEmpty){
@@ -992,13 +999,13 @@ Future pickImage(bool isModifing) async{
     }
     else{
       setState(() {
-        _nameError=null;
+        _nameModifingError=null;
       });
     }
-    if(_quantityModifingController.text.isEmpty && avoidForInt.hasMatch(_quantityModifingController.text)){
+    if(!_quantityModifingController.text.isEmpty && !regexInt.hasMatch(_quantityModifingController.text)){
       _can=false;
       setState(() {
-        _quantityError="Specificare il NUMERO INTERO";
+        _quantityModifingError="Specificare la quantità";
       });
     }
     else if(_quantityModifingController.text.isEmpty){
@@ -1006,13 +1013,13 @@ Future pickImage(bool isModifing) async{
     }
     else{
       setState(() {
-        _quantityError=null;
+        _quantityModifingError=null;
       });
     }
-    if(_descriptionModifingController.text.isEmpty && avoidForText.hasMatch(_descriptionModifingController.text)){
+    if(!_descriptionModifingController.text.isEmpty && !regexText.hasMatch(_descriptionModifingController.text)){
       _can=false;
       setState(() {
-        _descriptionError="Inserire una breve descrizione del prodotto, sono ammesse solo lettere";
+        _descriptionModifingError="Inserire una breve descrizione del prodotto";
       });
     }
     else if(_descriptionModifingController.text.isEmpty){
@@ -1020,13 +1027,13 @@ Future pickImage(bool isModifing) async{
     }
     else{
       setState(() {
-        _descriptionError=null;
+        _descriptionModifingError=null;
       });
     }
-    if(_priceModifingController.text.isEmpty && avoidForDouble.hasMatch(_priceModifingController.text)){
+    if(!_priceModifingController.text.isEmpty && !regexDouble.hasMatch(_priceModifingController.text)){
       _can=false;
       setState(() {
-        _priceError="Specificare il prezzo, es 3.14";
+        _priceModifingError="Specificare il prezzo, es 3.14";
       });
     }
     else if(_priceModifingController.text.isEmpty){
@@ -1034,7 +1041,7 @@ Future pickImage(bool isModifing) async{
     }
     else{
       setState(() {
-        _priceError=null;
+        _priceModifingError=null;
       });
     }
     if(_modifingRadioValue==""){
@@ -1132,7 +1139,7 @@ Future pickImage(bool isModifing) async{
     }
     else{
       totalProductHot!.forEach((element) {
-        if(element.name==value){
+        if(element.name.toLowerCase()==value.toLowerCase()){
           setState(() {
             searchedProductHot!.add(element);
           });
@@ -1151,7 +1158,7 @@ Future pickImage(bool isModifing) async{
     }
     else{
       totalProductHot!.forEach((element) {
-        if(element.name==value){
+        if(element.name.toLowerCase()==value.toLowerCase()){
           setState(() {
             searchedProductModify!.add(element);
           });

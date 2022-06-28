@@ -38,7 +38,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   bool hidePassword = true;
   bool isApiCallProcess=false;
   bool _canRegister=true;
-
+  bool shouldLogin=false;
 
   bool isModifing=false;
   dynamic u=Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS);
@@ -363,6 +363,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
       }
       else{
         uForm.email=_emailController.text;
+        shouldLogin=true;
         _emailError=null;
       }
     }
@@ -392,18 +393,30 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
     else{
       uForm.lastName=_lastNameController.text;
     }
-    //TODO filter
-    if(_phoneController.text.length<9 ||_phoneController.text.length>11){
+    final regexInt = RegExp(r'^[0-9]+$');
+
+    if(_phoneController.text.isEmpty){
       uForm.phone=u.phoneNumber;
     }
     else{
-      uForm.phone=_phoneController.text;
+      if(_phoneController.text.length<9 ||_phoneController.text.length>11){
+        _phoneError="Deve essere un numero valido";
+        _canRegister=false;
+      }
+      else if(regexInt.hasMatch(_phoneController.text)){
+        uForm.phone=_phoneController.text;
+      }
+      else{
+        _phoneError="Deve essere un numero valido";
+        _canRegister=false;
+
+      }
     }
+
   }
   void ValidateAndSave(){
     _canRegister=true;
-    //TODO add Consts.toValidate
-    if(true){
+    if(Consts.TO_VALIDATE){
       setState(() {
         Validate();
       });
@@ -415,7 +428,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
             u=Proxy.appState.getValue(Consts.USER_LOGGED_DETAILS);
             isModifing=false;
           });
-          showCoolSnackbar(context, "Modificato con successo", "ok");
+          if(shouldLogin){
+            showCoolSnackbar(context, "Modificato con successo, per favore riesegui il login", "tip",seconds: 3);
+            logOut(context);
+          }
+          else{
+            showCoolSnackbar(context, "Modificato con successo", "ok");
+          }
+
         }
         else{
           setState(() {
@@ -426,7 +446,6 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
         }
       });
     }
-    //todo to finish
   }
 
 }

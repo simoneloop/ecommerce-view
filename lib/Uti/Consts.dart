@@ -82,7 +82,7 @@ class Consts{
   static const double mediumText=25;
   static const double bigText=30;
   // ignore: constant_identifier_names
-  static const bool TO_VALIDATE=false;
+  static const bool TO_VALIDATE=true;
   // ignore: constant_identifier_names
   static const int PAGE_SIZE=7;
   // ignore: constant_identifier_names
