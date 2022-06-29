@@ -392,7 +392,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       _phoneError="Inserisci un numero di cellulare valido";
       _canRegister=false;
     }
-    else if(regexInt.hasMatch(_phoneController.text)){
+    else if(!regexInt.hasMatch(_phoneController.text)){
       _phoneError="Inserisci un numero di cellulare valido";
       _canRegister=false;
     }

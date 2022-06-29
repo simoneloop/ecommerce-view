@@ -144,9 +144,6 @@ class _LoginPageState extends State<LoginPage> {
 
                           children: [
                             CoolTextButton(gradient: Consts.SecondoGradient, text: "Login", press:(){ValidateAndLogin();
-                            setState(() {
-                              isApiCallProcess=true;
-                            });
 
                             }),
                             Padding(
@@ -195,20 +192,26 @@ class _LoginPageState extends State<LoginPage> {
     if(Consts.TO_VALIDATE){
       setState(() {
         if(!_emailController.text.contains("@")){
-          _emailError="Should be a valid email";
+          _emailError="Inserire una email valida";
           _canLogin=false;
         }
         else{
           _emailError=null;
         }
-        if(!(_passwordController.text.length>3)){
-          _passwordError="password should be more than 3 char";
+        if(_passwordController.text.length<=3){
+          _passwordError="La password dovrebbe essere più lunga di 3 caratteri";
           _canLogin=false;
-        }else{_passwordError=null;}
+        }
+        else{
+          _passwordError=null;
+        }
       });
     }
-
+  print(_canLogin);
     if(_canLogin){
+      setState(() {
+        isApiCallProcess=true;
+      });
       Proxy.sharedProxy.logIn(_emailController.text,_passwordController.text)
           .then((value){
             if(value==LogInResult.logged){
@@ -227,6 +230,11 @@ class _LoginPageState extends State<LoginPage> {
             });
 
           });
+    }
+    else{
+      setState(() {
+        isApiCallProcess=false;
+      });
     }
 
   }

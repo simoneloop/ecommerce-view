@@ -86,7 +86,6 @@ class Proxy{
         }
       );
       WebStorage.instance.storeData({"email":email,"password":password});
-      print("dopp"+WebStorage.instance.loadData(["email","password","name"]).toString());
       appState.addValue(Consts.USER_LOGGED_DETAILS, await getMyDetails());
       Map<String, dynamic> payload = Jwt.parseJwt(_restManager.token);
       appState.addValue(Consts.USER_LOGGED_IS_ADMIN, false);

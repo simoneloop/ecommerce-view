@@ -69,6 +69,7 @@ class _PIPCardState extends State<PIPCard> {
                 ),
                 CoolText(text:widget.pip.buyed.name, size: "s"),
                 CoolText(text: "${widget.pip.buyed.price}€",size: "s",),
+                productStatus==ProductStatus.unavailable?CoolText(text:"Disponibilità: 0pz", size: "s"):
                 CoolText(text:"Disponibilità: ${widget.pip.buyed.quantity}pz", size: "s"),
                   alert(productStatus),
                   CartCounter(callback: widget.callback,pip: widget.pip,productStatus:productStatus),
